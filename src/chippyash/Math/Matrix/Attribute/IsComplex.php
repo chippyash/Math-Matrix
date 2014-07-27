@@ -11,12 +11,12 @@ namespace chippyash\Math\Matrix\Attribute;
 
 use chippyash\Matrix\Interfaces\AttributeInterface;
 use chippyash\Matrix\Matrix;
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\ComplexMatrix;
 
 /**
- * Is matrix a Rational matrix?
+ * Is matrix a Complex matrix?
  */
-class IsRational implements AttributeInterface
+class IsComplex implements AttributeInterface
 {
     /**
      * Does the matrix have this attribute
@@ -26,6 +26,6 @@ class IsRational implements AttributeInterface
      */
     public function is(Matrix $mA)
     {
-        return ($mA instanceof RationalMatrix);
+        return ($mA instanceof ComplexMatrix);
     }
 }

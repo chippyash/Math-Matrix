@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014

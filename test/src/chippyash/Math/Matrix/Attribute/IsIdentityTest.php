@@ -1,7 +1,10 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Attribute;
 use chippyash\Math\Matrix\Attribute\IsIdentity;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\ComplexMatrix;
+use chippyash\Math\Matrix\MatrixFactory;
 
 /**
  */
@@ -21,53 +24,67 @@ class IsIdentityTest extends \PHPUnit_Framework_TestCase
                 $this->object);
     }
 
-    /**
-     * @covers chippyash\Matrix\Attribute\IsIdentity::is()
-     */
-    public function testNonSquareMatrixCanNeverBeAnIdentity()
+    public function testNonNumericMatrixCanNeverBeAnIdentity()
     {
-        $testBad = array(array(1,0,0), array(0,1,0));
+        $testBad = [[1,0,0], [0,1,0]];
         $mA = new Matrix($testBad);
         $this->assertFalse($this->object->is($mA));
     }
 
-    /**
-     * @covers chippyash\Matrix\Attribute\IsIdentity::is()
-     */
-    public function testNonIntegerMatrixCanNeverBeAnIdentity()
+    public function testNumericMatrixCanBeAnIdentity()
     {
-        $testBad = array(array(1,0,0), array(0,1,0), array(0,0,1.0));
-        $mA = new Matrix($testBad);
-        $this->assertFalse($this->object->is($mA));
-    }
-
-    /**
-     * @covers chippyash\Matrix\Attribute\IsIdentity::is()
-     */
-    public function testIsIdentityRecognisesAnIdentityMatrix()
-    {
-        $testGood = array(array(1,0,0), array(0,1,0), array(0,0,1));
-        $mA = new Matrix($testGood);
+        $testBad = [[1,0,0.0], [0,1,0], [0,0,1.0]];
+        $mA = new NumericMatrix($testBad);
         $this->assertTrue($this->object->is($mA));
     }
 
-    /**
-     * @covers chippyash\Matrix\Attribute\IsIdentity::is()
-     */
+    public function testIsIdentityRecognisesAnIdentityMatrix()
+    {
+        $testGood = [[1,0,0], [0,1,0], [0,0,1]];
+        $mA = new NumericMatrix($testGood);
+        $this->assertTrue($this->object->is($mA));
+    }
+
     public function testMatrixHasNonZeroInWrongPlaceIsNotAnIdentityMatrix()
     {
-        $testBad = array(array(1,0,2), array(0,1,0), array(0,0,1));
-        $mA = new Matrix($testBad);
+        $testBad = [[1,0,2], [0,1,0], [0,0,1]];
+        $mA = new NumericMatrix($testBad);
         $this->assertFalse($this->object->is($mA));
     }
 
-    /**
-     * @covers chippyash\Matrix\Attribute\IsIdentity::is()
-     */
     public function testMatrixHasNonOneInWrongPlaceIsNotIdentityMatrix()
     {
-        $testBad = array(array(2,0,0), array(0,1,0), array(0,0,1));
-        $mA = new Matrix($testBad);
+        $testBad = [[2,0,0], [0,1,0], [0,0,1]];
+        $mA = new NumericMatrix($testBad);
         $this->assertFalse($this->object->is($mA));
     }
+    
+    public function testComplexNumberIdentityMatrixIsRecognised()
+    {
+        $test = [['1+0i','0+0i','0+0i'],['0+0i','1+0i','0+0i'],['0+0i','0+0i','1+0i']];
+        $mA = MatrixFactory::createComplex($test);
+        $this->assertTrue($this->object->is($mA));
+    }
+    
+    public function testComplexNumberNonIdentityMatrixIsRecognised()
+    {
+        $test = [['0+0i','0+0i','0+0i'],['0+0i','1+0i','0+0i'],['0+0i','0+0i','1+0i']];
+        $mA = MatrixFactory::createComplex($test);
+        $this->assertFalse($this->object->is($mA));
+    }
+
+    public function testRationalNumberIdentityMatrixIsRecognised()
+    {
+        $test = [['1/1','0/1','0/1'],['0/1','1/1','0/1'],['0/1','0/1','1/1']];
+        $mA = MatrixFactory::createRational($test);
+        $this->assertTrue($this->object->is($mA));
+    }
+    
+    public function testRationalNumberNonIdentityMatrixIsRecognised()
+    {
+        $test = [['0/1','0/1','0/1'],['0/1','1/1','0/1'],['0/1','0/1','1/1']];
+        $mA = MatrixFactory::createRational($test);
+        $this->assertFalse($this->object->is($mA));
+    }
+    
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -10,7 +10,7 @@
 
 namespace chippyash\Math\Matrix\Interfaces;
 
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Matrix\Interfaces\InvokableInterface;
 
 /**
@@ -28,14 +28,14 @@ interface ComputatationInterface extends InvokableInterface
     /**
      * Carry out a computation and return the result
      *
-     * @param RationalMatrix $mA First matrix to act on - required
-     * @param mixed $extra RationalMatrix or other parameter required by the computation
+     * @param NumericMatrix $mA First matrix to act on - required
+     * @param mixed $extra NumericMatrix or other parameter required by the computation
      *
-     * @return RationalMatrix
+     * @return NumericMatrix
      *
      * @throws chippyash/Matrix/Exceptions/ComputationException
      * @codeCoverageIgnore
      */
-    public function compute(RationalMatrix $mA, $extra = null);
+    public function compute(NumericMatrix $mA, $extra = null);
 
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -10,9 +10,10 @@
 namespace chippyash\Math\Matrix\Attribute;
 
 use chippyash\Matrix\Interfaces\AttributeInterface;
-use chippyash\Math\Matrix\Derivative\Determinant;
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Matrix\Matrix;
+use chippyash\Matrix\Traits\AssertMatrixIsNumeric;
 use chippyash\Matrix\Traits\AssertMatrixIsSquare;
+use chippyash\Math\Matrix\Derivative\Determinant;
 
 /**
  * Is the matrix nonsingular?
@@ -20,31 +21,26 @@ use chippyash\Matrix\Traits\AssertMatrixIsSquare;
  */
 class IsNonsingular implements AttributeInterface
 {
+    use AssertMatrixIsNumeric;
     use AssertMatrixIsSquare;
 
     /**
      * Does the matrix have this attribute
      * A nonsingular matrix is a square matrix whose determinant != 0
      *
-     * @param RationalMatrix $mA
+     * @param Matrix $mA
      * @return boolean
      * @throws chippyash\Matrix\Exceptions\ComputationException;
      */
-    public function is(RationalMatrix $mA)
+    public function is(Matrix $mA)
     {
-
-        $this->assertMatrixIsSquare($mA);
+        $this->assertMatrixIsNumeric($mA)
+             ->assertMatrixIsSquare($mA);
 
         $fDet = new Determinant();
         if ($fDet($mA) == 0) {
             return false;
         }
-        //alternate method
-//        $data = $mA->toArray();
-//        for ($j = 0; $j < $mA->columns(); $j++) {
-//            if (!isset($data[$j][$j]) || $data[$j][$j] == 0)
-//                return false;
-//        }
 
         return true;
     }

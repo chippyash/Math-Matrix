@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -11,12 +11,13 @@
 
 namespace chippyash\Math\Matrix;
 
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Type\Number\IntType;
 
 /**
  * Matrix construction using a function
  */
-class FunctionMatrix extends RationalMatrix
+class FunctionMatrix extends NumericMatrix
 {
 
     /**
@@ -28,23 +29,25 @@ class FunctionMatrix extends RationalMatrix
      * $row and $col are 1 based
      *
      * @param callable $function
-     * @param int $rows Number of required rows
-     * @param int $cols Number or required columns
+     * @param IntType $rows Number of required rows
+     * @param IntType $cols Number or required columns
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(callable $function, $rows, $cols)
+    public function __construct(callable $function, IntType $rows, IntType $cols)
     {
-        if (!is_int($rows) || $rows < 1) {
-            throw new \InvalidArgumentException('$rows must be int >= 1');
+        if ($rows() < 1) {
+            throw new \InvalidArgumentException('$rows must be >= 1');
         }
-        if (!is_int($cols) || $cols < 1) {
-            throw new \InvalidArgumentException('$cols must be int >= 1');
+        if ($cols() < 1) {
+            throw new \InvalidArgumentException('$cols must be >= 1');
         }
 
         $source = array();
-        for ($r = 0; $r < $rows; $r++) {
-            for ($c = 0; $c < $cols; $c++) {
+        $rc = $rows();
+        $cc = $cols();
+        for ($r = 0; $r < $rc; $r++) {
+            for ($c = 0; $c < $cc; $c++) {
                 $source[$r][$c] = $function($r + 1, $c + 1);
             }
         }

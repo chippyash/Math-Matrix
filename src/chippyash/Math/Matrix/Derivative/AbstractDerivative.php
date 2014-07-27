@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -10,7 +10,7 @@
 namespace chippyash\Math\Matrix\Derivative;
 
 use chippyash\Matrix\Interfaces\DerivativeInterface;
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
 use chippyash\Matrix\Traits\Debug;
 
@@ -27,10 +27,10 @@ abstract class AbstractDerivative implements DerivativeInterface
      * @see DerivativeInterface::derive
      * @abstract
      *
-     * @param chippyash\Math\Matrix\RationalMatrix $ma
+     * @param chippyash\Math\Matrix\NumericMatrix $ma
      * @raparm mixed $extra
      */
-    abstract public function derive(RationalMatrix $mA, $extra = null);
+    abstract public function derive(NumericMatrix $mA, $extra = null);
 
     /**
      * Proxy to derive()

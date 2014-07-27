@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -9,7 +9,7 @@
  */
 namespace chippyash\Math\Matrix\Interfaces;
 
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
  * Interface for a Matrix determinant stratgey
@@ -21,10 +21,10 @@ interface DeterminantStrategyInterface
     /**
      * Compute determinant for a matrix
      *
-     * @param RationalMatrix $mA
+     * @param NumericMatrix $mA
      * @return numeric
      * @codeCoverageIgnore
      */
-    public function determinant(RationalMatrix $mA);
+    public function determinant(NumericMatrix $mA);
 
 }

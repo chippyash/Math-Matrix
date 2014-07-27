@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -9,27 +9,28 @@
  */
 namespace chippyash\Math\Matrix\Traits;
 
+use chippyash\Matrix\Matrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
- * Assert parameter is an array
+ * Assert matrix is a numeric one
  */
-Trait AssertParameterIsArray
+Trait AssertMatrixIsNumeric
 {
     /**
-     * Run test to ensure parameter is an array
+     * Check that matrix is rational
      *
-     * @param mixed $value
+     * @param \chippyash\Matrix\Matrix $matrix
      * @param string $msg Optional message
-     *
      * @return Fluent Interface
      *
      * @throws ComputationException
      */
-    protected function assertParameterIsArray($param, $msg = 'Parameter is not an array')
+    protected function assertMatrixIsNumeric(Matrix $matrix , $msg = 'Matrix is not numeric')
     {
-        if (!is_array($param)) {
-            throw new ComputationException($msg, 108);
+        if (!$matrix instanceof NumericMatrix) {
+            throw new ComputationException($msg, 111);
         }
 
         return $this;
