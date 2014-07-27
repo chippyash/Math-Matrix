@@ -1,6 +1,6 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Derivative\Strategy\Determinant;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Internal;
 
 /**
@@ -16,12 +16,12 @@ class InternalTest extends \PHPUnit_Framework_TestCase
 
     public function testEmptyMatrixReturnsNull()
     {
-        $this->assertNull($this->object->determinant(new Matrix([])));
+        $this->assertNull($this->object->determinant(new NumericMatrix([])));
     }
 
     public function testSingleMatrixReturnsNull()
     {
-        $this->assertNull($this->object->determinant(new Matrix([2])));
+        $this->assertNull($this->object->determinant(new NumericMatrix([2])));
     }
 
     /**
@@ -29,7 +29,7 @@ class InternalTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingularTwoByTwoMatricesReturnZero($arr)
     {
-        $this->assertEquals(0, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -37,7 +37,7 @@ class InternalTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonSingularTwoByTwoMatricesReturnNonZero($arr, $result)
     {
-        $this->assertEquals($result, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -45,7 +45,7 @@ class InternalTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingularThreeByThreeMatricesReturnZero($arr)
     {
-        $this->assertEquals(0, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -53,7 +53,7 @@ class InternalTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingularFourByFourMatricesReturnZero($arr)
     {
-        $this->assertEquals(0, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
 
@@ -62,7 +62,7 @@ class InternalTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonSingularThreeByThreeMatricesReturnNonZero($arr, $result)
     {
-        $this->assertEquals($result, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -70,7 +70,7 @@ class InternalTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonSingularNByNMatricesReturnNonZero($arr, $result)
     {
-        $this->assertEquals($result, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
 
@@ -82,16 +82,16 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     {
         //all known singular 2x2 matrices
         return [
-            [[0,0],[0,0]],
-            [[0,0],[0,1]],
-            [[0,0],[1,0]],
-            [[0,0],[1,1]],
-            [[0,1],[0,0]],
-            [[0,1],[0,1]],
-            [[1,0],[0,0]],
-            [[1,0],[1,0]],
-            [[1,1],[0,0]],
-            [[1,1],[1,1]],
+            [[[0,0],[0,0]]],
+            [[[0,0],[0,1]]],
+            [[[0,0],[1,0]]],
+            [[[0,0],[1,1]]],
+            [[[0,1],[0,0]]],
+            [[[0,1],[0,1]]],
+            [[[1,0],[0,0]]],
+            [[[1,0],[1,0]]],
+            [[[1,1],[0,0]]],
+            [[[1,1],[1,1]]],
         ];
     }
 
@@ -113,7 +113,10 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     public function singularThreesMatrices()
     {
         return [
-            [[1,2,3],[4,5,6],[7,8,9]]
+            [
+                [[1,2,3],
+                 [4,5,6],
+                 [7,8,9]]]
         ];
     }
 

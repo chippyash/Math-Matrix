@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -11,7 +11,7 @@
 namespace chippyash\Math\Matrix\Derivative;
 
 use chippyash\Math\Matrix\Derivative\AbstractDerivative;
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
 use chippyash\Matrix\Traits\AssertMatrixIsNotEmpty;
 use chippyash\Matrix\Traits\AssertMatrixIsSquare;
@@ -56,7 +56,7 @@ class Determinant extends AbstractDerivative
      * @throws chippyash/Math/Matrix/Exceptions/UndefinedComputationException
      * @throws chippyash/Math/Matrix/Exceptions/ComputationException
      */
-    public function derive(Matrix $mA, $extra = null)
+    public function derive(NumericMatrix $mA, $extra = null)
     {
         $this->assertMatrixIsNotEmpty($mA, 'No determinant for empty matrix')
              ->assertMatrixIsSquare($mA, 'No determinant for non-square matrix');
@@ -67,13 +67,13 @@ class Determinant extends AbstractDerivative
     /**
      * Compute determinant using a strategy
      *
-     * @param \chippyash\Math\Matrix\RationalMatrix $mA
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
      * @return numeric
      * @throws UndefinedComputationException
      *
      * @todo put back in LU determinant strategy once figured out what is wrong with it
      */
-    protected function getDeterminant(RationalMatrix $mA)
+    protected function getDeterminant(NumericMatrix $mA)
     {
         switch ($this->method) {
             case self::METHOD_INTERNAL:

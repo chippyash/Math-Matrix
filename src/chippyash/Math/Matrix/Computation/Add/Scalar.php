@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -11,10 +11,10 @@
 namespace chippyash\Math\Matrix\Computation\Add;
 
 use chippyash\Math\Matrix\Computation\AbstractComputation;
-use chippyash\Math\Matrix\RationalMatrix as MMatrix;
-use chippyash\Matrix\Traits\AssertMatrixIsComplete;
-use chippyash\Math\Matrix\Traits\AssertMatrixIsRational;
-use chippyash\Matrix\Traits\ConvertNumberToRational;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
+use chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
+use chippyash\Math\Type\Calculator;
 
 /**
  * Add a scalar to every item in the operand matrix
@@ -22,45 +22,39 @@ use chippyash\Matrix\Traits\ConvertNumberToRational;
  */
 class Scalar extends AbstractComputation
 {
-    use AssertMatrixIsComplete;
-    use AssertMatrixIsRational;
-    use ConvertNumberToRational;
+    use CreateCorrectMatrixType;
+    use CreateCorrectScalarType;
 
     /**
      * Add single scalar value to each member of the matrix and return result
-     * Boolean values are converted to 0 (false) and 1 (true).  Use the logical
-     * computations if required.
      *
-     * @param Matrix $mA First matrix to act on - required
+     * @param NumericMatrix $mA First matrix to act on - required
      * @param scalar $extra value to add
      *
-     * @return Matrix
+     * @return NumericMatrix|RationalMatrix|ComplexMatrix
      *
      * @throws chippyash/Matrix/Exceptions/ComputationException
      * @todo express product in terms of a FunctionMatrix
      */
-    public function compute(MMatrix $mA, $extra = null)
+    public function compute(NumericMatrix $mA, $extra = null)
     {
-        $this->assertMatrixIsComplete($mA);
-
         if ($mA->is('empty')) {
-            return new MMatrix([]);
+            return $this->createCorrectMatrixType($mA);
         }
 
-        $this->assertMatrixIsRational($mA, 'Matrix mA is not rational');
-
-        $scalar = $this->convertNumberToRational($extra);
+        $scalar = $this->createCorrectScalarType($mA, $extra);
 
         $data = $mA->toArray();
         $m = $mA->rows();
         $n = $mA->columns();
+        $calc = new Calculator();
         for ($row = 0; $row < $m; $row++) {
             for ($col = 0; $col < $n; $col++) {
-                $data[$row][$col] = $data[$row][$col]->add($scalar);
+                $data[$row][$col] = $calc->add($data[$row][$col], $scalar);
             }
         }
 
-        return new MMatrix($data);
+        return $this->createCorrectMatrixType($mA, $data);
     }
 
 }

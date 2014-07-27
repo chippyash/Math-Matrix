@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -9,11 +9,11 @@
  */
 namespace chippyash\Math\Matrix\Interfaces;
 
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Matrix\Interfaces\InvokableInterface;
 
 /**
- * Interface for a Matrix derivative
+ * Interface for a NumericMatrix derivative
  *
  * Derivatives return a single value as a reult of their derivation, usually
  * expected to be numeric
@@ -25,11 +25,11 @@ interface DerivativeInterface extends InvokableInterface
     /**
      * Compute derivative for a matrix
      *
-     * @param RationalMatrix $mA
+     * @param NumericMatrix $mA
      * @param mixed $extra Additional input required for derivative
      * @return numeric
      * @codeCoverageIgnore
      */
-    public function derive(RationalMatrix $mA, $extra = null);
+    public function derive(NumericMatrix $mA, $extra = null);
 
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -9,7 +9,7 @@
  */
 namespace chippyash\Math\Matrix\Interfaces;
 
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
  * Interface for inversion strategies
@@ -20,9 +20,9 @@ interface InversionStrategyInterface
     /**
      * Invert the matrix
      *
-     * @param RationalMatrix $mA
-     * @return RationalMatrix
+     * @param NumericMatrix $mA
+     * @return NumericMatrix
      * @codeCoverageIgnore
      */
-    public function invert(RationalMatrix $mA);
+    public function invert(NumericMatrix $mA);
 }

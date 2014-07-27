@@ -1,6 +1,6 @@
 <?php
 /*
- * Matrix library
+ * Math-Matrix library
  *
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
@@ -9,7 +9,10 @@
  */
 namespace chippyash\Math\Matrix\Traits;
 
-use chippyash\Math\Matrix\RationalNumber;
+use chippyash\Type\Number\Rational\RationalType;
+use chippyash\Type\Number\Rational\RationalTypeFactory;
+use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Number\IntType;
 use chippyash\Matrix\Exceptions\MatrixException;
 
 /**
@@ -20,7 +23,7 @@ Trait ConvertNumberToRational
     /**
      * Convert if possible a supplied argument to a rational
      *
-     * @param int|float|string $numerator
+     * @param int|float|string|NumericTypeInterface $numerator
      * @return chippyash\Math\Matrix\RationalNumber
      * @throws UndefinedComputationException
      */
@@ -28,27 +31,29 @@ Trait ConvertNumberToRational
     {
         switch(gettype($value)) {
             case 'integer':
-                return new RationalNumber($value);
+                return new RationalType(new IntType($value), new IntType(1));
             case 'double':
-                return RationalNumber::fromReal($value);
+                return RationalTypeFactory::fromReal($value);
             case 'string':
                 try {
-                    return RationalNumber::fromString($value);
+                    return RationalTypeFactory::fromString($value);
                 } catch (\Exception $e) {
                     throw new MatrixException('The string representation of the number is invalid for a rational');
                 }
             case 'object':
-                if ($value instanceof RationalNumber) {
+                if ($value instanceof RationalType) {
                     return $value;
+                } elseif($value instanceof NumericTypeInterface) {
+                    return RationalTypeFactory::create($value);
                 } else {
-                    throw new MatrixException('Rational expects int, float, string or Rational value');
+                    throw new MatrixException('Rational expects int, float, string, Rational or NumericTypeInterface value');
                 }
             case 'NULL':
-                return new RationalNumber(0);
+                return new RationalType(new IntType(0));
             case 'boolean':
-                return new RationalNumber($value ? 1 : 0);
+                return new RationalType(new IntType($value ? 1 : 0));
             default:
-                throw new MatrixException('Rational expects int, float, string or Rational ');
+                throw new MatrixException('Rational expects int, float, string, Rational or NumericTypeInterface ');
         }
     }
 }
