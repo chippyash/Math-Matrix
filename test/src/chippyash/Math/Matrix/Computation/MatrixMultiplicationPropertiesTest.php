@@ -5,7 +5,7 @@ use chippyash\Math\Matrix\Computation\Add\Matrix as Add;
 use chippyash\Math\Matrix\Computation\Mul\Scalar;
 use chippyash\Math\Matrix\Transformation\Transpose;
 use chippyash\Math\Matrix\Derivative\Trace;
-use chippyash\Math\Matrix\Matrix as Matrix;
+use chippyash\Math\Matrix\NumericMatrix as Matrix;
 use chippyash\Math\Matrix\IdentityMatrix;
 
 /**

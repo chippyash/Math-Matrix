@@ -10,34 +10,33 @@
 namespace chippyash\Math\Matrix;
 
 use chippyash\Math\Matrix\FunctionMatrix;
-
+use chippyash\Type\Number\IntType;
 /**
  * Construct a matrix with all entries set to 0/1
  */
 class ZeroMatrix extends FunctionMatrix
 {
     /**
-     * Construct a Matrix with all entries set to 0 or 0/1 (Rational)
+     * Construct a Matrix with all entries set to IntType(0)
      *
-     * @param int $rows Number of required rows
-     * @param int $cols Number of required columns
-     * @param boolean $rationalise Turn numeric values into Rational numbers
+     * @param chippyash\Type\Number\IntType $rows Number of required rows
+     * @param chippyash\Type\Number\IntType $cols Number of required columns
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($rows, $cols, $rationalise = true)
+    public function __construct(IntType $rows, IntType $cols)
     {
-        if (!is_int($rows) || $rows < 1) {
-            throw new \InvalidArgumentException('$rows must be int >= 1');
+        if ($rows() < 1) {
+            throw new \InvalidArgumentException('$rows must be >= 1');
         }
-        if (!is_int($cols) || $cols < 1) {
-            throw new \InvalidArgumentException('$rows must be int >= 1');
+        if ($cols() < 1) {
+            throw new \InvalidArgumentException('$rows must be >= 1');
         }
 
         $f = function($row, $col) {
-            return 0;
+            return new IntType(0);
         };
 
-        parent::__construct($f, $rows, $cols, $rationalise);
+        parent::__construct($f, $rows, $cols);
     }
 }

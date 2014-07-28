@@ -27,7 +27,6 @@ class Determinant extends AbstractDerivative
     use AssertMatrixIsSquare;
 
     const METHOD_INTERNAL = 0;
-//    const METHOD_LU = 1;
 
 
     /**
@@ -79,9 +78,6 @@ class Determinant extends AbstractDerivative
             case self::METHOD_INTERNAL:
                 $strategy = new Internal();
                 break;
-//            case self::METHOD_LU:
-//                $strategy = new Lu();
-//                break;
             default:
                 throw new UndefinedComputationException('Unknown determinant computation method');
         }

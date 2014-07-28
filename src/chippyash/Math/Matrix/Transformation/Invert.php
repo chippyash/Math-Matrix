@@ -38,7 +38,6 @@ class Invert extends AbstractTransformation
     use AssertMatrixIsRational;
     use Debug;
 
-//    const METHOD_LU = 0;  //LU Decomposition method
     const METHOD_GJ = 1;  //Gauss-Jordan method
     const METHOD_DET = 2; //By determinant method
 
@@ -109,9 +108,6 @@ class Invert extends AbstractTransformation
     protected function invert(Matrix $mA)
     {
         switch ($this->method) {
-//            case self::METHOD_LU:
-//                $strategy = new LU();
-//                break;
             case self::METHOD_GJ:
                 $strategy = new GaussJordan();
                 break;
