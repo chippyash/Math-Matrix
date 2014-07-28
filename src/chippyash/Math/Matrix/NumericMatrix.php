@@ -18,11 +18,13 @@ use chippyash\Matrix\Interfaces\TransformationInterface;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Type\Number\IntType;
 use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\ComplexMatrix;
 
 /**
- * Construct a matrix whose entries are numeric, i.e int, float, IntType, 
+ * Construct a matrix whose entries are numeric, i.e int, float, IntType,
  * FloatType or RationalType
- * 
+ *
  * On construction PHP native ints are converted to IntType and native
  * float types are converted to RationalType
  *
@@ -54,6 +56,7 @@ class NumericMatrix extends Matrix
             $this->store($source->toArray());
             return;
         }
+
         if (is_array($source)) {
             if (is_int($normalizeDefault)) {
                 $default = new IntType($normalizeDefault);

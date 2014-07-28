@@ -10,12 +10,11 @@
 
 namespace chippyash\Math\Matrix\Computation\Mul;
 
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Computation\AbstractComputation;
-use chippyash\Math\Matrix\RationalMatrix as MMatrix;
-use chippyash\Matrix\Traits\AssertMatrixIsComplete;
-use chippyash\Math\Matrix\Traits\AssertMatrixIsRational;
-use chippyash\Matrix\Traits\AssertParameterIsScalar;
-use chippyash\Matrix\Traits\ConvertNumberToRational;
+use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
+use chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
+use chippyash\Math\Type\Calculator;
 
 /**
  * Multiply every item in the operand matrix by a scalar value
@@ -23,10 +22,8 @@ use chippyash\Matrix\Traits\ConvertNumberToRational;
  */
 class Scalar extends AbstractComputation
 {
-    use AssertMatrixIsRational;
-    use AssertMatrixIsComplete;
-    use AssertParameterIsScalar;
-    use ConvertNumberToRational;
+    use CreateCorrectMatrixType;
+    use CreateCorrectScalarType;
 
     /**
      * Multiply each member of the matrix by single scalar value and return result
@@ -42,28 +39,25 @@ class Scalar extends AbstractComputation
      *
      * @throws chippyash/Matrix/Exceptions/ComputationException
      */
-    public function compute(MMatrix $mA, $extra = null)
+    public function compute(NumericMatrix $mA, $extra = null)
     {
         if ($mA->is('empty')) {
-            return new MMatrix([]);
+            return $this->createCorrectMatrixType($mA);
         }
 
-        $this->assertMatrixIsComplete($mA, 'Matrix mA is not complete')
-             ->assertMatrixIsRational($mA, 'Matrix mA is not rational')
-             ->assertParameterIsScalar($extra);
-
-        $scalar = $this->convertNumberToRational($extra);
+        $scalar = $this->createCorrectScalarType($mA, $extra);
 
         $data = $mA->toArray();
         $lx = $mA->columns();
         $ly = $mA->rows();
+        $calc = new Calculator();
         for ($row = 0; $row < $ly; $row++) {
             for ($col = 0; $col < $lx; $col++) {
-                $data[$row][$col] = $data[$row][$col]->multiplyBy($scalar);
+                $data[$row][$col] = $calc->mul($data[$row][$col], $scalar);
             }
         }
 
-        return new MMatrix($data);
+        return $this->createCorrectMatrixType($mA, $data);
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Derivative\Strategy\Determinant;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Lu as LuDet;
 
 /**
@@ -15,12 +15,12 @@ class LuTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Matrix parameter is empty
+     * @expectedException chippyash\Matrix\Exceptions\MatrixException
+     * @expectedExceptionMessage Matrix parameter is empty
      */
     public function testEmptyMatrixThrowsException()
     {
-        $this->assertNull($this->object->determinant(new Matrix([])));
+        $this->assertNull($this->object->determinant(new NumericMatrix([])));
     }
 
     /**
@@ -30,7 +30,7 @@ class LuTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleMatrixReturnsSingleEntryValue()
     {
-        $this->assertEquals(2.0,$this->object->determinant(new Matrix([2])));
+        $this->assertEquals(2.0,$this->object->determinant(new NumericMatrix([2]))->get());
     }
 
     /**
@@ -38,7 +38,7 @@ class LuTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingularTwoByTwoMatricesReturnZero($arr)
     {
-        $this->assertEquals(0, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -46,7 +46,7 @@ class LuTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonSingularTwoByTwoMatricesReturnNonZero($arr, $result)
     {
-        $this->assertEquals($result, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -54,7 +54,7 @@ class LuTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingularThreeByThreeMatricesReturnZero($arr)
     {
-        $this->assertEquals(0, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -64,7 +64,7 @@ class LuTest extends \PHPUnit_Framework_TestCase
     public function testSingularFourByFourMatricesReturnZero($arr)
     {
         $this->markTestSkipped('error in LU needs to be determined');
-        $this->assertEquals(0, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
 
@@ -73,7 +73,7 @@ class LuTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonSingularThreeByThreeMatricesReturnNonZero($arr, $result)
     {
-        $this->assertEquals($result, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
     /**
@@ -84,7 +84,7 @@ class LuTest extends \PHPUnit_Framework_TestCase
     public function testNonSingularNByNMatricesReturnNonZero($arr, $result)
     {
         $this->markTestSkipped('Failed asserting that -221490 matches expected -221490.');
-        $this->assertEquals($result, $this->object->determinant(new Matrix($arr)));
+        $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
     }
 
 

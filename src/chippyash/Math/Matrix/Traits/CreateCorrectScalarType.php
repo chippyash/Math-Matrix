@@ -46,13 +46,25 @@ Trait CreateCorrectScalarType
         if ($originalMatrix instanceof RationalMatrix) {
             return RationalTypeFactory::create($scalar);
         }
-        
+
         if (is_int($scalar)) {
-            return TypeFactory::create('int', $scalar);
+            return TypeFactory::createInt($scalar);
         } elseif (is_float($scalar)) {
-            return TypeFactory::create('float', $scalar);
-        } else {
-            throw new ComputationException('Scalar parameter is not a supported type for numeric matrices: ' . getType($scalar));
+            return TypeFactory::createFloat($scalar);
+        } elseif(is_bool($scalar)) {
+            return TypeFactory::createInt(($scalar ? 1 : 0));
+        } elseif(is_string($scalar)) {
+            try {
+                return TypeFactory::createFloat($scalar);
+            } catch (\InvalidArgumentException $e) {
+                try {
+                    return TypeFactory::createRational($scalar);
+                } catch(\InvalidArgumentException $e) {
+                    //do nothing
+                }
+            }
         }
+
+        throw new ComputationException('Scalar parameter is not a supported type for numeric matrices: ' . getType($scalar));
     }
 }

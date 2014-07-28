@@ -9,7 +9,7 @@
  */
 namespace chippyash\Math\Matrix\Derivative;
 
-use chippyash\Matrix\Interfaces\DerivativeInterface;
+use chippyash\Math\Matrix\Interfaces\DerivativeInterface;
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
 use chippyash\Matrix\Traits\Debug;
