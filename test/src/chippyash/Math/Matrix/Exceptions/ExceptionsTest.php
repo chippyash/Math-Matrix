@@ -13,15 +13,10 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->exceptions = array(
-            'Matrix' => new Exceptions\MatrixException('foo'),
             'Computation' => new Exceptions\ComputationException('foo'),
-            'FormatterNotSet' => new Exceptions\FormatterNotSetException('foo'),
             'NoInverse' => new Exceptions\NoInverseException('foo'),
-            'NotAnAttributeInterface' => new Exceptions\NotAnAttributeInterfaceException('foo'),
-            'NotCompleteMatrix' => new Exceptions\NotCompleteMatrixException(2),
             'UndefinedComputation' => new Exceptions\UndefinedComputationException('foo'),
-            'VerticeNotFound' => new Exceptions\VerticeNotFoundException(2,2),
-            'VerticeOutOfBounds' => new Exceptions\VerticeOutOfBoundsException('foo', 2)
+            'MathMatrix' => new Exceptions\MathMatrixException('foo'),
         );
     }
 

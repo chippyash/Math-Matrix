@@ -10,44 +10,46 @@
 
 namespace chippyash\Math\Matrix\Derivative;
 
-use chippyash\Matrix\Derivative\AbstractDerivative;
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\Derivative\AbstractDerivative;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
+use chippyash\Math\Type\Calculator;
+use chippyash\Type\Number\FloatType;
+use chippyash\Matrix\Traits\AssertMatrixIsNotEmpty;
+use chippyash\Matrix\Traits\AssertMatrixIsSquare;
 
 /**
  * Find the Trace of a square matrix tr(M)
  */
 class Trace extends AbstractDerivative
 {
+    use AssertMatrixIsNotEmpty;
+    use AssertMatrixIsSquare;
 
     /**
      * Find tr(M)
      *
-     * @param RationalMatrix $mA
+     * @param NumericMatrix $mA
      * @param mixed $extra
      * @return numeric
      *
      * @throws chippyash/Math/Matrix/Exceptions/UndefinedComputationException
      */
-    public function derive(RationalMatrix $mA, $extra = null)
+    public function derive(NumericMatrix $mA, $extra = null)
     {
-        if ($mA->is('empty')) {
-            throw new UndefinedComputationException('No trace for empty matrix');
-        }
-
         if ($mA->is('singleitem')) {
             return $mA->get(1,1);
         }
 
-        if (!$mA->is('square')) {
-            throw new UndefinedComputationException('No trace for non-square matrix');
-        }
+        $this->assertMatrixIsNotEmpty($mA, 'No trace for empty matrix')
+                ->assertMatrixIsSquare($mA, 'No trace for non-square matrix');
 
-        $tr = 0;
+        $tr = new FloatType(0);
         $size = $mA->rows();
         $data = $mA->toArray();
+        $calc = new Calculator();
         for ($x = 0; $x < $size; $x++) {
-            $tr += $data[$x][$x];
+            $tr = $calc->add($tr, $data[$x][$x]);
         }
 
         return $tr;

@@ -9,9 +9,10 @@
  */
 namespace chippyash\Math\Matrix\Derivative\Strategy\Determinant;
 
-use chippyash\Math\Matrix\RationalMatrix;
-use chippyash\Matrix\Interfaces\DeterminantStrategyInterface;
-use chippyash\Matrix\Transformation\Decomposition\Lu as dLu;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\Interfaces\DeterminantStrategyInterface;
+use chippyash\Math\Matrix\Transformation\Decomposition\Lu as dLu;
+use chippyash\Type\Number\IntType;
 
 /**
  * LU strategy for matrix inversion
@@ -31,21 +32,22 @@ class Lu implements DeterminantStrategyInterface
      * - square
      * This is not checked here - that is done in the determinant derivative class
      *
-     * @param \chippyash\Matrix\Matrix $mA
-     * @return double|int
-     * @throws ComputationException
+     * @param \chippyash\Matrix\NumericMatrix $mA
+    *
+     * @return \chippyash\Type\Number\IntType|chippyash\Type\Number\FloatType
      */
-    public function determinant(Matrix $mA)
+    public function determinant(NumericMatrix $mA)
     {
         $Lu = new dLu();
-        $det = (real) $Lu->transform($mA)->Det;
-        if ($det == 0) {
-            return 0;
+        var_dump($Lu->transform($mA)->Det);exit;
+        $det = $Lu->transform($mA)->Det;
+        if ($det() == 0) {
+            return new IntType(0);
         }
-        if (($det / round($det)) == 1.0) {
-            return (int) $det;
+        if (($det() / round($det())) == 1.0) {
+            return new IntType($det);
         }
 
-        return $det; //double
+        return $det; //FloatType
     }
 }

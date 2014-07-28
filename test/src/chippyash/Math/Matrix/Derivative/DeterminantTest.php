@@ -1,7 +1,7 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Derivative;
 use chippyash\Math\Matrix\Derivative\Determinant;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
  */
@@ -17,29 +17,28 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
     public function testSutHasDerivativeInterface()
     {
         $this->assertInstanceOf(
-                'chippyash\Matrix\Interfaces\DerivativeInterface',
+                'chippyash\Math\Matrix\Interfaces\DerivativeInterface',
                 $this->object);
     }
 
     /**
-     * @covers chippyash\Matrix\Derivative\Determinant::derive()
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: No determinant for empty matrix
+     * @expectedException chippyash\Matrix\Exceptions\MatrixException
+     * @expectedExceptionMessage No determinant for empty matrix
      */
     public function testEmptyMatrixThrowsException()
     {
-        $mA = new Matrix(array());
+        $mA = new NumericMatrix(array());
         $this->object->derive($mA);
     }
 
     /**
      * @covers chippyash\Matrix\Derivative\Determinant::derive()
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: No determinant for non-square matrix
+     * @expectedException chippyash\Matrix\Exceptions\MatrixException
+     * @expectedExceptionMessage No determinant for non-square matrix
      */
     public function testNonSquareMatrixThrowsException()
     {
-        $mA = new Matrix(array(1,2));
+        $mA = new NumericMatrix(array(1,2));
         $this->object->derive($mA);
     }
 
@@ -51,7 +50,7 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
 //    public function testReturnsDeterminantForTwoByTwoSquareMatrixUsingLUMethod()
 //    {
 //        $obj = new Determinant(Determinant::METHOD_LU);
-//        $mA = new Matrix(
+//        $mA = new NumericMatrix(
 //               array(
 //                   array(1,2),
 //                   array(4,5)
@@ -59,27 +58,24 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
 //        $this->assertEquals(-3, $obj->derive($mA));
 //    }
 
-    /**
-     * @covers chippyash\Matrix\Derivative\Determinant::derive()
-     */
     public function testReturnsDeterminantForTwoByTwoSquareMatrixUsingInternalMethod()
     {
         $obj = new Determinant(Determinant::METHOD_INTERNAL);
-        $mA = new Matrix(
+        $mA = new NumericMatrix(
                array(
                    array(1,2),
                    array(4,5)
                ));
-        $this->assertEquals(-3, $obj->derive($mA));
+        $this->assertEquals(-3, $obj->derive($mA)->get());
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\UndefinedComputationException
+     * @expectedException chippyash\Math\Matrix\Exceptions\UndefinedComputationException
      * @expectedExceptionMessage Computation Error: Undefined computation: Unknown determinant computation method
      */
     public function testUndefinedComputationExceptionThrownForUnknownMethod()
     {
-        $mA = new Matrix(
+        $mA = new NumericMatrix(
                array(
                    array(1,2),
                    array(4,5)
@@ -89,7 +85,6 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers chippyash\Matrix\Derivative\Determinant::derive()
      * @dataProvider threeByThree
      * @link http://en.wikipedia.org/wiki/Matrix_determinant#3.C2.A0.C3.97.C2.A03_matrices
      * @link http://www.intmath.com/matrices-determinants/2-large-determinants.php
@@ -99,11 +94,10 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
 //    public function testReturnsDeterminantForThreeByThreeSquareMatrixUsingLUMethod($data, $determinant)
 //    {
 //        $obj = new Determinant(Determinant::METHOD_LU);
-//        $this->assertEquals($determinant, $obj->derive(new Matrix($data)));
+//        $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data)));
 //    }
 
     /**
-     * @covers chippyash\Matrix\Derivative\Determinant::derive()
      * @dataProvider threeByThree
      * @link http://en.wikipedia.org/wiki/Matrix_determinant#3.C2.A0.C3.97.C2.A03_matrices
      * @link http://www.intmath.com/matrices-determinants/2-large-determinants.php
@@ -111,7 +105,7 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
     public function testReturnsDeterminantForThreeByThreeSquareMatrixUsingInternalMethod($data, $determinant)
     {
         $obj = new Determinant(Determinant::METHOD_INTERNAL);
-       $this->assertEquals($determinant, $obj->derive(new Matrix($data)));
+        $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data))->get());
     }
 
     /**
@@ -178,13 +172,13 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @dataProvider bigMatrices
-     */
-    public function testReturnsDeterminantForNByNSquareMatrixUsingLUMethod($data, $determinant)
-    {
-       $this->assertEquals($determinant, $this->object->derive(new Matrix($data)));
-    }
+//    /**
+//     * @dataProvider bigMatrices
+//     */
+//    public function testReturnsDeterminantForNByNSquareMatrixUsingLUMethod($data, $determinant)
+//    {
+//       $this->assertEquals($determinant, $this->object->derive(new NumericMatrix($data))->get());
+//    }
 
     /**
      * @dataProvider bigMatrices
@@ -192,7 +186,7 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
     public function testReturnsDeterminantForNByNSquareMatrixUsingInternalMethod($data, $determinant)
     {
         $obj = new Determinant(Determinant::METHOD_INTERNAL);
-       $this->assertEquals($determinant, $obj->derive(new Matrix($data)));
+       $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data))->get());
     }
 
     public function bigMatrices()

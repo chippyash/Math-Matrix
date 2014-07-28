@@ -13,6 +13,8 @@ use chippyash\Math\Matrix\Interfaces\DecompositionInterface;
 use chippyash\Matrix\Transformation\AbstractTransformation;
 use chippyash\Matrix\Matrix;
 use chippyash\Matrix\Traits\AssertMatrixIsNotEmpty;
+use chippyash\Matrix\Interfaces\InvokableInterface;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
  * Base abstract for decomposition
@@ -89,10 +91,10 @@ abstract class AbstractDecomposition extends AbstractTransformation
     /**
      * Do the actual decomposition
      *
-     * @param Matrix $mA
+     * @param NumericMatrix $mA
      * @return void
      */
-    abstract protected function decompose(Matrix $mA);
+    abstract protected function decompose(NumericMatrix $mA);
 
     /**
      * Set a product for this decomposition

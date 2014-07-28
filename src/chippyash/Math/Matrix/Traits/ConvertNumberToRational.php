@@ -24,8 +24,10 @@ Trait ConvertNumberToRational
      * Convert if possible a supplied argument to a rational
      *
      * @param int|float|string|NumericTypeInterface $numerator
+     *
      * @return chippyash\Math\Matrix\RationalNumber
-     * @throws UndefinedComputationException
+     *
+     * @throws chippyash\Matrix\Exceptions\MatrixException
      */
     protected function convertNumberToRational($value)
     {
@@ -33,7 +35,7 @@ Trait ConvertNumberToRational
             case 'integer':
                 return new RationalType(new IntType($value), new IntType(1));
             case 'double':
-                return RationalTypeFactory::fromReal($value);
+                return RationalTypeFactory::fromFloat($value);
             case 'string':
                 try {
                     return RationalTypeFactory::fromString($value);

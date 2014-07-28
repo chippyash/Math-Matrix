@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.4",
         "chippyash/matrix" : ">=1.2.0",
-        "chippyash/math-type-calculator" : ">=1.0.0"
+        "chippyash/strong-type" : ">=1.0.8",
+        "chippyash/math-type-calculator" : ">=1.0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7.37",

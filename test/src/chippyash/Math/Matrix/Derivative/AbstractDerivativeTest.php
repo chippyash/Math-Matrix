@@ -1,6 +1,8 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Derivative;
-use chippyash\Math\Matrix\Matrix;
+
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Type\Number\IntType;
 
 /**
  *
@@ -12,14 +14,14 @@ class AbstractDerivativeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->object = $this->getMockForAbstractClass('chippyash\Matrix\Derivative\AbstractDerivative');
+        $this->object = $this->getMockForAbstractClass('chippyash\Math\Matrix\Derivative\AbstractDerivative');
         $this->object->expects($this->any())
                 ->method('derive')
-                ->will($this->returnValue(new Matrix(array('foo'), false, false, null, false)));
+                ->will($this->returnValue(new NumericMatrix([2])));
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @expectedExceptionMessage Computation Error: Invoke method expects 0<n<3 arguments
      */
     public function testInvokeExpectsAtLeastOneArgument()
@@ -29,7 +31,7 @@ class AbstractDerivativeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @expectedExceptionMessage Computation Error: Invoke method expects 0<n<3 arguments
      */
     public function testInvokeExpectsLessThanThreeArguments()
@@ -41,14 +43,14 @@ class AbstractDerivativeTest extends \PHPUnit_Framework_TestCase
     public function testInvokeCanAcceptTwoArguments()
     {
         $f = $this->object;
-        $f(new Matrix(array()),'bar');
+        $f(new NumericMatrix([]),'bar');
     }
 
     public function testInvokeProxiesToDerive()
     {
         $f = $this->object;
-        $m = new Matrix(array());
-        $this->assertInstanceOf('chippyash\Matrix\Matrix', $f($m));
-        $this->assertEquals(array(array('foo')), $f($m)->toArray());
+        $m = new NumericMatrix([]);
+        $this->assertInstanceOf('chippyash\Math\Matrix\NumericMatrix', $f($m));
+        $this->assertEquals([[new IntType(2)]], $f($m)->toArray());
     }
 }
