@@ -12,23 +12,26 @@ namespace chippyash\Math\Matrix\Computation\Mul;
 
 use chippyash\Math\Matrix\Computation\AbstractComputation;
 use chippyash\Matrix\Transformation\Colslice;
-use chippyash\Math\Matrix\RationalMatrix as MMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\ZeroMatrix as ZMatrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
-use chippyash\Matrix\Exceptions\UndefinedComputationException;
+use chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
+use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
+use chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
+use chippyash\Math\Matrix\Traits\AssertMatrixIsNumeric;
 use chippyash\Matrix\Traits\AssertParameterIsMatrix;
-use chippyash\Matrix\Traits\AssertMatrixIsComplete;
-use chippyash\Math\Matrix\Traits\AssertMatrixIsRational;
-use FlorianWolters\Component\Number\Fraction as Rational;
+use chippyash\Type\Number\IntType;
+use chippyash\Math\Type\Calculator;
 
 /**
  * Standard multiplication of two matrices
  */
 class Matrix extends AbstractComputation
 {
+    use CreateCorrectMatrixType;
+    use CreateCorrectScalarType;
+    use AssertMatrixIsNumeric;
     use AssertParameterIsMatrix;
-    use AssertMatrixIsComplete;
-    use AssertMatrixIsRational;
 
     /**
      * Multiply two matrices together
@@ -36,26 +39,23 @@ class Matrix extends AbstractComputation
      * computations if required.
      * Only numeric values can be multiplied. Strings cannot be multiplied
      *
-     * @param MMatrix $mA First matrix operand - required
-     * @param MMatrix $extra Second Matrix operand - required
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA First matrix operand - required
+     * @param \chippyash\Math\Matrix\NumericMatrix $extra Second Matrix operand - required
      *
-     * @return MMatrix
+     * @return \chippyash\Math\Matrix\NumericMatrix
      *
      * @throws chippyash/Matrix/Exceptions/ComputationException
      */
-    public function compute(MMatrix $mA, $extra = null)
+    public function compute(NumericMatrix $mA, $extra = null)
     {
-        $this->assertParameterIsMatrix($extra, 'Parameter is not a matrix');
+        $this->assertParameterIsMatrix($extra, 'Parameter is not a matrix')
+                ->assertMatrixIsNumeric($extra, 'Parameter is not a numeric matrix');
 
         if ($mA->is('empty') || $extra->is('empty')) {
-            return new MMatrix(array());
+            return $this->createCorrectMatrixType($mA, []);
         }
 
-        $this->assertMatrixIsRational($mA, 'Matrix mA is not rational')
-             ->assertMatrixIsRational($extra, 'Parameter is not a rational matrix')
-             ->assertMatrixIsComplete($mA, 'Matrix mA is not complete')
-             ->assertMatrixIsComplete($extra, 'Parameter is not a complete matrix')
-             ->checkCompatibility($mA, $extra);
+        $this->checkCompatibility($mA, $extra);
 
         $product = $this->doComputation($mA, $extra);
 
@@ -66,24 +66,27 @@ class Matrix extends AbstractComputation
      * Carry out the actual multiplication using standard matrix multiplication
      * method.
      *
-     * @param \chippyash\Matrix\Matrix $mA
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      * @return array
      * @throws ComputationException
      */
-    protected function doComputation(MMatrix $mA, MMatrix $mB)
+    protected function doComputation(NumericMatrix $mA, NumericMatrix $mB)
     {
-        $size = max(array($mA->columns(), $mA->rows(), $mB->columns(), $mB->rows()));
+        $size = new IntType(max(array($mA->columns(), $mA->rows(), $mB->columns(), $mB->rows())));
         $mZ = new ZMatrix($size, $size);
+        $size = $size(); //convert back to internal type
         $product = $mZ->toArray();
         $dA = $mA->toArray();
         $dB = $mB->toArray();
+        $zero = $this->createCorrectScalarType($mA, 0);
+        $calc = new Calculator();
         for ($i = 0; $i < $size; $i++) {
             for ($k = 0; $k < $size; $k++) {
                 for ($j = 0; $j < $size; $j++) {
-                    $a = isset($dA[$i][$k]) ? $dA[$i][$k] : new Rational(0);
-                    $b = isset($dB[$k][$j]) ? $dB[$k][$j] : new Rational(0);
-                    $product[$i][$j] = $product[$i][$j]->add($a->multiplyBy($b));
+                    $a = isset($dA[$i][$k]) ? $dA[$i][$k] : $zero;
+                    $b = isset($dB[$k][$j]) ? $dB[$k][$j] : $zero;
+                    $product[$i][$j] = $calc->add($product[$i][$j], $calc->mul($a, $b));
                 }
             }
         }
@@ -94,10 +97,10 @@ class Matrix extends AbstractComputation
     /**
      * Check that multiplication is possible for the two matrices
      *
-     * @param \chippyash\Matrix\Matrix $mA
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      */
-    protected function checkCompatibility(MMatrix $mA, MMatrix $mB)
+    protected function checkCompatibility(NumericMatrix $mA, NumericMatrix $mB)
     {
         if ($mA->is('rowvector')) {
             $this->checkRowVectorCompatibility($mA, $mB);
@@ -116,11 +119,11 @@ class Matrix extends AbstractComputation
     /**
      * Check that multiplication is possible when mA is a row vector
      *
-     * @param \chippyash\Matrix\Matrix $mRV
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mRV
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      * @throws ComputationException
      */
-    protected function checkRowVectorCompatibility(MMatrix $mRV, MMatrix $mB)
+    protected function checkRowVectorCompatibility(NumericMatrix $mRV, NumericMatrix $mB)
     {
         if ($mB->is('columnvector') && ($mRV->columns() != $mB->rows())) {
             throw new ComputationException('Two matrices cannot be multiplied: mA->columns != mB->rows');
@@ -130,12 +133,12 @@ class Matrix extends AbstractComputation
     /**
      * Check that multiplication is possible when mA is a column vector
      *
-     * @param \chippyash\Matrix\Matrix $mCV
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mCV
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      * @throws ComputationException
      * @throws UndefinedComputationException
      */
-    protected function checkColumnVectorCompatibility(MMatrix $mCV, MMatrix $mB)
+    protected function checkColumnVectorCompatibility(NumericMatrix $mCV, NumericMatrix $mB)
     {
         if ($mB->is('rowvector') && ($mCV->rows() != $mB->columns())) {
             throw new ComputationException('Two matrices cannot be multiplied: mA->rows != mB->columns');
@@ -148,11 +151,11 @@ class Matrix extends AbstractComputation
     /**
      * Check that multiplication is possible when mA is a square
      *
-     * @param \chippyash\Matrix\Matrix $mSq
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mSq
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      * @throws ComputationException
      */
-    protected function checkSquareMatrixCompatibility(MMatrix $mSq, MMatrix $mB)
+    protected function checkSquareMatrixCompatibility(NumericMatrix $mSq, NumericMatrix $mB)
     {
         if ($mB->is('columnvector') && ($mSq->columns() != $mB->rows())) {
             throw new ComputationException('Two matrices cannot be multiplied: mA->columns != mB->rows');
@@ -162,7 +165,13 @@ class Matrix extends AbstractComputation
         }
     }
 
-    protected function checkRectangleMatrixCompatibility(MMatrix $mA, MMatrix $mB)
+    /**
+     *
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
+     * @throws ComputationException
+     */
+    protected function checkRectangleMatrixCompatibility(NumericMatrix $mA, NumericMatrix $mB)
     {
         if ($mB->is('rectangle') && ($mA->columns() != $mB->rows())) {
             throw new ComputationException('Two matrices cannot be multiplied: mA->columns != mB->rows');
@@ -173,15 +182,15 @@ class Matrix extends AbstractComputation
      * Massage the product of a multiplication to return a matrix of the
      * correct size and shape
      *
-     * @param \chippyash\Matrix\Matrix $mA
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      * @param array $product
-     * @return \chippyash\Matrix\Matrix
+     * @return \chippyash\Math\Matrix\NumericMatrix
      */
-    protected function massageProduct(MMatrix $mA, MMatrix $mB, array $product)
+    protected function massageProduct(NumericMatrix $mA, NumericMatrix $mB, array $product)
     {
         if ($mA->is('rowvector') && $mB->is('columnvector')) {
-            return new MMatrix(array($product[0][0]));
+            return $this->createCorrectMatrixType($mA, [$product[0][0]]);
         }
         if ($mA->is('square')) {
             return $this->massageSquare($mA, $mB, $product);
@@ -189,42 +198,44 @@ class Matrix extends AbstractComputation
         if ($mA->is('rectangle')) {
             return $this->massageRectangle($mA, $mB, $product);
         }
-        return new MMatrix($product);
+        return $this->createCorrectMatrixType($mA, $product);
     }
 
     /**
      * Massage where mA is a square
-     * @param \chippyash\Matrix\Matrix $mA
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      * @param array $product
-     * @return \chippyash\Matrix\Matrix
+     * @return \chippyash\Math\Matrix\NumericMatrix
      */
-    protected function massageSquare(MMatrix $mA, MMatrix $mB, array $product)
+    protected function massageSquare(NumericMatrix $mA, NumericMatrix $mB, array $product)
     {
         if ($mB->is('columnvector')) {
             $fC = new Colslice();
-            return $fC(new MMatrix($product), array(1, 1));
+            return $fC($this->createCorrectMatrixType($mA, $product), array(1, 1));
         }
 
-        return new MMatrix($product);
+        return $this->createCorrectMatrixType($mA, $product);
     }
 
     /**
      * Massage where mA is rectangle
-     * @param \chippyash\Matrix\Matrix $mA
-     * @param \chippyash\Matrix\Matrix $mB
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
+     * @param \chippyash\Math\Matrix\NumericMatrix $mB
      * @param array $product
-     * @return \chippyash\Matrix\Matrix
+     * @return \chippyash\Math\Matrix\NumericMatrix
      */
-    protected function massageRectangle(MMatrix $mA, MMatrix $mB, array $product)
+    protected function massageRectangle(NumericMatrix $mA, NumericMatrix $mB, array $product)
     {
         if ($mB->is('rectangle') && ($mA->rows() < $mB->rows())) {
-            return new MMatrix(array(
-                array($product[0][0], $product[0][1]),
-                array($product[1][0], $product[1][1])
-            ));
+            return $this->createCorrectMatrixType(
+                    $mA,
+                    [[$product[0][0], $product[0][1]],
+                     [$product[1][0], $product[1][1]]
+                     ]
+                    );
         }
 
-        return new MMatrix($product);
+        return $this->createCorrectMatrixType($mA, $product);
     }
 }
