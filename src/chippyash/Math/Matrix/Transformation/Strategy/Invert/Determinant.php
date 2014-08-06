@@ -11,13 +11,15 @@
 
 namespace chippyash\Math\Matrix\Transformation\Strategy\Invert;
 
-use chippyash\Matrix\Derivative\Determinant as Det;
 use chippyash\Matrix\Transformation\Cofactor;
 use chippyash\Matrix\Transformation\Transpose;
-use chippyash\Matrix\Computation\Div\Scalar;
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\Computation\Div\Scalar;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\Derivative\Determinant as Det;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
-use chippyash\Matrix\Interfaces\InversionStrategyInterface;
+use chippyash\Math\Matrix\Interfaces\InversionStrategyInterface;
+use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
+use chippyash\Math\Type\Calculator;
 
 /**
  * Determinant strategy for matrix inversion
@@ -25,6 +27,8 @@ use chippyash\Matrix\Interfaces\InversionStrategyInterface;
  */
 class Determinant implements InversionStrategyInterface
 {
+    use CreateCorrectMatrixType;
+
     /**
      * Compute inverse using determinants method
      * We are expecting a non singular, square matrix (complete, n=m, n>1)
@@ -33,7 +37,7 @@ class Determinant implements InversionStrategyInterface
      * @return Matrix
      * @throws ComputationException
      */
-    public function invert(Matrix $mA)
+    public function invert(NumericMatrix $mA)
     {
         $rows = $mA->rows();
         $cols = $mA->columns();
@@ -43,12 +47,11 @@ class Determinant implements InversionStrategyInterface
         try {
             for ($row = 0; $row < $rows; $row++) {
                 for ($col = 0; $col < $cols; $col++) {
+                    $t = $fDet($fCof($mA,[$row + 1, $col + 1]));
                     if (fmod($row + $col, 2) == 0) {
-                        $work[$row][$col] = $fDet($fCof($mA,
-                                        array($row + 1, $col + 1)));
+                        $work[$row][$col] = $t;
                     } else {
-                        $work[$row][$col] = -$fDet($fCof($mA,
-                                                array($row + 1, $col + 1)));
+                        $work[$row][$col] = $t->negate();
                     }
                     $r = $row + 1;
                     $c = $col + 1;
@@ -57,7 +60,7 @@ class Determinant implements InversionStrategyInterface
             $fTr = new Transpose();
             $fDiv = new Scalar();
 
-            return $fTr($fDiv(new Matrix($work), $fDet($mA)));
+            return $fTr($fDiv($this->createCorrectMatrixType($mA, $work), $fDet($mA)));
         } catch (ComputationException $e) {
             $msg = str_replace('Computation Error: ', '', $e->getMessage());
             throw new ComputationException('Matrix is not invertible: ' . $msg,

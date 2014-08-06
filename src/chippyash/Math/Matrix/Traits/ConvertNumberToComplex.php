@@ -9,19 +9,19 @@
  */
 namespace chippyash\Math\Matrix\Traits;
 
-use chippyash\Type\Number\Rational\RationalType;
-use chippyash\Type\Number\Rational\RationalTypeFactory;
+use chippyash\Type\Number\Complex\ComplexType;
+use chippyash\Type\Number\Complex\ComplexTypeFactory;
 use chippyash\Type\Number\NumericTypeInterface;
 use chippyash\Type\Number\IntType;
 use chippyash\Matrix\Exceptions\MatrixException;
 
 /**
- * Convert if possible a supplied argument to a rational
+ * Convert if possible a supplied argument to a complex
  */
-Trait ConvertNumberToRational
+Trait ConvertNumberToComplex
 {
     /**
-     * Convert if possible a supplied argument to a rational
+     * Convert if possible a supplied argument to a complex
      *
      * @param int|float|string|NumericTypeInterface $numerator
      *
@@ -29,31 +29,30 @@ Trait ConvertNumberToRational
      *
      * @throws chippyash\Matrix\Exceptions\MatrixException
      */
-    protected function convertNumberToRational($value)
+    protected function convertNumberToComplex($value)
     {
         switch(gettype($value)) {
             case 'integer':
-                return new RationalType(new IntType($value), new IntType(1));
             case 'double':
-                return RationalTypeFactory::fromFloat($value);
+                return ComplexTypeFactory::create($value, 0);
             case 'string':
                 try {
-                    return RationalTypeFactory::fromString($value);
+                    return ComplexTypeFactory::fromString($value);
                 } catch (\Exception $e) {
-                    throw new MatrixException('The string representation of the number is invalid for a rational');
+                    throw new MatrixException('The string representation of the number is invalid for a complex number');
                 }
             case 'object':
                 if($value instanceof NumericTypeInterface) {
-                    return $value->asRational();
+                    return $value->asComplex();
                 } else {
-                    throw new MatrixException('Rational expects int, float, string, Rational or NumericTypeInterface value');
+                    throw new MatrixException('Complex expects int, float, string, or NumericTypeInterface value');
                 }
             case 'NULL':
-                return new RationalType(new IntType(0));
+                return ComplexTypeFactory::create(0, 0);
             case 'boolean':
-                return new RationalType(new IntType($value ? 1 : 0));
+                return ComplexTypeFactory::create(($value ? 1 : 0), 0);
             default:
-                throw new MatrixException('Rational expects int, float, string, Rational or NumericTypeInterface ');
+                throw new MatrixException('Complex expects int, float, string, or NumericTypeInterface value');
         }
     }
 }

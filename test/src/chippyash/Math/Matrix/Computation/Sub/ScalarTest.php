@@ -1,7 +1,7 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Computation\Sub;
 use chippyash\Math\Matrix\Computation\Sub\Scalar;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
  * Description of ScalarTest
@@ -19,7 +19,7 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     public function testComputeAcceptsNumericScalarValue()
     {
-        $m = new Matrix(array(1));
+        $m = new NumericMatrix(array(1));
         $this->object->compute($m, 0);
         $this->object->compute($m, 1.23);
         $this->object->compute($m, '2/3');
@@ -28,32 +28,31 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage The string representation of the number is invalid for a rational
+     * @expectedExceptionMessage Scalar parameter is not a supported type for numeric matrices
      */
     public function testComputeRejectsNonNumericScalarValue()
     {
-        $this->object->compute(new Matrix(array(1)), 'foo');
+        $this->object->compute(new NumericMatrix(array(1)), 'foo');
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Parameter is not scalar!
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @dataProvider nonScalarValues
      */
     public function testComputeRejectsNonScalarValue($nonScalar)
     {
-        $m = new Matrix(array(1));
+        $m = new NumericMatrix(array(1));
         $this->object->compute($m, $nonScalar);
     }
 
     /**
      * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage Rational expects int, float, string or Rational
+     * @expectedExceptionMessage NumberToNumeric expects int, float, string or Rational
      * @dataProvider nonScalarValues
      */
     public function testComputeRejectsNonScalarValueInMatrix($nonScalar)
     {
-        $m = new Matrix(array($nonScalar));
+        $m = new NumericMatrix(array($nonScalar));
         $this->object->compute($m, 1);
     }
 
@@ -68,7 +67,7 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     public function testComputeReturnsEmptyIfMatrixIsEmpty()
     {
-        $m = new Matrix(array());
+        $m = new NumericMatrix(array());
         $test = $this->object->compute($m, 1);
         $this->assertTrue($test->is('empty'));
     }
@@ -78,8 +77,9 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
      */
     public function testComputeReturnsCorrectResult($operand, $test, $scalar)
     {
-        $m = new Matrix($operand);
-        $this->assertEquals($test, $this->object->compute($m, $scalar)->toArray());
+        $mA = new NumericMatrix($operand);
+        $mT = new NumericMatrix($test);
+        $this->assertEquals($mT, $this->object->compute($mA, $scalar));
     }
 
     public function computeMatrices()

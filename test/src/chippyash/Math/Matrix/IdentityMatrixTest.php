@@ -1,9 +1,11 @@
 <?php
 namespace chippyash\Test\Math\Matrix;
 use chippyash\Math\Matrix\IdentityMatrix;
-use chippyash\Type\BoolType;
+use chippyash\Type\Number\FloatType;
 use chippyash\Type\Number\IntType;
 use chippyash\Type\Number\Rational\RationalType;
+use chippyash\Type\Number\Complex\ComplexType;
+use chippyash\Type\Number\Complex\ComplexTypeFactory;
 
 /**
  * Unit test for IdentityMatrix Class
@@ -20,7 +22,7 @@ class IdentityMatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mA->is('empty'));
         $this->assertTrue($mA->is('square'));
         $one = new IntType(1);
-        $zero = new IntType(1);
+        $zero = new IntType(0);
         $this->assertEquals(
                 [[$one, $zero],
                  [$zero, $one]],
@@ -30,7 +32,7 @@ class IdentityMatrixTest extends \PHPUnit_Framework_TestCase
     public function testConstructRequestingRationalisationProperlyGivesIdentityMatrix()
     {
 
-        $mA = new IdentityMatrix(new IntType(2), new BoolType(true));
+        $mA = new IdentityMatrix(new IntType(2), new IntType(IdentityMatrix::IDM_TYPE_RATIONAL));
         $this->assertInstanceOf(self::NSUT, $mA);
         $this->assertFalse($mA->is('empty'));
         $this->assertTrue($mA->is('square'));
@@ -70,4 +72,17 @@ class IdentityMatrixTest extends \PHPUnit_Framework_TestCase
                  [$zero, $one]],
                 $rA->toArray());
     }
+
+    public function testCreateComplexIdentityReturnsComplexMatrix()
+    {
+        $cA = IdentityMatrix::complexIdentity(new IntType(2));
+        $this->assertInstanceOf('chippyash\Math\Matrix\ComplexMatrix', $cA);
+        $one = ComplexTypeFactory::create(1, 0);
+        $zero = ComplexTypeFactory::create(0, 0);
+        $this->assertEquals(
+                [[$one, $zero],
+                 [$zero, $one]],
+                $cA->toArray());
+    }
+
 }

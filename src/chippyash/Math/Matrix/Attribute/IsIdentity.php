@@ -21,7 +21,7 @@ use chippyash\Type\Number\Complex\ComplexType;
  */
 class IsIdentity implements AttributeInterface
 {
-    
+
     /**
      * Does the matrix have this attribute
      * @link http://en.wikipedia.org/wiki/Identity_matrix
@@ -30,7 +30,7 @@ class IsIdentity implements AttributeInterface
      * @return boolean
      */
     public function is(Matrix $mA)
-    { 
+    {
         if (!$mA instanceof NumericMatrix) {
             return false;
         }
@@ -40,7 +40,6 @@ class IsIdentity implements AttributeInterface
         for ($r = 0; $r < $rows; $r++) {
             for ($c = 0; $c < $cols; $c++) {
                 $item = $this->checkItem($data[$r][$c]);
-                echo "{$r},{$c}:{$item}\n";
                 //diagonal == 1
                 if (($r == $c) && $item != 1) {
                     return false;
@@ -53,7 +52,7 @@ class IsIdentity implements AttributeInterface
 
         return true;
     }
-    
+
     protected function checkItem($item)
     {
         if ($item instanceof ComplexType) {
@@ -68,7 +67,7 @@ class IsIdentity implements AttributeInterface
         if ($item instanceof NumericTypeInterface) {
             return $item();
         }
-        
+
         return $item;
     }
 }

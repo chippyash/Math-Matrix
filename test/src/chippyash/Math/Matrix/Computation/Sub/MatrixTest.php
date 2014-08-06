@@ -1,7 +1,7 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Computation\Sub;
 use chippyash\Math\Matrix\Computation\Sub\Matrix as CMatrix;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
  * Description of MatrixTest
@@ -18,84 +18,63 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Parameter is not a matrix
+     * @expectedException chippyash\Matrix\Exceptions\MatrixException
+     * @expectedExceptionMessage Parameter is not a matrix
      */
     public function testComputeRejectsSecondParamNotBeingMatrix()
     {
-        $m = new Matrix(array());
+        $m = new NumericMatrix(array());
         $p = 'foo';
         $this->object->compute($m, $p);
     }
 
     public function testComputeOnlyAcceptsMatrixValues()
     {
-        $m = new Matrix(array());
+        $m = new NumericMatrix(array());
         $this->assertInstanceOf('chippyash\Matrix\Matrix', $this->object->compute($m, $m));
     }
 
     public function testComputeReturnsEmptyIfMatrixIsEmpty()
     {
-        $m = new Matrix(array());
-        $test = $this->object->compute($m, new Matrix(array(1)));
+        $m = new NumericMatrix(array());
+        $test = $this->object->compute($m, new NumericMatrix(array(1)));
         $this->assertTrue($test->is('empty'));
-        $test = $this->object->compute(new Matrix(array(1)), $m);
+        $test = $this->object->compute(new NumericMatrix(array(1)), $m);
         $this->assertTrue($test->is('empty'));
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Matrix parameter not complete
-     */
-    public function testComputeThrowsExceptionIfFirstOperandIsIncompleteMatrix()
-    {
-        $m = new Matrix(array(array(1,2),array(1)));
-        $this->object->compute($m, $m);
-    }
-
-    /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Matrix parameter not complete
-     */
-    public function testComputeThrowsExceptionIfSecondOperandIsIncompleteMatrix()
-    {
-        $mA = new Matrix(array());
-        $mB = new Matrix(array(array(1,2),array(1)));
-        $this->object->compute($mA, $mB);
-    }
-
-    /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: mA->rows != mB->rows
+     * @expectedException chippyash\Matrix\Exceptions\MatrixException
+     * @expectedExceptionMessage mA->rows != mB->rows
      */
     public function testComputeThrowsExceptionIfBothOperandsNotSameSize()
     {
-        $mA = new Matrix(array(1));
-        $mB = new Matrix(array(array(1,2),array(2,1)));
+        $mA = new NumericMatrix(array(1));
+        $mB = new NumericMatrix(array(array(1,2),array(2,1)));
         $this->object->compute($mA, $mB);
     }
 
     /**
      * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage Rational expects int, float, string or Rational
+     * @expectedExceptionMessage NumberToNumeric expects int, float, string or Rational
      * @dataProvider nonScalarValues
      */
     public function testComputeThrowsExceptionIfFirstOperandVerticeNotScalar($nonScalar)
     {
-        $mA = $mB = new Matrix(array($nonScalar));
-        $mB = new Matrix(array(array(1,)));
+        $mA = $mB = new NumericMatrix(array($nonScalar));
+        $mB = new NumericMatrix(array(array(1,)));
         $this->object->compute($mA, $mB);
     }
 
     /**
      * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage Rational expects int, float, string or Rational
+     * @expectedExceptionMessage NumberToNumeric expects int, float, string or Rational
      * @dataProvider nonScalarValues
      */
     public function testComputeThrowsExceptionIfSecondOperandVerticeNotScalar($nonScalar)
     {
-        $mA = new Matrix([[1]]);
-        $mB = new Matrix(array($nonScalar));
+        $mA = new NumericMatrix([[1]]);
+        $mB = new NumericMatrix(array($nonScalar));
         $this->object->compute($mA, $mB);
     }
 
@@ -113,9 +92,10 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
      */
     public function testComputeReturnsCorrectResult($op1, $op2, $test)
     {
-        $mA = new Matrix($op1);
-        $mB = new Matrix($op2);
-        $this->assertEquals($test, $this->object->compute($mA, $mB)->toArray());
+        $mA = new NumericMatrix($op1);
+        $mB = new NumericMatrix($op2);
+        $mT = new NumericMatrix($test);
+        $this->assertEquals($mT, $this->object->compute($mA, $mB));
     }
 
     public function computeMatrices()

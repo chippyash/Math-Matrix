@@ -1,7 +1,11 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Derivative\Strategy\Determinant;
 use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\ComplexMatrix;
 use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Internal;
+use chippyash\Type\Number\Rational\RationalTypeFactory;
+use chippyash\Type\Number\Complex\ComplexTypeFactory;
 
 /**
  */
@@ -14,14 +18,18 @@ class InternalTest extends \PHPUnit_Framework_TestCase
         $this->object = new Internal();
     }
 
-    public function testEmptyMatrixReturnsNull()
+    public function testEmptyMatrixReturnsOne()
     {
-        $this->assertNull($this->object->determinant(new NumericMatrix([])));
+        $this->assertEquals(1, $this->object->determinant(new NumericMatrix([]))->get());
+        $this->assertEquals(1, $this->object->determinant(new RationalMatrix([]))->get());
+        $this->assertEquals(1, $this->object->determinant(new ComplexMatrix([]))->get());
     }
 
-    public function testSingleMatrixReturnsNull()
+    public function testSingleMatrixReturnsValueOfItsSingleEntry()
     {
-        $this->assertNull($this->object->determinant(new NumericMatrix([2])));
+        $this->assertEquals(2, $this->object->determinant(new NumericMatrix([2]))->get());
+        $this->assertEquals('2/5', (string) $this->object->determinant(new RationalMatrix([RationalTypeFactory::fromString('2/5')])));
+        $this->assertEquals('1+3i', $this->object->determinant(new ComplexMatrix([ComplexTypeFactory::fromString('1+3i')]))->get());
     }
 
     /**
@@ -30,6 +38,8 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     public function testSingularTwoByTwoMatricesReturnZero($arr)
     {
         $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
+        $this->assertEquals(0, $this->object->determinant(new RationalMatrix($arr))->get());
+        $this->assertEquals(0, $this->object->determinant(new ComplexMatrix($arr))->get());
     }
 
     /**
@@ -38,6 +48,8 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     public function testNonSingularTwoByTwoMatricesReturnNonZero($arr, $result)
     {
         $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
+        $this->assertEquals($result, $this->object->determinant(new RationalMatrix($arr))->get());
+        $this->assertEquals($result, $this->object->determinant(new ComplexMatrix($arr))->get());
     }
 
     /**
@@ -46,6 +58,8 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     public function testSingularThreeByThreeMatricesReturnZero($arr)
     {
         $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
+        $this->assertEquals(0, $this->object->determinant(new RationalMatrix($arr))->get());
+        $this->assertEquals(0, $this->object->determinant(new ComplexMatrix($arr))->get());
     }
 
     /**
@@ -54,6 +68,8 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     public function testSingularFourByFourMatricesReturnZero($arr)
     {
         $this->assertEquals(0, $this->object->determinant(new NumericMatrix($arr))->get());
+        $this->assertEquals(0, $this->object->determinant(new RationalMatrix($arr))->get());
+        $this->assertEquals(0, $this->object->determinant(new ComplexMatrix($arr))->get());
     }
 
 
@@ -63,6 +79,8 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     public function testNonSingularThreeByThreeMatricesReturnNonZero($arr, $result)
     {
         $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
+        $this->assertEquals($result, $this->object->determinant(new RationalMatrix($arr))->get());
+        $this->assertEquals($result, $this->object->determinant(new ComplexMatrix($arr))->get());
     }
 
     /**
@@ -71,6 +89,8 @@ class InternalTest extends \PHPUnit_Framework_TestCase
     public function testNonSingularNByNMatricesReturnNonZero($arr, $result)
     {
         $this->assertEquals($result, $this->object->determinant(new NumericMatrix($arr))->get());
+        $this->assertEquals($result, $this->object->determinant(new RationalMatrix($arr))->get());
+        $this->assertEquals($result, $this->object->determinant(new ComplexMatrix($arr))->get());
     }
 
 

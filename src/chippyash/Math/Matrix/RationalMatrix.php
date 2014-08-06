@@ -57,7 +57,6 @@ class RationalMatrix extends NumericMatrix
                 }
             }
             $this->data = $data;
-            $this->rationalised = true;
         } catch (ArithmeticException $e) {
             throw new MathMatrixException($e->getMessage(), $e->getCode(), $e);
         }

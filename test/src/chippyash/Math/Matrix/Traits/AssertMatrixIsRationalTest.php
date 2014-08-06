@@ -1,13 +1,14 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Traits;
 use chippyash\Math\Matrix\Traits\AssertMatrixIsRational;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\MatrixFactory;
 
 class stubTraitAssertMatrixIsRational
 {
     use AssertMatrixIsRational;
 
-    public function test(Matrix $mA, $msg = null)
+    public function test(NumericMatrix $mA, $msg = null)
     {
         return (is_null($msg))
                 ? $this->assertMatrixIsRational($mA)
@@ -20,64 +21,45 @@ class AssertMatrixIsRationalTest extends \PHPUnit_Framework_TestCase
     protected $object;
 
     protected $mRational;
-    protected $mIrationalA;
-    protected $mIrationalString;
+    protected $mNumeric;
+    protected $mComplex;
 
     protected function setUp()
     {
         $this->object = new stubTraitAssertMatrixIsRational();
-        $this->mRational = new Matrix([[1,'2/3',3.786]]);
-        $this->mIrationalA = new Matrix([[1]], false, false, null, false);
-        $this->mIrationalString = new Matrix([['foo']]);
+        $this->mRational = MatrixFactory::createRational([[[1,1],'2/3',3.786]]);
+        $this->mNumeric = MatrixFactory::createNumeric([[1]]);
+        $this->mComplex = MatrixFactory::createComplex([['1+2i', '14-4i', '4-3i']]);
     }
 
     /**
-     * @covers chippyash\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
+     * @covers chippyash\Math\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
      */
     public function testRationalMatrixReturnsClass()
     {
         $this->assertInstanceOf(
-                'chippyash\Test\Matrix\Traits\stubTraitAssertMatrixIsRational',
+                'chippyash\Test\Math\Matrix\Traits\stubTraitAssertMatrixIsRational',
                 $this->object->test($this->mRational));
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @expectedExceptionMessage Computation Error: Matrix is not rational
-     * @covers chippyash\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
+     * @covers chippyash\Math\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
      */
     public function testNonRationalMatrixThrowsException()
     {
-        $this->object->test($this->mB);
+        $this->object->test($this->mNumeric);
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @expectedExceptionMessage Computation Error: foo
-     * @covers chippyash\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
+     * @covers chippyash\Math\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
      */
     public function testNonRationalMatrixThrowsExceptionWithUserMessage()
     {
-        $this->object->test($this->mB, 'foo');
+        $this->object->test($this->mComplex, 'foo');
     }
 
-    /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Matrix is not rational
-     * @covers chippyash\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
-     */
-    public function testEmptyMatrixThrowsException()
-    {
-        $this->object->test($this->mC);
-    }
-
-    /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Matrix is not rational
-     * @covers chippyash\Matrix\Traits\AssertMatrixIsRational::assertMatrixIsRational
-     */
-    public function testSingleItemMatrixThrowsException()
-    {
-        $this->object->test($this->mD);
-    }
 }

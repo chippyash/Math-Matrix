@@ -18,8 +18,6 @@ use chippyash\Matrix\Interfaces\TransformationInterface;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Type\Number\IntType;
 use chippyash\Type\Number\NumericTypeInterface;
-use chippyash\Math\Matrix\RationalMatrix;
-use chippyash\Math\Matrix\ComplexMatrix;
 
 /**
  * Construct a matrix whose entries are numeric, i.e int, float, IntType,
@@ -33,9 +31,9 @@ class NumericMatrix extends Matrix
 {
     use ConvertNumberToNumeric;
 
-    const NS_NUMERIC_ATTRIBUTE = 'chippyash\Maths\Matrix\Attribute\Is';
+    const NS_NUMERIC_ATTRIBUTE = 'chippyash\Math\Matrix\Attribute\Is';
     const NS_COMPUTATION = 'chippyash\Math\Matrix\Computation\\';
-    const NS_RTRANSFORMATION = 'chippyash\Math\Matrix\Transformation\\';
+    const NS_NTRANSFORMATION = 'chippyash\Math\Matrix\Transformation\\';
     const NS_DERIVATIVE = 'chippyash\Math\Matrix\Derivative\\';
 
     /**
@@ -113,7 +111,7 @@ class NumericMatrix extends Matrix
      *
      * @param \chippyash\Math\Matrix\Interfaces\ComputationInterface $computation
      * @param mixed $extra
-     * @return \chippyash\Math\Matrix\RationalMatrix
+     * @return \chippyash\Math\Matrix\NumericMatrix
      */
     public function compute(ComputatationInterface $computation, $extra = null)
     {
@@ -138,7 +136,7 @@ class NumericMatrix extends Matrix
      * @param \chippyash\Matrix\Interfaces\TransformationInterface $transformation
      * @param mixed $extra
      *
-     * @return RationalMatrix
+     * @return NumericMatrix
      */
     public function transform(TransformationInterface $transformation, $extra = null)
     {
@@ -159,7 +157,7 @@ class NumericMatrix extends Matrix
      * @param string $operationName Name of operation to perform
      * @param mixed $extra Additional parameter required by the operation
      *
-     * @return \chippyash\Math\Matrix\RationalMatrix
+     * @return \chippyash\Math\Matrix\NumericMatrix
      *
      * @throws \InvalidArgumentException
      */
@@ -182,8 +180,8 @@ class NumericMatrix extends Matrix
             return $this->compute(new $cName(), $extra);
         }
 
-        //Rational transformations
-        $tName = self::NS_RTRANSFORMATION . $operationName;
+        //NUmeric transformations
+        $tName = self::NS_NTRANSFORMATION . $operationName;
         if (class_exists($tName, true)) {
             return $this->transform(new $tName(), $extra);
         }

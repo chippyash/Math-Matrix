@@ -11,11 +11,10 @@
 namespace chippyash\Math\Matrix\Computation\Sub;
 
 use chippyash\Math\Matrix\Computation\AbstractComputation;
-use chippyash\Math\Matrix\RationalMatrix as MMatrix;
-use chippyash\Matrix\Traits\AssertMatrixIsComplete;
-use chippyash\Math\Matrix\Traits\AssertMatrixIsRational;
-use chippyash\Matrix\Traits\AssertParameterIsScalar;
-use chippyash\Matrix\Traits\ConvertNumberToRational;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
+use chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
+use chippyash\Math\Type\Calculator;
 
 /**
  * Subtract a scalar from every item in the operand matrix
@@ -23,10 +22,8 @@ use chippyash\Matrix\Traits\ConvertNumberToRational;
  */
 class Scalar extends AbstractComputation
 {
-    use AssertMatrixIsRational;
-    use AssertMatrixIsComplete;
-    use AssertParameterIsScalar;
-    use ConvertNumberToRational;
+    use CreateCorrectMatrixType;
+    use CreateCorrectScalarType;
 
     /**
      * Subtract a single scalar value from each member of the matrix and return result
@@ -35,35 +32,32 @@ class Scalar extends AbstractComputation
      * String values do a string replace for the scalar, replacing occurences of
      * if with ''
      *
-     * @param Matrix $mA First matrix to act on - required
+     * @param NumericMatrix $mA First matrix to act on - required
      * @param scalar $extra value to subtract
      *
      * @return Matrix
      *
      * @throws chippyash/Matrix/Exceptions/ComputationException
      */
-    public function compute(MMatrix $mA, $extra = null)
+    public function compute(NumericMatrix $mA, $extra = null)
     {
         if ($mA->is('empty')) {
-            return new MMatrix(array(), false, false, null, $mA->isRational());
+            return $this->createCorrectMatrixType($mA);
         }
 
-        $this->assertMatrixIsComplete($mA, 'Matrix mA is not complete')
-             ->assertMatrixIsRational($mA, 'Matrix mA is not rational')
-             ->assertParameterIsScalar($extra);
-
-        $scalar = $this->convertNumberToRational($extra);
+        $scalar = $this->createCorrectScalarType($mA, $extra);
 
         $data = $mA->toArray();
         $lx = $mA->columns();
         $ly = $mA->rows();
+        $calc = new Calculator();
         for ($row = 0; $row < $ly; $row++) {
             for ($col = 0; $col < $lx; $col++) {
-                $data[$row][$col] = $data[$row][$col]->subtract($scalar);
+                $data[$row][$col] = $calc->sub($data[$row][$col], $scalar);
             }
         }
 
-        return new MMatrix($data);
+        return $this->createCorrectMatrixType($mA, $data);
     }
 
 }

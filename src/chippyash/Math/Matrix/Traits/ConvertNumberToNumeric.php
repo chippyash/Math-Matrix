@@ -12,7 +12,6 @@ namespace chippyash\Math\Matrix\Traits;
 use chippyash\Matrix\Exceptions\MatrixException;
 use chippyash\Type\TypeFactory;
 use chippyash\Type\Number\NumericTypeInterface;
-use chippyash\Type\Number\Complex\ComplexType;
 
 /**
  * Convert if possible a supplied argument to strong numeric
@@ -21,9 +20,8 @@ Trait ConvertNumberToNumeric
 {
     /**
      * Convert if possible a supplied argument to a strong numeric type
-     * This does not include complex types
-     * 
-     * @param int|float|string $numerator
+     *
+     * @param int|float|string|NumericTypeInterface $numerator
      * @return chippyash\Type\Number\NumericTypeInterface
      * @throws UndefinedComputationException
      */
@@ -38,11 +36,14 @@ Trait ConvertNumberToNumeric
                 try {
                     return TypeFactory::createRational($value);
                 } catch (\Exception $e) {
-                    throw new MatrixException("The string representation of the number ('{$value}') is invalid for a rational");
+                    if (is_numeric($value)) {
+                        return TypeFactory::createRational(floatval($value));
+                    } else {
+                        throw new MatrixException("The string representation of the number ('{$value}') is invalid for a rational");
+                    }
                 }
             case 'object':
-                if ($value instanceof NumericTypeInterface
-                        && !$value instanceof ComplexType) {
+                if ($value instanceof NumericTypeInterface) {
                     return $value;
                 } else {
                     throw new MatrixException('NumberToNumeric expects int, float, string or Rational value');

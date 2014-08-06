@@ -8,7 +8,7 @@ use chippyash\Type\Number\Rational\RationalTypeFactory;
 /**
  * Unit test for RationalMatrix Class
  */
-class MatrixTest extends \PHPUnit_Framework_TestCase
+class RationalMatrixTest extends \PHPUnit_Framework_TestCase
 {
 
     const NSUT = 'chippyash\Math\Matrix\RationalMatrix';
@@ -54,9 +54,6 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @covers chippyash\Matrix\Matrix::compute()
-     */
     public function testComputeReturnsCorrectResult()
     {
         $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];

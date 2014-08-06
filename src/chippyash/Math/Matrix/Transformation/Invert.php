@@ -10,18 +10,17 @@
 namespace chippyash\Math\Matrix\Transformation;
 
 use chippyash\Matrix\Transformation\AbstractTransformation;
-use chippyash\Matrix\Exceptions\NoInverseException;
-use chippyash\Matrix\Exceptions\UndefinedComputationException;
+use chippyash\Matrix\Matrix;
+use chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
-use chippyash\Matrix\Traits\AssertMatrixIsSquare;
-use chippyash\Matrix\Traits\AssertMatrixIsNonSingular;
-use chippyash\Math\Matrix\Traits\AssertMatrixIsRational;
-use chippyash\Matrix\Transformation\Strategy\Invert\Determinant;
-use chippyash\Matrix\Transformation\Strategy\Invert\GaussJordan;
-use chippyash\Math\Matrix\RationalMatrix;
-
+use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
+use chippyash\Math\Matrix\Traits\AssertMatrixIsNonSingular;
+use chippyash\Math\Matrix\Traits\AssertMatrixIsNumeric;
+use chippyash\Math\Matrix\Transformation\Strategy\Invert\Determinant;
+use chippyash\Math\Matrix\Transformation\Strategy\Invert\GaussJordan;
+use chippyash\Math\Matrix\NumericMatrix;
 //use chippyash\Matrix\Transformation\Strategy\Invert\LU;
-use chippyash\Matrix\Traits\Debug;
+use chippyash\Math\Type\Calculator;
 
 /**
  * Invert a matrix i.e. produce its inverse matrix
@@ -33,10 +32,9 @@ use chippyash\Matrix\Traits\Debug;
  */
 class Invert extends AbstractTransformation
 {
-    use AssertMatrixIsSquare;
+    use AssertMatrixIsNumeric;
     use AssertMatrixIsNonSingular;
-    use AssertMatrixIsRational;
-    use Debug;
+    use CreateCorrectMatrixType;
 
     const METHOD_GJ = 1;  //Gauss-Jordan method
     const METHOD_DET = 2; //By determinant method
@@ -48,12 +46,23 @@ class Invert extends AbstractTransformation
     protected $method;
 
     /**
+     * Inversion methods supported by this transformation
+     *
+     * @var array
+     */
+    private $supportedMethods = [self::METHOD_DET, self::METHOD_GJ];
+
+    /**
      * Constructor
      * @param int $method
      */
     public function __construct($method = self::METHOD_GJ)
     {
-        $this->method = $method;
+        if (in_array($method, $this->supportedMethods)) {
+            $this->method = $method;
+        } else {
+            throw new UndefinedComputationException('Unknown Inverse computation method');
+        }
     }
 
     /**
@@ -61,39 +70,36 @@ class Invert extends AbstractTransformation
      *
      * $mA must be square and nonsingular.
      * An empty $mA returns an empty matrix
-     * A single entry matrix e.g. [[2]] returns [[1/n]]
+     * A single entry matrix e.g. [[n]] returns [[1/n]]
      * A zero single item matrix e.g. [[0]] throws an exception (Division by zero)
      *
-     * @param Matrix $mA First matrix operand - required
+     * @param chippyash\Math\Matrix\NumericMatrix $mA First matrix operand - required
      * @param mixed $extra ignored
      *
-     * @return Matrix
+     * @return chippyash\Math\Matrix\NumericMatrix
      *
      * @throws chippyash\Matrix\Exceptions\ComputationException
      * @throws chippyash\Matrix\Exceptions\UndefinedComputationException
      */
-    public function transform(Matrix $mA, $extra = null)
+    protected function doTransform(Matrix $mA, $extra = null)
     {
-        $this->debug('Start', $mA);
+        $this->assertMatrixIsNumeric($mA);
 
         if ($mA->is('empty')) {
-            return new Matrix([]);
+            return $this->createCorrectMatrixType($mA);
         }
         if ($mA->is('singleitem')) {
-            $i = $mA->get(1,1);
-            if ($i == 0) {
+            $item = $mA->get(1,1)->get();
+            if ($item == 0 || $item == '0+0i') {
                 throw new ComputationException('Division by zero');
             } else {
-                return new Matrix([1/$i]);
+                $calc = new Calculator();
+                return $this->createCorrectMatrixType($mA, [$calc->reciprocal($mA->get(1,1))]);
             }
         }
-        $this->assertMatrixIsSquare($mA)
-             ->assertMatrixIsRational($mA, 'Matrix mA is not rational')
-             ->assertMatrixIsNonSingular($mA,'Can only perform inversion on non singular matrix');
+        $this->assertMatrixIsNonSingular($mA,'Can only perform inversion on non singular matrix');
 
         $I = $this->invert($mA);
-
-        $this->debug("Finish", $I);
 
         return $I;
     }
@@ -101,11 +107,10 @@ class Invert extends AbstractTransformation
     /**
      * Do the inversion
      *
-     * @param \chippyash\Matrix\Matrix $mA
-     * @return \chippyash\Matrix\Matrix
-     * @throws UndefinedComputationException
+     * @param \chippyash\Math\Matrix\NumericMatrix $mA
+     * @return \chippyash\Math\Matrix\NumericMatrix
      */
-    protected function invert(Matrix $mA)
+    protected function invert(NumericMatrix $mA)
     {
         switch ($this->method) {
             case self::METHOD_GJ:
@@ -114,8 +119,6 @@ class Invert extends AbstractTransformation
             case self::METHOD_DET:
                 $strategy = new Determinant();
                 break;
-            default:
-                throw new UndefinedComputationException('Unknown Inverse computation method');
         }
 
         return $strategy->invert($mA);

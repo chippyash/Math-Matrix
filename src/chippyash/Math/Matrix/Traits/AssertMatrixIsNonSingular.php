@@ -9,8 +9,9 @@
  */
 namespace chippyash\Math\Matrix\Traits;
 
-use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
+use chippyash\Math\Matrix\Attribute\IsNonsingular;
 
 /**
  * Assert matrix is non singular
@@ -22,18 +23,21 @@ Trait AssertMatrixIsNonSingular
      * Check that matrix is non singular
      * i.e. det(A) != 0
      *
-     * @param \chippyash\Math\RationalMatrix $matrix
+     * @param \chippyash\Math\Matrix\NumericMatrix $matrix
+     *
      * @param string $msg Optional message
+     *
      * @return Fluent Interface
      *
      * @throws ComputationException
      */
-    protected function assertMatrixIsNonSingular(RationalMatrix $matrix , $msg = 'Matrix is non singular')
+    protected function assertMatrixIsNonSingular(NumericMatrix $matrix , $msg = 'Matrix is non singular')
     {
-        if (!$matrix->is('nonsingular')) {
-            throw new ComputationException($msg, 110);
+        $attr = new IsNonsingular();
+        if ($attr->is($matrix)) {
+            return $this;
         }
 
-        return $this;
+        throw new ComputationException($msg, 110);
     }
 }
