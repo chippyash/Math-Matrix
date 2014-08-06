@@ -38,7 +38,7 @@ and manipulate matrices containing numeric (float, int, rational and complex) va
 The current library covers basic matrix manipulation (inverses being worked on at
 the moment which means matrix division is pending.) The library will cover most
 well known matrix transformations and derivatives, enabling those with a modicum
-of matrix maths to construct a good deal of common algabraic functionality .
+of matrix maths to construct a good deal of common algebraic functionality .
 
 If you want more, either suggest it, or better still, fork it and provide a pull request.
 
@@ -84,40 +84,6 @@ On the whole, computations, (transformations etc) will work with any scalar but:
 *  dividing a matrix by a non invertible matrix is like 1/0 - oops!
 *  using float, int and rational data items will work together
 *  using complex number data items: all items have to be complex
-
-####  Matrices can be decomposed
-
-*  Decomposition is an extended form of Transformation
-*  Decomposition always returns the decomposition class
-*  The original matrix is untouched
-*  You can use the magic __invoke functionality
-*  Computations implement the chippyash\Math\Matrix\Interfaces\DecompositionInterface
-
-<pre>
-    $d = $mA("Decomposition\\Lu")
-    //same as
-    $decomp = new Math\Matrix\Transformation\Decomposition\Lu();
-    $d = $decomp($mA);
-</pre>
-
-The thing about decompositions is that they have multiple products so that the
-Lu decomposition for instance provides:
-
-*  LU
-*  L
-*  U
-*  Det
-*  PivotVector
-*  PermutationMatrix
-
-So assuming you are only interested in the L product you can write
-
-<pre>
-    $L = $mA("Decomposition\\Lu")->L
-</pre>
-
-Decomposition transformations all support dereferencing of their
-products.
 
 ####  You can derive other information from a matrix
 

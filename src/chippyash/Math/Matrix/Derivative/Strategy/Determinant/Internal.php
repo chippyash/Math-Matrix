@@ -6,7 +6,7 @@
  * @author Ashley Kitson <akitson@zf4.biz>
  * @copyright Ashley Kitson, UK, 2014
  * @licence GPL V3 or later : http://www.gnu.org/licenses/gpl.html
- * @link http://en.wikipedia.org/wiki/Matrix_(mathematics)
+ * @link http://en.wikipedia.org/wiki/Matrix_(mathematics)#Determinant
  */
 
 namespace chippyash\Math\Matrix\Derivative\Strategy\Determinant;
@@ -22,6 +22,7 @@ use chippyash\Type\Number\Complex\ComplexType;
 use chippyash\Type\Number\Rational\RationalType;
 use chippyash\Type\Number\FloatType;
 use chippyash\Type\Number\IntType;
+use chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
 
 /**
  * Determinant strategy for matrix inversion
@@ -29,6 +30,7 @@ use chippyash\Type\Number\IntType;
  */
 class Internal implements DeterminantStrategyInterface
 {
+    use CreateCorrectScalarType;
 
     /**
      * Cofactor function
@@ -41,19 +43,19 @@ class Internal implements DeterminantStrategyInterface
      * @var chippyash\Math\Type\Calculator
      */
     protected $calc;
-    
+
     /**
      * Are we dealing with a complex matrix?
      * @var boolean
      */
     protected $isComplex = false;
-    
+
     /**
      * Are we dealing with a rational matrix?
      * @var boolean
      */
     protected $isRational = false;
-    
+
     /**
      * Compute determinant using internal method
      * $mA must be
@@ -65,15 +67,21 @@ class Internal implements DeterminantStrategyInterface
      */
     public function determinant(NumericMatrix $mA)
     {
+        if ($mA->is('empty')) {
+            return $this->createCorrectScalarType($mA, 1);
+        }
+        if ($mA->is('singleitem')) {
+            return $mA->get(1,1);
+        }
         $this->isComplex = ($mA instanceof ComplexMatrix);
         $this->isRational = ($mA instanceof RationalMatrix);
-        
+
         return $this->det($mA);
     }
 
     /**
      * Recursive determinant function
-     * 
+     *
      * @param \chippyash\Matrix\Matrix $mA
      * @return chippyash\Type\Number\NumericTypeInterface
      */
@@ -92,7 +100,7 @@ class Internal implements DeterminantStrategyInterface
             return $this->detN($mA);
         }
     }
-    
+
     /**
      * Return determinant of a 2X2 matrix
      * @link http://en.wikipedia.org/wiki/Matrix_determinant#2.C2.A0.C3.97.C2.A02_matrices
@@ -123,9 +131,12 @@ class Internal implements DeterminantStrategyInterface
     protected function det3(Matrix $mA)
     {
         if ($this->isComplex) {
-            $det = new ComplexType(new FloatType(0), new FloatType(0));
+            $det = new ComplexType(
+                    new RationalType(new IntType(0), new IntType(1)),
+                    new RationalType(new IntType(0), new IntType(1))
+                    );
         } elseif ($this->isRational) {
-            $det = new RationalType(new IntType(0), new InType(1));
+            $det = new RationalType(new IntType(0), new IntType(1));
         } else {
             $det = new FloatType(0);
         }
@@ -133,7 +144,7 @@ class Internal implements DeterminantStrategyInterface
         $c = $this->calc();
         for ($r = 1; $r < 4; $r++) {
             $t = $c->mul(
-                    $mA->get($r, 1), 
+                    $mA->get($r, 1),
                     $this->det2($this->cof()->transform($mA,array($r, 1)))
                     );
             $det = $c->add(
@@ -155,9 +166,12 @@ class Internal implements DeterminantStrategyInterface
     protected function detN(Matrix $mA)
     {
         if ($this->isComplex) {
-            $det = new ComplexType(new FloatType(0), new FloatType(0));
+            $det = new ComplexType(
+                    new RationalType(new IntType(0), new IntType(1)),
+                    new RationalType(new IntType(0), new IntType(1))
+                    );
         } elseif ($this->isRational) {
-            $det = new RationalType(new IntType(0), new InType(1));
+            $det = new RationalType(new IntType(0), new IntType(1));
         } else {
             $det = new FloatType(0);
         }
@@ -184,10 +198,10 @@ class Internal implements DeterminantStrategyInterface
         if (empty($this->fCof)) {
             $this->fCof = new Cofactor();
         }
-        
+
         return $this->fCof;
     }
-    
+
     /**
      * @return chippyash\Math\Type\Calculator
      */
@@ -196,7 +210,7 @@ class Internal implements DeterminantStrategyInterface
         if (empty($this->calc)) {
             $this->calc = new Calculator();
         }
-        
+
         return $this->calc;
     }
 }

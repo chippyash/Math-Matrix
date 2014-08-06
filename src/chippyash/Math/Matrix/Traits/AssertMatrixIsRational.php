@@ -11,7 +11,7 @@ namespace chippyash\Math\Matrix\Traits;
 
 use chippyash\Matrix\Matrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
-
+use chippyash\Math\Matrix\RationalMatrix;
 /**
  * Assert matrix composed of rational numbers
  */
@@ -28,7 +28,7 @@ Trait AssertMatrixIsRational
      */
     protected function assertMatrixIsRational(Matrix $matrix , $msg = 'Matrix is not rational')
     {
-        if (!$matrix->isRational()) {
+        if (!$matrix instanceof RationalMatrix) {
             throw new ComputationException($msg, 111);
         }
 

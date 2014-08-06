@@ -23,20 +23,16 @@ class AssertParameterIsNotStringTest extends \PHPUnit_Framework_TestCase
         $this->object = new stubTraitAssertParameterIsNotString();
     }
 
-    /**
-     * @covers chippyash\Matrix\Traits\AssertParameterIsNotString::assertParameterIsNotString
-     */
     public function testNotStringParamReturnsClass()
     {
         $this->assertInstanceOf(
-                'chippyash\Test\Matrix\Traits\stubTraitAssertParameterIsNotString',
+                'chippyash\Test\Math\Matrix\Traits\stubTraitAssertParameterIsNotString',
                 $this->object->test(23));
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @expectedExceptionMessage Computation Error: Parameter is a string
-     * @covers chippyash\Matrix\Traits\AssertParameterIsNotString::assertParameterIsNotString
      */
     public function testStringParamThrowsException()
     {
@@ -44,9 +40,8 @@ class AssertParameterIsNotStringTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\ComputationException
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @expectedExceptionMessage Computation Error: foo
-     * @covers chippyash\Matrix\Traits\AssertParameterIsNotString::assertParameterIsNotString
      */
     public function testStringParamThrowsExceptionWithUserMessage()
     {

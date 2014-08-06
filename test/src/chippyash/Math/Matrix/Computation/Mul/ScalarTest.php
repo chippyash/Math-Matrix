@@ -46,7 +46,6 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
-     * @expectedExceptionMessage Computation Error: Scalar parameter is not scalar
      * @dataProvider nonScalarValues
      */
     public function testComputeRejectsNonScalarValue($nonScalar)
@@ -107,7 +106,7 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
             ],
               [
                 [[1,2,3]],
-                [[new FloatType(2.5), new FloatType(5.0), new FloatType(7.5)]],
+                [[RationalTypeFactory::create(2.5), RationalTypeFactory::create(5.0), RationalTypeFactory::create(7.5)]],
                 2.5
             ],
               [

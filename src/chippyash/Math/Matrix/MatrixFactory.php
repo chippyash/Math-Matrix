@@ -20,13 +20,13 @@ use chippyash\Math\Matrix\Exceptions\MathMatrixException;
 
 /**
  * Static factory to create the various standard numerical matrices
- * 
+ *
  */
 abstract class MatrixFactory
 {
- 
+
     /**
-     * 
+     *
      * @param string $type
      * @param array $data
      * @return chippyash\Math\Matrix\NumericMatrix
@@ -53,11 +53,11 @@ abstract class MatrixFactory
      *  - a ComplexType
      *  - string representations of complex number
      *  - a 2 item array representing r & i e.g. [2,-4] = '2-4i'
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return \chippyash\Math\Matrix\ComplexMatrix
-     * 
+     *
      * @throws chippyash\Math\Matrix\Exceptions\MathMatrixException
      */
     public static function createComplex(array $data)
@@ -85,11 +85,11 @@ abstract class MatrixFactory
      *  - string representations of rational number
      *  - a PHP float
      *  - a 2 item array representing numerator & denominator e.g. [2,-4] = '-2/4'
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return \chippyash\Math\Matrix\RationalMatrix
-     * 
+     *
      * @throws chippyash\Math\Matrix\Exceptions\MathMatrixException
      */
     public static function createRational(array $data)
@@ -115,13 +115,13 @@ abstract class MatrixFactory
 
     /**
      * Create and return a numeric value matrix
-     * 
+     *
      * @param array $data
      * @return \chippyash\Math\Matrix\NumericMatrix
      */
     public static function createNumeric(array $data)
     {
-        return new NumericMatrix($data);        
+        return new NumericMatrix($data);
     }
 
 }

@@ -32,7 +32,6 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers chippyash\Matrix\Derivative\Determinant::derive()
      * @expectedException chippyash\Matrix\Exceptions\MatrixException
      * @expectedExceptionMessage No determinant for non-square matrix
      */
@@ -43,7 +42,6 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers chippyash\Matrix\Derivative\Determinant::derive()
      *
      * @todo put back in once figured out what is wrong with LU determinant
      */

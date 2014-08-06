@@ -3,10 +3,11 @@ namespace chippyash\Test\Math\Matrix\Computation;
 use chippyash\Math\Matrix\Computation\Mul\Matrix as Mult;
 use chippyash\Math\Matrix\Computation\Add\Matrix as Add;
 use chippyash\Math\Matrix\Computation\Mul\Scalar;
-use chippyash\Math\Matrix\Transformation\Transpose;
+use chippyash\Matrix\Transformation\Transpose;
 use chippyash\Math\Matrix\Derivative\Trace;
 use chippyash\Math\Matrix\NumericMatrix as Matrix;
 use chippyash\Math\Matrix\IdentityMatrix;
+use chippyash\Type\Number\IntType;
 
 /**
  * Unit tests to check that matrix multiplication properties are maintained
@@ -45,12 +46,12 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
         $this->wideRectangle = new Matrix(
                 array(
             array(1, 2, 3),
-            array(1, 2, 3)), false, false, null, false);
+            array(1, 2, 3)));
         $this->longRectangle = new Matrix(
                 array(
             array(1, 2),
             array(1, 2),
-            array(1, 2)), false, false, null, false);
+            array(1, 2)));
     }
 
     /**
@@ -93,7 +94,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
     public function testMultIdentityMatrixIsCommmutative()
     {
         $mA = $this->square;
-        $mB = new IdentityMatrix($mA->rows());
+        $mB = new IdentityMatrix(new IntType($mA->rows()));
         $this->assertEquals(
                 $this->object->compute($mA, $mB),
                 $this->object->compute($mB, $mA)

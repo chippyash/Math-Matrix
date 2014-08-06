@@ -1,7 +1,10 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Attribute;
 use chippyash\Math\Matrix\Attribute\IsNumeric;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\ComplexMatrix;
+use chippyash\Matrix\Matrix;
 
 /**
  */
@@ -21,33 +24,21 @@ class IsNumericTest extends \PHPUnit_Framework_TestCase
                 $this->object);
     }
 
-    /**
-     * @covers chippyash\Matrix\Attribute\IsNumeric::is()
-     */
-    public function testNonCompleteNumericMatrixReturnsFalse()
-    {
-        $testBad = array(array(1,0,0), array(0,0), array(0));
-        $mA = new Matrix($testBad);
-        $this->assertFalse($this->object->is($mA));
-    }
-
-    /**
-     * @covers chippyash\Matrix\Attribute\IsNumeric::is()
-     */
-    public function testNonNumericMatrixReturnsFalse()
-    {
-        $testBad = array(array(1,0,'foo'));
-        $mA = new Matrix($testBad);
-        $this->assertFalse($this->object->is($mA));
-    }
-
-    /**
-     * @covers chippyash\Matrix\Attribute\IsNumeric::is()
-     */
     public function testNumericMatrixReturnsTrue()
     {
-        $testGood = array(array(1,"0",1.345));
-        $mA = new Matrix($testGood);
+        $mA = new NumericMatrix([[1,0,0],[10,0,2],[3,0.5,1.5]]);
         $this->assertTrue($this->object->is($mA));
+
+        $mC = new RationalMatrix([[1,0,0],[10,0,2],[3,0.5,1.5]]);
+        $this->assertTrue($this->object->is($mC));
+
+        $mD = new ComplexMatrix([[1,0,0],[10,0,2],[3,0.5,1.5]]);
+        $this->assertTrue($this->object->is($mD));
+    }
+
+    public function testNonNumericMatrixReturnsFalse()
+    {
+        $mA = new Matrix([1]);
+        $this->assertFalse($this->object->is($mA));
     }
 }

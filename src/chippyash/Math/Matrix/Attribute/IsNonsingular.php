@@ -11,7 +11,7 @@ namespace chippyash\Math\Matrix\Attribute;
 
 use chippyash\Matrix\Interfaces\AttributeInterface;
 use chippyash\Matrix\Matrix;
-use chippyash\Matrix\Traits\AssertMatrixIsNumeric;
+use chippyash\Math\Matrix\Traits\AssertMatrixIsNumeric;
 use chippyash\Matrix\Traits\AssertMatrixIsSquare;
 use chippyash\Math\Matrix\Derivative\Determinant;
 
@@ -28,7 +28,7 @@ class IsNonsingular implements AttributeInterface
      * Does the matrix have this attribute
      * A nonsingular matrix is a square matrix whose determinant != 0
      *
-     * @param Matrix $mA
+     * @param NumericMatrix $mA
      * @return boolean
      * @throws chippyash\Matrix\Exceptions\ComputationException;
      */
@@ -38,7 +38,7 @@ class IsNonsingular implements AttributeInterface
              ->assertMatrixIsSquare($mA);
 
         $fDet = new Determinant();
-        if ($fDet($mA) == 0) {
+        if ($fDet($mA)->get() == 0) {
             return false;
         }
 

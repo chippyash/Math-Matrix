@@ -11,11 +11,15 @@
 namespace chippyash\Math\Matrix\Computation\Div;
 
 use chippyash\Math\Matrix\Computation\AbstractComputation;
-use chippyash\Math\Matrix\RationalMatrix as MMatrix;
+use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
-use chippyash\Matrix\Traits\AssertMatrixIsComplete;
-use chippyash\Math\Matrix\Traits\AssertMatrixIsRational;
-use chippyash\Matrix\Traits\ConvertNumberToRational;
+use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
+use chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
+use chippyash\Math\Type\Calculator;
+use chippyash\Type\Number\IntType;
+use chippyash\Type\Number\FloatType;
+use chippyash\Type\Number\Rational\RationalType;
+use chippyash\Type\Number\Complex\ComplexType;
 
 /**
  * Divide every item in the operand matrix by a scalar value
@@ -23,49 +27,54 @@ use chippyash\Matrix\Traits\ConvertNumberToRational;
  */
 class Scalar extends AbstractComputation
 {
-    use AssertMatrixIsRational;
-    use AssertMatrixIsComplete;
-    use ConvertNumberToRational;
+    use CreateCorrectMatrixType;
+    use CreateCorrectScalarType;
 
     /**
      * Divide each member of the matrix by single scalar value and return result
-     * Boolean values are converted to 0 (false) and 1 (true).  Use the logical
-     * computations if required.
-     * String values (although scalar) cannot be divided so will cause an exception
      *
-     * @param Matrix $mA First matrix to act on - required
-     * @param scalar $extra value to add
+     * @param NumericMatrix $mA First matrix to act on - required
+     * @param numeric $extra value to add
      *
      * @return Matrix
      *
      * @throws chippyash/Matrix/Exceptions/ComputationException
      */
-    public function compute(MMatrix $mA, $extra = null)
+    public function compute(NumericMatrix $mA, $extra = null)
     {
         if ($mA->is('empty')) {
-            return new MMatrix([], false, false, null, $mA->isRational());
+            return $this->createCorrectMatrixType($mA);
         }
 
-        $this->assertMatrixIsRational($mA)
-             ->assertMatrixIsComplete($mA);
+        $scalar = $this->createCorrectScalarType($mA, $extra);
 
-        //convert to rational as we don't know exact format of incoming data
-        //will throw an exception if not possible
-        $scalar = $this->convertNumberToRational($extra)->reciprocal();
-        if ($scalar->getDenominator() === 0) {
-            throw new ComputationException('Parameter == zero');
+        if ($this->isZero($scalar)) {
+            throw new ComputationException('Divisor == zero');
         }
 
         $data = $mA->toArray();
         $lx = $mA->columns();
         $ly = $mA->rows();
+        $calc = new Calculator();
         for ($row = 0; $row < $ly; $row++) {
             for ($col = 0; $col < $lx; $col++) {
-                $data[$row][$col] = $data[$row][$col]->multiplyBy($scalar)->reduce();
+                $data[$row][$col] = $calc->div($data[$row][$col], $scalar);
             }
         }
 
-        return new MMatrix($data);
+        return $this->createCorrectMatrixType($mA, $data);
     }
 
+    protected function isZero($number)
+    {
+        if ($number instanceof IntType || $number instanceof FloatType) {
+            return ($number() == 0);
+        }
+        if ($number instanceof RationalType) {
+            return ($number->numerator()->get() == 0);
+        }
+        if ($number instanceof ComplexType) {
+            return $number->isZero();
+        }
+    }
 }

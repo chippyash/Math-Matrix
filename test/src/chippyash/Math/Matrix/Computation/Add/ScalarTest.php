@@ -1,7 +1,7 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Computation\Add;
 use chippyash\Math\Matrix\Computation\Add\Scalar;
-use chippyash\Math\Matrix\Matrix;
+use chippyash\Math\Matrix\NumericMatrix;
 
 /**
  * Description of ScalarTest
@@ -19,7 +19,7 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     public function testComputeAcceptsScalarValue()
     {
-        $m = new Matrix(array());
+        $m = new NumericMatrix(array());
         $this->object->compute($m, 0);
         $this->object->compute($m, 1.23);
         $this->object->compute($m, 'foo');
@@ -28,7 +28,7 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     public function testComputeReturnsEmptyIfMatrixIsEmpty()
     {
-        $m = new Matrix(array());
+        $m = new NumericMatrix(array());
         $test = $this->object->compute($m, 1);
         $this->assertTrue($test->is('empty'));
     }
@@ -38,8 +38,8 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
      */
     public function testComputeReturnsCorrectResult($operand, $test, $scalar)
     {
-        $m = new Matrix($operand);
-        $testM = new Matrix($test);
+        $m = new NumericMatrix($operand);
+        $testM = new NumericMatrix($test);
         $this->assertEquals($testM, $this->object->compute($m, $scalar));
     }
 

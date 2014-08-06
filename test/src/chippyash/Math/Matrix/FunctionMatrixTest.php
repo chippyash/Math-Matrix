@@ -1,13 +1,14 @@
 <?php
 namespace chippyash\Test\Math\Matrix;
 use chippyash\Math\Matrix\FunctionMatrix;
+use chippyash\Type\Number\IntType;
 
 /**
  * Unit test for FunctionMatrix Class
  */
 class FunctionMatrixTest extends \PHPUnit_Framework_TestCase
 {
-    const NSUT = 'chippyash\Matrix\FunctionMatrix';
+    const NSUT = 'chippyash\Math\Matrix\FunctionMatrix';
 
     /**
      * @var FunctionMatrix
@@ -30,65 +31,49 @@ class FunctionMatrixTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructProperlyGivesFunctionMatrix()
     {
-        $this->object = new FunctionMatrix($this->function, 1, 1);
+        $f = $this->function;
+        $this->object = new FunctionMatrix($f, new IntType(1),new IntType(1));
         $this->assertInstanceOf(self::NSUT, $this->object);
         $this->assertFalse($this->object->is('empty'));
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage $function is not callable
+     * @expectedException PHPUnit_Framework_Error
      */
     public function testConstructNotCallableParameterRaisesException()
     {
-        $this->object = new FunctionMatrix('foo', 1, 1);
+        $this->object = new FunctionMatrix('foo', new IntType(1),new IntType(1));
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage $rows must be int >= 1
-     */
-    public function testConstructRowsNotIntRaisesException()
-    {
-        $this->object = new FunctionMatrix($this->function, 1.123, 1);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage $rows must be int >= 1
+     * @expectedExceptionMessage $rows must be >= 1
      */
     public function testConstructRowslessThanOneRaisesException()
     {
-        $this->object = new FunctionMatrix($this->function, 0, 1);
+        $f = $this->function;
+        $this->object = new FunctionMatrix($f, new IntType(0),new IntType(1));
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage $cols must be int >= 1
-     */
-    public function testConstructColsNotIntRaisesException()
-    {
-        $this->object = new FunctionMatrix($this->function, 1, 1.123);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage $cols must be int >= 1
+     * @expectedExceptionMessage $cols must be >= 1
      */
     public function testConstructColslessThanOneRaisesException()
     {
-        $this->object = new FunctionMatrix($this->function, 1, 0);
+        $f = $this->function;
+        $this->object = new FunctionMatrix($f, new IntType(1),new IntType(0));
     }
 
     public function testConstructGivesExpectedOutput()
     {
-        $test = array(
-            array(0, -1, -2),
-            array(1, 0, -1),
-            array(2, 1, 0)
-            );
-        $this->object = new FunctionMatrix($this->function, 3, 3);
-        $this->assertEquals($test, $this->object->toArray());
+        $expected = [
+            [new IntType(0), new IntType(-1), new IntType(-2)],
+            [new IntType(1), new IntType(0), new IntType(-1)],
+            [new IntType(2), new IntType(1), new IntType(0)]
+            ];
+        $this->object = new FunctionMatrix($this->function, new IntType(3),new IntType(3));
+        $this->assertEquals($expected, $this->object->toArray());
         $this->assertTrue($this->object->is('Complete'));
         $this->assertTrue($this->object->is('Square'));
         $this->assertFalse($this->object->is('Empty'));

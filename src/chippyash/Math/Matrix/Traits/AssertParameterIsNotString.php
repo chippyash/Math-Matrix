@@ -9,7 +9,6 @@
  */
 namespace chippyash\Math\Matrix\Traits;
 
-use chippyash\Math\Matrix\RationalMatrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
 
 /**
