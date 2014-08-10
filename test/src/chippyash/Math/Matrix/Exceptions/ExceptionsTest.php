@@ -27,8 +27,11 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase
     public function testExceptionsDerivedFromComputationException()
     {
         foreach ($this->exceptions as $ex) {
-            $this->assertInstanceOf('chippyash\Matrix\Exceptions\MatrixException', $ex);
+            $this->assertInstanceOf('chippyash\Math\Matrix\Exceptions\MathMatrixException', $ex);
         }
+
+        $base = new Exceptions\MathMatrixException();
+        $this->assertInstanceOf('\chippyash\Matrix\Exceptions\MatrixException', $base);
     }
 
 

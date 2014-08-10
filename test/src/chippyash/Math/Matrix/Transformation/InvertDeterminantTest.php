@@ -4,6 +4,7 @@ use chippyash\Math\Matrix\Transformation\Invert;
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\RationalMatrix;
 use chippyash\Type\Number\FloatType;
+use chippyash\Type\Number\Rational\RationalTypeFactory;
 
 /**
  * Test inversion by determinant
@@ -58,16 +59,53 @@ class InvertDeterminantTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider computeMatrices
+     *
+     * As a result of the computation, all the items are converted to rational
+     * types to maintain stability.  This test is kind of a fudge, because the
+     * $result array contains FloatTypes.  We need to convert them to RationalTypes
+     * to make the comparison
      */
-    public function testComputeWithNumericMatrixReturnsCorrectResult($operand, $result)
+    public function testTransformWithNumericMatrixReturnsCorrectResult($operand, $result)
     {
         $mA = new NumericMatrix($operand);
         $mI = $this->object->transform($mA);
-        echo $mI->setFormatter(new \chippyash\Matrix\Formatter\Ascii())->display();
+        foreach ($result as &$row) {
+            foreach ($row as &$item) {
+                $item = RationalTypeFactory::fromFloat($item);
+
+            }
+        }
         $this->assertEquals($result, $mI->toArray());
     }
 
     /**
+     * The limitations of php (actually any common language) internal maths
+     * mean that it is hard to produce A*Inv(A)=Identity using floating point maths.
+     * This test proves that.
+     *
+     * testTransformWithRationalMatrixProducesIdentityMatrixWhenMultiplied
+     * proves it can be done using rational numbers.
+     *
+     * This single test is the reason why I developed the RationalType into the
+     * underlying strong-type library and why the ComplexType is based on
+     * RationalTypes.
+     *
+     * @link http://en.wikipedia.org/wiki/Matrix_inverse
+     * @dataProvider computeMatrices
+     */
+    public function testTransformWithNumericMatrixDoesNotProduceIdentityMatrixWhenMultiplied($operand)
+    {
+        $mA = new NumericMatrix($operand);
+        $mI = $this->object->transform($mA);
+        $result = $mA('Mul\Matrix', $mI);
+        $this->assertFalse($result->is('identity'));
+    }
+
+    /**
+     * This test is exactly the same as
+     * testTransformWithNumericMatrixDoesNotProduceIdentityMatrixWhenMultiplied
+     * except that  here, we use a rational matrix.
+     *
      * @dataProvider computeMatrices
      */
     public function testTransformWithRationalMatrixProducesIdentityMatrixWhenMultiplied($operand)

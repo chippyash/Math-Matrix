@@ -17,9 +17,7 @@ use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
 use chippyash\Math\Matrix\Traits\AssertMatrixIsNonSingular;
 use chippyash\Math\Matrix\Traits\AssertMatrixIsNumeric;
 use chippyash\Math\Matrix\Transformation\Strategy\Invert\Determinant;
-use chippyash\Math\Matrix\Transformation\Strategy\Invert\GaussJordan;
 use chippyash\Math\Matrix\NumericMatrix;
-//use chippyash\Matrix\Transformation\Strategy\Invert\LU;
 use chippyash\Math\Type\Calculator;
 
 /**
@@ -36,8 +34,8 @@ class Invert extends AbstractTransformation
     use AssertMatrixIsNonSingular;
     use CreateCorrectMatrixType;
 
-    const METHOD_GJ = 1;  //Gauss-Jordan method
-    const METHOD_DET = 2; //By determinant method
+    const METHOD_AUTO = 0; //Auto determine
+    const METHOD_DET = 1; //By determinant method
 
     /**
      * Which inversion method to use
@@ -50,13 +48,13 @@ class Invert extends AbstractTransformation
      *
      * @var array
      */
-    private $supportedMethods = [self::METHOD_DET, self::METHOD_GJ];
+    private $supportedMethods = [self::METHOD_DET, self::METHOD_AUTO];
 
     /**
      * Constructor
      * @param int $method
      */
-    public function __construct($method = self::METHOD_GJ)
+    public function __construct($method = self::METHOD_AUTO)
     {
         if (in_array($method, $this->supportedMethods)) {
             $this->method = $method;
@@ -107,15 +105,17 @@ class Invert extends AbstractTransformation
     /**
      * Do the inversion
      *
+     * At the current time, only the determinant method is supported.
+     * In the future, alternative methods will be supported that can be
+     * used dependent on the type of matrix, user preference etc.
+     *
      * @param \chippyash\Math\Matrix\NumericMatrix $mA
      * @return \chippyash\Math\Matrix\NumericMatrix
      */
     protected function invert(NumericMatrix $mA)
     {
         switch ($this->method) {
-            case self::METHOD_GJ:
-                $strategy = new GaussJordan();
-                break;
+            case self::METHOD_AUTO:
             case self::METHOD_DET:
                 $strategy = new Determinant();
                 break;

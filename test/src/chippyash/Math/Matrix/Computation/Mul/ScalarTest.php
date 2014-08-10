@@ -67,7 +67,7 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage The string representation of the number ('foo') is invalid for a rational
+     * @expectedExceptionMessage The string representation of the number ('foo') is invalid for a complex
      */
     public function testComputeRejectsStringValueInMatrix()
     {

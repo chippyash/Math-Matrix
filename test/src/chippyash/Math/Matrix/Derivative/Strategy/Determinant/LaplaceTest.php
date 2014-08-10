@@ -1,21 +1,23 @@
 <?php
 namespace chippyash\Test\Math\Matrix\Derivative\Strategy\Determinant;
+
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\RationalMatrix;
 use chippyash\Math\Matrix\ComplexMatrix;
-use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Internal;
+use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Laplace;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Type\Number\Complex\ComplexTypeFactory;
+use chippyash\Type\String\StringType;
 
 /**
  */
-class InternalTest extends \PHPUnit_Framework_TestCase
+class LaplaceTest extends \PHPUnit_Framework_TestCase
 {
     protected $object;
 
     protected function setUp()
     {
-        $this->object = new Internal();
+        $this->object = new Laplace();
     }
 
     public function testEmptyMatrixReturnsOne()
@@ -93,6 +95,36 @@ class InternalTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($result, $this->object->determinant(new ComplexMatrix($arr))->get());
     }
 
+    public function testTuneClearCacheFalseDoesNotClearCache()
+    {
+        $this->object->tune(new StringType('clearCache'), true);
+        $this->object->determinant(new NumericMatrix([[1,2],[3,4]]));
+        $c1 = $this->object->tune(new StringType('clearCache'), false);
+        $this->object->determinant(new NumericMatrix([[-12,2],[3,4]]));
+        $c2 = $this->object->tune(new StringType('clearCache'), false);
+        $this->assertGreaterThan($c1, $c2);
+    }
+
+    public function testTuneClearCacheTrueDoesClearCache()
+    {
+        $this->object->tune(new StringType('clearCache'), true);
+        $this->object->determinant(new NumericMatrix([[1,2],[3,4]]));
+        $c1 = $this->object->tune(new StringType('clearCache'), true);
+        $this->object->determinant(new NumericMatrix([[-12,2,13],[3,4,3],[7,8,-4]]));
+        $c2 = $this->object->tune(new StringType('clearCache'), true);
+        $this->assertGreaterThan($c1, $c2);
+        $c3 = $this->object->tune(new StringType('clearCache'), false);
+        $this->assertEquals(0, $c3);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage foo is unknown for tuning
+     */
+    public function testTuningWithInvalidNameThrowsException()
+    {
+        $this->object->tune(new StringType('foo'), 'bar');
+    }
 
     /**
      *

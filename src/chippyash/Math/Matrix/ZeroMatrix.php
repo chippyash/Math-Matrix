@@ -11,6 +11,7 @@ namespace chippyash\Math\Matrix;
 
 use chippyash\Math\Matrix\FunctionMatrix;
 use chippyash\Type\Number\IntType;
+
 /**
  * Construct a matrix with all entries set to 0/1
  */
@@ -30,7 +31,7 @@ class ZeroMatrix extends FunctionMatrix
             throw new \InvalidArgumentException('$rows must be >= 1');
         }
         if ($cols() < 1) {
-            throw new \InvalidArgumentException('$rows must be >= 1');
+            throw new \InvalidArgumentException('$cols must be >= 1');
         }
 
         $f = function($row, $col) {

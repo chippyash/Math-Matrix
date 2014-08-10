@@ -42,6 +42,9 @@ testSuiteLoaderFile="/path/to/StandardTestSuiteLoader.php"
             <directory>../vendor</directory>
             <!-- don't cover interfaces- nothing to test! -->
             <directory>../src/chippyash/Math/Matrix/Interfaces</directory>
+            <!-- don't cover base math matrix exception.  It is an empty class so
+            clover doesn't understand it.  It is tested - see ExceptionsTest -->
+            <file>../src/chippyash/Math/Matrix/Exceptions/MathMatrixException.php</file>
         </blacklist>
     </filter>
 

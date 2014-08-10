@@ -22,24 +22,6 @@ class IsNonSingularTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage Matrix is not square
-     */
-    public function testEmptyMatrixThrowsException()
-    {
-        $this->object->is(new NumericMatrix([]));
-    }
-
-    /**
-     * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage Matrix is not square
-     */
-    public function testSingleItemZeroMatrixThrowsException()
-    {
-        $this->object->is(new NumericMatrix([0]));
-    }
-
-    /**
      * @covers chippyash\Math\Matrix\Attribute\IsNonSingular::is()
      * @dataProvider singularMatrices
      */
@@ -65,11 +47,10 @@ class IsNonSingularTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @covers chippyash\Math\Matrix\Attribute\IsNonSingular::is()
-     */
     public function testNonSingularMatrixReturnsTrue()
     {
         $this->assertTrue($this->object->is(new NumericMatrix([[12,2,3],[4,5,6],[7,8,9]])));
+        $this->assertTrue($this->object->is(new NumericMatrix([])));
+        $this->assertTrue($this->object->is(new NumericMatrix([[1]])));
     }
 }

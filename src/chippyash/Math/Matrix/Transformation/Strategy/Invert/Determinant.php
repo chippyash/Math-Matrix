@@ -16,10 +16,8 @@ use chippyash\Matrix\Transformation\Transpose;
 use chippyash\Math\Matrix\Computation\Div\Scalar;
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Derivative\Determinant as Det;
-use chippyash\Math\Matrix\Exceptions\ComputationException;
 use chippyash\Math\Matrix\Interfaces\InversionStrategyInterface;
 use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
-use chippyash\Math\Type\Calculator;
 
 /**
  * Determinant strategy for matrix inversion
@@ -35,7 +33,6 @@ class Determinant implements InversionStrategyInterface
      *
      * @param \chippyash\Matrix\Matrix $mA
      * @return Matrix
-     * @throws ComputationException
      */
     public function invert(NumericMatrix $mA)
     {
@@ -44,28 +41,22 @@ class Determinant implements InversionStrategyInterface
         $work = array();
         $fDet = new Det();
         $fCof = new Cofactor();
-        try {
-            for ($row = 0; $row < $rows; $row++) {
-                for ($col = 0; $col < $cols; $col++) {
-                    $t = $fDet($fCof($mA,[$row + 1, $col + 1]));
-                    if (fmod($row + $col, 2) == 0) {
-                        $work[$row][$col] = $t;
-                    } else {
-                        $work[$row][$col] = $t->negate();
-                    }
-                    $r = $row + 1;
-                    $c = $col + 1;
+        for ($row = 0; $row < $rows; $row++) {
+            for ($col = 0; $col < $cols; $col++) {
+                $t = $fDet($fCof($mA,[$row + 1, $col + 1]));
+                if (fmod($row + $col, 2) == 0) {
+                    $work[$row][$col] = $t;
+                } else {
+                    $work[$row][$col] = $t->negate();
                 }
+                $r = $row + 1;
+                $c = $col + 1;
             }
-            $fTr = new Transpose();
-            $fDiv = new Scalar();
-
-            return $fTr($fDiv($this->createCorrectMatrixType($mA, $work), $fDet($mA)));
-        } catch (ComputationException $e) {
-            $msg = str_replace('Computation Error: ', '', $e->getMessage());
-            throw new ComputationException('Matrix is not invertible: ' . $msg,
-            100, $e);
         }
+        $fTr = new Transpose();
+        $fDiv = new Scalar();
+
+        return $fTr($fDiv($this->createCorrectMatrixType($mA, $work), $fDet($mA)));
     }
 
 }

@@ -13,21 +13,26 @@ namespace chippyash\Math\Matrix\Derivative;
 use chippyash\Math\Matrix\Derivative\AbstractDerivative;
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
-use chippyash\Matrix\Traits\AssertMatrixIsNotEmpty;
 use chippyash\Matrix\Traits\AssertMatrixIsSquare;
-use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Internal;
-use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Lu;
+use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Laplace;
+use chippyash\Math\Matrix\Interfaces\TuningInterface;
+use chippyash\Type\String\StringType;
 
 /**
  * Find the Determinant of a square matrix det(M)
  */
-class Determinant extends AbstractDerivative
+class Determinant extends AbstractDerivative implements TuningInterface
 {
-    use AssertMatrixIsNotEmpty;
     use AssertMatrixIsSquare;
 
-    const METHOD_INTERNAL = 0;
+    const METHOD_AUTO = 0;
+    const METHOD_LAPLACE = 1;
 
+    /**
+     * Maximum matrix size that will be handled by the Laplace expansion method
+     * @var int
+     */
+    static protected $laplaceLimit = 9;
 
     /**
      * Which derivative method to use
@@ -39,7 +44,7 @@ class Determinant extends AbstractDerivative
      * Constructor
      * @param int $method
      */
-    public function __construct($method = self::METHOD_INTERNAL)
+    public function __construct($method = self::METHOD_AUTO)
     {
         $this->method = $method;
     }
@@ -57,10 +62,32 @@ class Determinant extends AbstractDerivative
      */
     public function derive(NumericMatrix $mA, $extra = null)
     {
-        $this->assertMatrixIsNotEmpty($mA, 'No determinant for empty matrix')
-             ->assertMatrixIsSquare($mA, 'No determinant for non-square matrix');
+        $this->assertMatrixIsSquare($mA, 'No determinant for non-square matrix');
 
         return $this->getDeterminant($mA);
+    }
+
+    /**
+     * Tune an item on a class. Available items:
+     * - laplaceLimit: int Matrix size (n=m) limit for Laplace Expansion
+     *
+     * @param \chippyash\Type\String\StringType $name Item to tune
+     * @param mixed $value Value to set
+     *
+     * @return mixed - previous value of item
+     *
+     * @throws \InvalidArgumentException if name does not exist
+     */
+    public function tune(StringType $name, $value)
+    {
+        if ($name() != 'laplaceLimit') {
+            throw new \InvalidArgumentException("{$name} is unknown for tuning");
+        }
+
+        $ret = self::$laplaceLimit;
+        self::$laplaceLimit = $value;
+
+        return $ret;
     }
 
     /**
@@ -75,8 +102,15 @@ class Determinant extends AbstractDerivative
     protected function getDeterminant(NumericMatrix $mA)
     {
         switch ($this->method) {
-            case self::METHOD_INTERNAL:
-                $strategy = new Internal();
+            case self::METHOD_AUTO;
+                if ($mA->rows() <= self::$laplaceLimit) {
+                    $strategy = new Laplace();
+                } else {
+                    throw new UndefinedComputationException('No available strategy found to determine the determinant');
+                }
+                break;
+            case self::METHOD_LAPLACE:
+                $strategy = new Laplace();
                 break;
             default:
                 throw new UndefinedComputationException('Unknown determinant computation method');

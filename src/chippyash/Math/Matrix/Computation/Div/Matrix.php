@@ -8,20 +8,23 @@
  * @link http://en.wikipedia.org/wiki/Matrix_(mathematics)
  */
 
-namespace chippyash\Math\Matrix\Computation\Add;
+namespace chippyash\Math\Matrix\Computation\Div;
 
 use chippyash\Math\Matrix\Computation\AbstractComputation;
+use chippyash\Math\Matrix\Computation\Mul\Matrix as MM;
+use chippyash\Math\Matrix\Transformation\Invert;
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
 use chippyash\Matrix\Traits\AssertParameterIsMatrix;
 use chippyash\Matrix\Traits\AssertMatrixColumnsAreEqual;
 use chippyash\Matrix\Traits\AssertMatrixRowsAreEqual;
-use chippyash\Math\Matrix\ZeroMatrix as ZMatrix;
-use chippyash\Type\Number\IntType;
-use chippyash\Math\Type\Calculator;
 
 /**
- * Add two matrices together
+ * Divide one matrix by another
+ * This is the same as multiplying by the inverse of the divisor
+ * i.e. Where a, b are numeric matrices and i = inverse(b)
+ * then a/b = a * i
+ *
  * @link http://www.php.net//manual/en/function.is-scalar.php
  */
 class Matrix extends AbstractComputation
@@ -32,8 +35,7 @@ class Matrix extends AbstractComputation
     use CreateCorrectMatrixType;
 
     /**
-     * Add two matrices together
-     * dot product
+     * Divide a mtix by another
      *
      * @param NumericMatrix $mA First matrix operand - required
      * @param NumericMatrix $extra Second Matrix operand - required
@@ -44,31 +46,21 @@ class Matrix extends AbstractComputation
     {
         $this->assertParameterIsMatrix($extra, 'Parameter is not a matrix');
 
-        if ($mA->is('empty') || $extra->is('empty')) {
-            return $this->createCorrectMatrixType($mA, []);
+        if ($mA->is('empty')) {
+            $mA = $this->createCorrectMatrixType($mA, [1]);
+        }
+        if ($extra->is('empty')) {
+            $extra = $this->createCorrectMatrixType($extra, [1]);
         }
 
         $this->assertMatrixColumnsAreEqual($mA, $extra)
              ->assertMatrixRowsAreEqual($mA, $extra);
 
-        $mZ = new ZMatrix(new IntType($mA->rows()), new IntType($mA->columns()));
-        $data = $mZ->toArray();
+        $fI = new Invert();
+        $mI = $fI->transform($extra);
 
-        $dA = $mA->toArray();
-        $dB = $extra->toArray();
-
-        $cols = $mA->columns();
-        $rows = $mA->rows();
-        $calc = new Calculator();
-
-        for ($row=0; $row<$rows; $row++) {
-            for ($col=0; $col<$cols; $col++) {
-                //this is where having operator overide makes sense :-(
-                $data[$row][$col] = $calc->add($dA[$row][$col], $dB[$row][$col]);
-            }
-        }
-
-        return $this->createCorrectMatrixType($mA, $data);
+        $mul = new MM();
+        return $mul($mA, $mI);
     }
 
 }

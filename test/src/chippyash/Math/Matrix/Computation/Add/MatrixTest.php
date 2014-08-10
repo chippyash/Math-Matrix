@@ -33,7 +33,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
     public function testComputeOnlyAcceptsMatrixValues()
     {
         $m = new NumericMatrix([]);
-        $this->assertInstanceOf('chippyash\Matrix\Matrix', $this->object->compute($m, $m));
+        $this->assertInstanceOf('chippyash\Math\Matrix\NumericMatrix', $this->object->compute($m, $m));
     }
 
     public function testComputeReturnsEmptyIfMatrixIsEmpty()

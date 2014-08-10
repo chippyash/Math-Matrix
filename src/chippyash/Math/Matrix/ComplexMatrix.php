@@ -10,7 +10,6 @@
 namespace chippyash\Math\Matrix;
 
 use chippyash\Math\Matrix\NumericMatrix;
-use chippyash\Math\Matrix\Exceptions\MathMatrixException;
 use chippyash\Type\Number\Complex\ComplexType;
 use chippyash\Type\Number\Rational\RationalType;
 use chippyash\Type\Number\IntType;

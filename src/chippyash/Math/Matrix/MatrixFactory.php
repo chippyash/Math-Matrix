@@ -17,6 +17,7 @@ use chippyash\Type\Number\Complex\ComplexTypeFactory;
 use chippyash\Type\Number\Rational\RationalType;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Math\Matrix\Exceptions\MathMatrixException;
+use chippyash\Type\Number\IntType;
 
 /**
  * Static factory to create the various standard numerical matrices
@@ -36,14 +37,11 @@ abstract class MatrixFactory
         switch (strtolower($type)) {
             case 'complex':
                 return self::createComplex($data);
-                break;
             case 'rational':
                 return self::createRational($data);
-                break;
             case 'numeric':
             default:
                 return self::createNumeric($data);
-                break;
         }
     }
 
@@ -65,12 +63,16 @@ abstract class MatrixFactory
         foreach ($data as &$row) {
             foreach ($row as &$item) {
                 if (!$item instanceof ComplexType) {
-                    if (is_array($item)) {
+                    if (is_array($item) && count($item) == 2) {
                         $item = ComplexTypeFactory::create($item[0], $item[1]);
                     } elseif (is_string($item)) {
-                        $item = ComplexTypeFactory::create($item);
+                        try {
+                            $item = ComplexTypeFactory::fromString($item);
+                        } catch (\InvalidArgumentException $e) {
+                            throw new MathMatrixException('Invalid item type for Complex Matrix');
+                        }
                     } else {
-                        throw new MathMatrixException('Invalid item type for Rational Matrix');
+                        throw new MathMatrixException('Invalid item type for Complex Matrix');
                     }
                 }
             }
@@ -100,7 +102,11 @@ abstract class MatrixFactory
                     if (is_array($item) && count($item) == 2) {
                         $item = RationalTypeFactory::create($item[0], $item[1]);
                     } elseif (is_string($item)) {
-                        $item = RationalTypeFactory::fromString($item);
+                        try {
+                            $item = RationalTypeFactory::fromString($item);
+                        } catch (\InvalidArgumentException $e) {
+                            throw new MathMatrixException('Invalid item type for Rational Matrix');
+                        }
                     } elseif(is_float($item)) {
                         $item = RationalTypeFactory::fromFloat($item);
                     } else {
@@ -124,4 +130,41 @@ abstract class MatrixFactory
         return new NumericMatrix($data);
     }
 
+    /**
+     * Construct a complete matrix whose entries are a result of a function
+     *
+     * The function must accept two parameters
+     *  e.g. $function($row, $col) {return $row - $col;}
+     *
+     * $row and $col are 1 based
+     *
+     * @param callable $fn
+     * @param IntType $rows Number of required rows
+     * @param IntType $cols Number or required columns
+     * @param string $type ['numeric'|'rational'|'complex']
+     *
+     * @return \chippyash\Math\Matrix\ComplexMatrix|\chippyash\Math\Matrix\NumericMatrix|\chippyash\Math\Matrix\RationalMatrix
+     *
+     * @throws \InvalidArgumentException
+     */
+    public static function createFromFunction(callable $fn, IntType $rows, IntType $cols, $type = 'numeric')
+    {
+        if ($rows() < 1) {
+            throw new \InvalidArgumentException('$rows must be >= 1');
+        }
+        if ($cols() < 1) {
+            throw new \InvalidArgumentException('$cols must be >= 1');
+        }
+
+        $source = array();
+        $rc = $rows();
+        $cc = $cols();
+        for ($r = 0; $r < $rc; $r++) {
+            for ($c = 0; $c < $cc; $c++) {
+                $source[$r][$c] = $fn($r + 1, $c + 1);
+            }
+        }
+
+        return self::create($type, $source);
+    }
 }

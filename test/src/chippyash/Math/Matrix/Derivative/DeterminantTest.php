@@ -2,6 +2,7 @@
 namespace chippyash\Test\Math\Matrix\Derivative;
 use chippyash\Math\Matrix\Derivative\Determinant;
 use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Type\String\StringType;
 
 /**
  */
@@ -19,16 +20,6 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
                 'chippyash\Math\Matrix\Interfaces\DerivativeInterface',
                 $this->object);
-    }
-
-    /**
-     * @expectedException chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage No determinant for empty matrix
-     */
-    public function testEmptyMatrixThrowsException()
-    {
-        $mA = new NumericMatrix(array());
-        $this->object->derive($mA);
     }
 
     /**
@@ -56,9 +47,9 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
 //        $this->assertEquals(-3, $obj->derive($mA));
 //    }
 
-    public function testReturnsDeterminantForTwoByTwoSquareMatrixUsingInternalMethod()
+    public function testReturnsDeterminantForTwoByTwoSquareMatrixUsingLaplaceMethod()
     {
-        $obj = new Determinant(Determinant::METHOD_INTERNAL);
+        $obj = new Determinant(Determinant::METHOD_LAPLACE);
         $mA = new NumericMatrix(
                array(
                    array(1,2),
@@ -100,9 +91,9 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
      * @link http://en.wikipedia.org/wiki/Matrix_determinant#3.C2.A0.C3.97.C2.A03_matrices
      * @link http://www.intmath.com/matrices-determinants/2-large-determinants.php
      */
-    public function testReturnsDeterminantForThreeByThreeSquareMatrixUsingInternalMethod($data, $determinant)
+    public function testReturnsDeterminantForThreeByThreeSquareMatrixUsingLaplaceMethod($data, $determinant)
     {
-        $obj = new Determinant(Determinant::METHOD_INTERNAL);
+        $obj = new Determinant(Determinant::METHOD_LAPLACE);
         $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data))->get());
     }
 
@@ -181,9 +172,9 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider bigMatrices
      */
-    public function testReturnsDeterminantForNByNSquareMatrixUsingInternalMethod($data, $determinant)
+    public function testReturnsDeterminantForNByNSquareMatrixUsingLaplaceMethod($data, $determinant)
     {
-        $obj = new Determinant(Determinant::METHOD_INTERNAL);
+        $obj = new Determinant(Determinant::METHOD_LAPLACE);
        $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data))->get());
     }
 
@@ -199,5 +190,31 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
                 ), -279
             )
         );
+    }
+
+    /**
+     * @expectedException chippyash\Math\Matrix\Exceptions\UndefinedComputationException
+     * @expectedExceptionMessage Computation Error: Undefined computation: No available strategy found to determine the determinant
+     *
+     * @runInSeparateProcess
+     */
+    public function testCanSetUpperLimitForLaplaceMethodWhenAutoDeterminingStrategy()
+    {
+        $obj = new Determinant(); //uses auto method by default
+        $obj->tune(new StringType('laplaceLimit'), 2);
+        $data = [[1,2,3],
+                [4,5,6],
+                [7,8,9]];
+        $obj->derive(new NumericMatrix($data));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage foo is unknown for tuning
+     */
+    public function testTuningWithInvalidNameThrowsException()
+    {
+        $obj = new Determinant();
+        $obj->tune(new StringType('foo'), 'bar');
     }
 }
