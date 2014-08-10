@@ -257,8 +257,8 @@ NB. Make sure you rebase to HEAD before your pull request
 
 ## Where?
 
-The library is hosted at [Github](https://github.com/chippyash/Math-Matrix). It will
-appear at [Packagist.org](https://packagist.org/) in due course as a
+The library is hosted at [Github](https://github.com/chippyash/Math-Matrix).
+It is available at [Packagist.org](https://packagist.org/packages/chippyash/math-matrix) as a
 [Composable](https://getcomposer.org/) module
 
 ### Installation
