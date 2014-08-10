@@ -85,4 +85,24 @@ class IdentityMatrixTest extends \PHPUnit_Framework_TestCase
                 $cA->toArray());
     }
 
+    public function testNumericIdentityFactoryMethodReturnsMatrixWithIntTypes()
+    {
+        $mI = IdentityMatrix::numericIdentity(new IntType(2));
+        $this->assertInstanceOf('chippyash\Math\Matrix\NumericMatrix', $mI);
+        $one = new IntType(1);
+        $zero = new IntType(0);
+        $this->assertEquals(
+                [[$one, $zero],
+                 [$zero, $one]],
+                $mI->toArray());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Identity type invalid
+     */
+    public function testConstructWithUnknownMatrixTypeThrowsException()
+    {
+        $mI = new IdentityMatrix(new IntType(2), new IntType(4));
+    }
 }

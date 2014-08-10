@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "chippyash/matrix" : ">=1.2.3",
+        "chippyash/matrix" : ">=1.2.4",
         "chippyash/math-type-calculator" : ">=1.1.0"
     },
     "require-dev": {

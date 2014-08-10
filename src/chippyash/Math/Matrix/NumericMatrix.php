@@ -180,7 +180,7 @@ class NumericMatrix extends Matrix
             return $this->compute(new $cName(), $extra);
         }
 
-        //NUmeric transformations
+        //Numeric transformations
         $tName = self::NS_NTRANSFORMATION . $operationName;
         if (class_exists($tName, true)) {
             return $this->transform(new $tName(), $extra);
@@ -211,16 +211,12 @@ class NumericMatrix extends Matrix
      * @throws \chippyash\Math\Matrix\Exceptions\MathMatrixException
      */
     protected function store(array $data) {
-        try {
-            foreach ($data as &$row) {
-                foreach ($row as &$item) {
-                    $item = $this->convertNumberToNumeric($item);
-                }
+        foreach ($data as &$row) {
+            foreach ($row as &$item) {
+                $item = $this->convertNumberToNumeric($item);
             }
-            $this->data = $data;
-        } catch (ArithmeticException $e) {
-            throw new MathMatrixException($e->getMessage(), $e->getCode(), $e);
         }
+        $this->data = $data;
     }
 
 }

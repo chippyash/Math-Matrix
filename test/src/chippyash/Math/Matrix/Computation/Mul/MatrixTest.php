@@ -134,7 +134,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $test->rows());
         $this->assertEquals(1, $test->columns());
-        $this->assertFalse($test->is('square'));
+        $this->assertTrue($test->is('square'));
         $this->assertEquals(
                 $this->toStrongType([[14]]),
                 $test->toArray());

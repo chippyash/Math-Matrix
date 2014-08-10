@@ -73,8 +73,7 @@ class Scalar extends AbstractComputation
         if ($number instanceof RationalType) {
             return ($number->numerator()->get() == 0);
         }
-        if ($number instanceof ComplexType) {
-            return $number->isZero();
-        }
+        //must be complex
+        return $number->isZero();
     }
 }

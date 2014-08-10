@@ -2,6 +2,8 @@
 namespace chippyash\Test\Math\Matrix\Computation\Div;
 use chippyash\Math\Matrix\Computation\Div\Scalar;
 use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Math\Matrix\RationalMatrix;
+use chippyash\Math\Matrix\ComplexMatrix;
 
 /**
  * Division by scalar test
@@ -24,9 +26,29 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
      * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
      * @expectedExceptionMessage Computation Error: Divisor == zero
      */
-    public function testComputeThrowsExceptionIfScalarIsZero()
+    public function testComputeThrowsExceptionIfScalarIsZeroForNumericMatrix()
     {
         $mA = new NumericMatrix(array(2));
+        $this->object->compute($mA, 0);
+    }
+
+    /**
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
+     * @expectedExceptionMessage Computation Error: Divisor == zero
+     */
+    public function testComputeThrowsExceptionIfScalarIsZeroForRationalMatrix()
+    {
+        $mA = new RationalMatrix(array(2));
+        $this->object->compute($mA, 0);
+    }
+
+    /**
+     * @expectedException chippyash\Math\Matrix\Exceptions\ComputationException
+     * @expectedExceptionMessage Computation Error: Divisor == zero
+     */
+    public function testComputeThrowsExceptionIfScalarIsZeroForComplexMatrix()
+    {
+        $mA = new ComplexMatrix(array(2));
         $this->object->compute($mA, 0);
     }
 

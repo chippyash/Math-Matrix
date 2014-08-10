@@ -32,12 +32,12 @@ class NumericMatrixTest extends \PHPUnit_Framework_TestCase
     {
         $this->object = new NumericMatrix(new Matrix([]));
     }
-    
+
     public function testConstructWithNumericMatrixIsAllowed()
     {
         $this->assertInstanceOf(self::NSUT, new NumericMatrix(new NumericMatrix([])));
     }
-    
+
     public function testConstructNonEmptyArrayGivesNonEmptyMatrix()
     {
         $this->object = new NumericMatrix(array(2));
@@ -152,7 +152,18 @@ class NumericMatrixTest extends \PHPUnit_Framework_TestCase
         $mA('foobar');
     }
 
-    public function testInvokeProxiesToComputation()
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Invalid number of arguments to invoke method
+     */
+    public function testInvokeWithMoreThanTwoParameterThrowsException()
+    {
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $mA = new NumericMatrix($testArray);
+        $mA('foo','bar','baz');
+    }
+
+    public function testInvokeProxiesToCompute()
     {
         $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
         $three = new IntType(3);
@@ -161,6 +172,84 @@ class NumericMatrixTest extends \PHPUnit_Framework_TestCase
         $expectedArray = [[$three, $four, $five], [$five, $four, $three], [$four, $three, $five]];
         $object = new NumericMatrix($testArray);
         $this->assertEquals($expectedArray, $object("Add\\Scalar", 2)->toArray());
+    }
+
+    public function testInvokeProxiesToDerive()
+    {
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $object = new NumericMatrix($testArray);
+        $this->assertEquals(6, $object("Trace")->get());
+    }
+
+    public function testInvokeProxiesToTransform()
+    {
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $object = new NumericMatrix($testArray);
+        $this->assertInstanceOf(self::NSUT, $object("Invert"));
+    }
+
+    public function testInvokeProxiesToParentClassTransform()
+    {
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $object = new NumericMatrix($testArray);
+        $this->assertInstanceOf(self::NSUT, $object("Reflect", 0));
+    }
+
+    public function testConstructWithIncompletDataAndFloatDefaultReturnsMatrix()
+    {
+        $testArray = [[2, 1], []];
+        $mA = new NumericMatrix($testArray, 12.3);
+        $this->assertInstanceOf(self::NSUT, $mA);
+    }
+
+    /**
+     * @expectedException chippyash\Math\Matrix\Exceptions\MathMatrixException
+     * @expectedExceptionMessage NumericMatrix expects numeric default value
+     */
+    public function testConstructWithIncompletDataAndNonNumericDefaultThrowsException()
+    {
+        $testArray = [[2, 1], []];
+        $mA = new NumericMatrix($testArray, new \stdClass());
+    }
+
+    public function testConstructWithIncompletDataAndNumericTypeDefaultReturnsMatrix()
+    {
+        $testArray = [[2, 1], []];
+        $mA = new NumericMatrix($testArray, new FloatType(12.3));
+        $this->assertInstanceOf(self::NSUT, $mA);
+    }
+
+    public function testTestMethodAcceptsKnownAttributeClassName()
+    {
+        $attrName = 'Numeric';
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $mA = new NumericMatrix($testArray);
+        $this->assertTrue($mA->test($attrName));
+
+    }
+
+    public function testTestMethodWIllPassUnknownAttributeClassToParentForResolution()
+    {
+        $attr = new \chippyash\Matrix\Attribute\IsSquare();
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $mA = new NumericMatrix($testArray);
+        $this->assertTrue($mA->test($attr));
+    }
+
+    public function testDeriveWillReturnValue()
+    {
+        $derivative = new \chippyash\Math\Matrix\Derivative\Determinant();
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $mA = new NumericMatrix($testArray);
+        $this->assertEquals(-12, $mA->derive($derivative)->get());
+    }
+
+    public function testTransformWillReturnValue()
+    {
+        $transformation = new \chippyash\Math\Matrix\Transformation\Invert();
+        $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
+        $mA = new NumericMatrix($testArray);
+        $this->assertInstanceOf(self::NSUT, $mA->transform($transformation));
     }
 
 }

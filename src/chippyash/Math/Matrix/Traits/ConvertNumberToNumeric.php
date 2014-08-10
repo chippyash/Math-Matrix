@@ -34,12 +34,15 @@ Trait ConvertNumberToNumeric
                 return TypeFactory::createRational($value);
             case 'string':
                 try {
+                    if (is_numeric($value)) {
+                        $value = floatval($value);
+                    }
                     return TypeFactory::createRational($value);
                 } catch (\Exception $e) {
-                    if (is_numeric($value)) {
-                        return TypeFactory::createRational(floatval($value));
-                    } else {
-                        throw new MatrixException("The string representation of the number ('{$value}') is invalid for a rational");
+                    try {
+                        return TypeFactory::createComplex($value);
+                    } catch (\Exception $ex) {
+                        throw new MatrixException("The string representation of the number ('{$value}') is invalid for a complex");
                     }
                 }
             case 'object':
@@ -49,7 +52,7 @@ Trait ConvertNumberToNumeric
                     throw new MatrixException('NumberToNumeric expects int, float, string or Rational value');
                 }
             case 'NULL':
-                return TypeFactory::createInt($value);
+                return TypeFactory::createInt(0);
             case 'boolean':
                 return TypeFactory::createInt(($value ? 1 : 0));
             default:

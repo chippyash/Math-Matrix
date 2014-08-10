@@ -46,20 +46,14 @@ class RationalMatrix extends NumericMatrix
      * @param array $data
      *
      * @return void
-     *
-     * @throws \chippyash\Math\Matrix\Exceptions\MathMatrixException
      */
     protected function store(array $data) {
-        try {
-            foreach ($data as &$row) {
-                foreach ($row as &$item) {
-                    $item = $this->convertNumberToRational($item);
-                }
+        foreach ($data as &$row) {
+            foreach ($row as &$item) {
+                $item = $this->convertNumberToRational($item);
             }
-            $this->data = $data;
-        } catch (ArithmeticException $e) {
-            throw new MathMatrixException($e->getMessage(), $e->getCode(), $e);
         }
+        $this->data = $data;
     }
 
 }

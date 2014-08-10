@@ -34,7 +34,6 @@ class Scalar extends AbstractComputation
      * @return NumericMatrix|RationalMatrix|ComplexMatrix
      *
      * @throws chippyash/Matrix/Exceptions/ComputationException
-     * @todo express product in terms of a FunctionMatrix
      */
     public function compute(NumericMatrix $mA, $extra = null)
     {

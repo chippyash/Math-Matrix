@@ -58,16 +58,13 @@ class IsIdentity implements AttributeInterface
         if ($item instanceof ComplexType) {
             if ($item() == '1+0i') {
                 return 1;
-            } elseif ($item() == '0+0i') {
+            } elseif ($item->isZero()) {
                 return 0;
             } else {
                 return -1;
             }
         }
-        if ($item instanceof NumericTypeInterface) {
-            return $item();
-        }
-
-        return $item;
+        //any other numericType will caste down as required
+        return $item();
     }
 }
