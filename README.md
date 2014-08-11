@@ -4,8 +4,7 @@ Since the [JAMA library](http://www.phpmath.com/build02/JAMA/downloads/), there
 has not been been a library to my knowledge that allows PHP devs to simply
 incorporate arithmetic Matrix functionality within an application.
 
-If you are using reasonably small matrices (i.e  up to a couple of thousand rather
-than many of thousands of entries) then the complexity of having to compile in external
+If you are using reasonably small matrices then the complexity of having to compile in external
 [Fortran or C based](http://en.wikipedia.org/wiki/LAPACK) libraries
 is something you can do without. And even when you do, it transpires the PHP
 bindings are limited.
@@ -97,7 +96,7 @@ according to the following rules:
 *  NumericMatrix: items are created in the lowest NumericTypeInterface possible.  The
 low to high order is IntType, FloatType, RationalType, ComplexType
 *  RationalMatrix: items are created as RationalType
-*  ComplexMatrixL items are created as ComplexType.  If you supply non-complex data
+*  ComplexMatrix items are created as ComplexType.  If you supply non-complex data
 items, then 'real' complex items are created, i.e. the imaginary part == zero
 
 Be aware that operations on a NumericMatrix will probably produce the result
