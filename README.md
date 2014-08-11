@@ -33,14 +33,17 @@ and manipulate matrices containing numeric (float, int, rational and complex) va
 The current library covers basic matrix maths.  It is a work in progress and has some
 limitations.  Addition, subtraction and multiplication  are straight forward and
 should work for any size matrix.  Division relies on inversion which currently relies on
-the ability to determine the determinant of a matrix.  The currently supported
-determinant strategy is the Laplace Expansion.  This places a realistic limit on the
+the ability to determine the determinant of a matrix.  The library supports two strategies
+for finding a determinant - Laplace expansion and LU.  This places a realistic limit on the
 size of matrices that can be operated on.  See the examples/example-laplace-bounds.php
-script to understand why. The limit is a 9x9 matrix when using the Determinant derivative
-in auto mode.
+and examples/example-lu-determinant-bounds.php scripts to understand why.
+The limit is a 20x20 matrix when using the Determinant derivative
+in auto mode.  The limit is arbitrary and based on what can computed on my
+laptop in about a second.  Other brands of machinery may vary.
 
-This will change in the future as I incorporate more performant strategies for
-computing inverses and determinants
+This may change in the future as I refactor for performance or incorporate more
+performant strategies for computing inverses and determinants.  If you are good
+at maths computation, this is an area where you can really help out
 
 If you want more, either suggest it, or better still, fork it and provide a pull request.
 
@@ -217,11 +220,15 @@ Two derivatives are currently supplied.
     $det = $fDet($mA);
 </pre>
 
-As noted above, the Determinant derivative currently only supports the Laplace Expansion
-strategy.  This is ok for small matrices, and is supplied more by way of proof
-of concept.  More pragmatic strategies will be introduced in due course.
+As noted above, the Determinant derivative currently only supports up to a 20x20 matrix
+in auto mode. It will bork if you supply a matrix bigger than that. This will
+be ok for most purposes.  If you are happy to wait a while to compute determinants
+for bigger matrices, create the determinant by construction (second way above)
+and specify Determinant::METHOD_LU as a construction parameter.
+Determinant::METHOD_LAPLACE is left for historical reasons, as there is very
+little likelihood you will want to use it!
 
-*  Trace. Returns the trace of a square matrix [Wikipedia](http://en.wikipedia.org/wiki/Matrix_trace)
+*  Trace. Returns the trace of a square matrix
 
 <pre>
     $tr = $mA('Trace');
@@ -231,8 +238,8 @@ of concept.  More pragmatic strategies will be introduced in due course.
 #### Additional transformations are supported by numeric matrices
 
 *  Invert - Returns the inverted matrix or throws an exception if not possible.
-ThThe current inversion method relies on determinants and as noted, this is only
-currently feasible for matrices up to 9x9
+The current inversion method relies on determinants and as noted, this is only
+currently feasible for matrices up to 20x20
 
 <pre>
     try {
@@ -245,6 +252,14 @@ currently feasible for matrices up to 9x9
     } catch (chippyash\Math\Matrix\Exceptions\ComputationException $e) {
         //cannot invert
     }
+</pre>
+
+If you want to break the 20x20 limit, you can do the following:
+
+<pre>
+    $det = new chippyash\Math\Matrix\Derivative\Determinant();
+    $det->tune('luLimit', 40); //or whatever you are prepared to put up with
+    $mI = $mA('Invert');
 </pre>
 
 ### Changing the library

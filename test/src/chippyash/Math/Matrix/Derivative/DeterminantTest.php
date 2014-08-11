@@ -32,20 +32,16 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
         $this->object->derive($mA);
     }
 
-    /**
-     *
-     * @todo put back in once figured out what is wrong with LU determinant
-     */
-//    public function testReturnsDeterminantForTwoByTwoSquareMatrixUsingLUMethod()
-//    {
-//        $obj = new Determinant(Determinant::METHOD_LU);
-//        $mA = new NumericMatrix(
-//               array(
-//                   array(1,2),
-//                   array(4,5)
-//               ));
-//        $this->assertEquals(-3, $obj->derive($mA));
-//    }
+    public function testReturnsDeterminantForTwoByTwoSquareMatrixUsingLUMethod()
+    {
+        $obj = new Determinant(Determinant::METHOD_LU);
+        $mA = new NumericMatrix(
+               array(
+                   array(1,2),
+                   array(4,5)
+               ));
+        $this->assertEquals(-3, $obj->derive($mA)->get());
+    }
 
     public function testReturnsDeterminantForTwoByTwoSquareMatrixUsingLaplaceMethod()
     {
@@ -77,14 +73,12 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
      * @dataProvider threeByThree
      * @link http://en.wikipedia.org/wiki/Matrix_determinant#3.C2.A0.C3.97.C2.A03_matrices
      * @link http://www.intmath.com/matrices-determinants/2-large-determinants.php
-     *
-     * @todo put back in once figured out what is wrong with LU determinant
      */
-//    public function testReturnsDeterminantForThreeByThreeSquareMatrixUsingLUMethod($data, $determinant)
-//    {
-//        $obj = new Determinant(Determinant::METHOD_LU);
-//        $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data)));
-//    }
+    public function testReturnsDeterminantForThreeByThreeSquareMatrixUsingLUMethod($data, $determinant)
+    {
+        $obj = new Determinant(Determinant::METHOD_LU);
+        $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data))->get());
+    }
 
     /**
      * @dataProvider threeByThree
@@ -161,20 +155,21 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-//    /**
-//     * @dataProvider bigMatrices
-//     */
-//    public function testReturnsDeterminantForNByNSquareMatrixUsingLUMethod($data, $determinant)
-//    {
-//       $this->assertEquals($determinant, $this->object->derive(new NumericMatrix($data))->get());
-//    }
+    /**
+     * @dataProvider bigMatrices
+     */
+    public function testReturnsDeterminantForNByNSquareMatrixUsingLUMethod($data, $determinant)
+    {
+       $obj = new Determinant(Determinant::METHOD_LU);
+       $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data))->get());
+    }
 
     /**
      * @dataProvider bigMatrices
      */
     public function testReturnsDeterminantForNByNSquareMatrixUsingLaplaceMethod($data, $determinant)
     {
-        $obj = new Determinant(Determinant::METHOD_LAPLACE);
+       $obj = new Determinant(Determinant::METHOD_LAPLACE);
        $this->assertEquals($determinant, $obj->derive(new NumericMatrix($data))->get());
     }
 
@@ -198,10 +193,10 @@ class DeterminantTest extends \PHPUnit_Framework_TestCase
      *
      * @runInSeparateProcess
      */
-    public function testCanSetUpperLimitForLaplaceMethodWhenAutoDeterminingStrategy()
+    public function testCanSetUpperLimitForLuMethodWhenAutoDeterminingStrategy()
     {
         $obj = new Determinant(); //uses auto method by default
-        $obj->tune(new StringType('laplaceLimit'), 2);
+        $obj->tune(new StringType('luLimit'), 2);
         $data = [[1,2,3],
                 [4,5,6],
                 [7,8,9]];

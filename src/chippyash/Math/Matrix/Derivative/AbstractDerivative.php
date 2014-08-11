@@ -28,7 +28,9 @@ abstract class AbstractDerivative implements DerivativeInterface
      * @abstract
      *
      * @param chippyash\Math\Matrix\NumericMatrix $ma
-     * @raparm mixed $extra
+     * @param mixed $extra
+     *
+     * @return numeric
      */
     abstract public function derive(NumericMatrix $mA, $extra = null);
 
@@ -36,7 +38,7 @@ abstract class AbstractDerivative implements DerivativeInterface
      * Proxy to derive()
      * Allows object to be called as function
      *
-     * @param RationalMatrix $mA
+     * @param NumericMatrix $mA
      * @param mixed $extra Additional input required for derivative
      *
      * @return numeric
