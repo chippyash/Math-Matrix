@@ -204,7 +204,7 @@ The following computations are provided (using the magic invoke interface method
 *  You can use the magic __invoke functionality
 *  Derivatives implement the chippyash\Math\Matrix\Interfaces\DerivativeInterface
 
-A single derivative is currently supplied.
+Two derivatives are currently supplied.
 
 *  Determinant
 
@@ -220,6 +220,13 @@ A single derivative is currently supplied.
 As noted above, the Determinant derivative currently only supports the Laplace Expansion
 strategy.  This is ok for small matrices, and is supplied more by way of proof
 of concept.  More pragmatic strategies will be introduced in due course.
+
+*  Trace. Returns the trace of a square matrix [Wikipedia](http://en.wikipedia.org/wiki/Matrix_trace)
+
+<pre>
+    $tr = $mA('Trace');
+    //or other variations as with Determinant
+</pre>
 
 #### Additional transformations are supported by numeric matrices
 
