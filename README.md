@@ -231,7 +231,7 @@ of concept.  More pragmatic strategies will be introduced in due course.
 #### Additional transformations are supported by numeric matrices
 
 *  Invert - Returns the inverted matrix or throws an exception if not possible.
-The current inversion method relies on determinants and as noted, this is only
+ThThe current inversion method relies on determinants and as noted, this is only
 currently feasible for matrices up to 9x9
 
 <pre>
