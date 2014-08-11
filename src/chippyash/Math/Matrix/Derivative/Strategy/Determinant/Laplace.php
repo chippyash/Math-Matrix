@@ -17,7 +17,6 @@ use chippyash\Matrix\Transformation\Cofactor;
 use chippyash\Math\Type\Calculator;
 use chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
 use chippyash\Math\Matrix\Interfaces\TuningInterface;
-use chippyash\Type\String\StringType;
 
 /**
  * Laplace expansion strategy for matrix determinant

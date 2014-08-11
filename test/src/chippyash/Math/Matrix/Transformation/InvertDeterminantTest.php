@@ -92,14 +92,17 @@ class InvertDeterminantTest extends \PHPUnit_Framework_TestCase
      *
      * @link http://en.wikipedia.org/wiki/Matrix_inverse
      * @dataProvider computeMatrices
+     *
+     * However this is not a stable test as it can sometimes assert true, sometimes false
+     * 
      */
-    public function testTransformWithNumericMatrixDoesNotProduceIdentityMatrixWhenMultiplied($operand)
-    {
-        $mA = new NumericMatrix($operand);
-        $mI = $this->object->transform($mA);
-        $result = $mA('Mul\Matrix', $mI);
-        $this->assertFalse($result->is('identity'));
-    }
+//    public function testTransformWithNumericMatrixDoesNotProduceIdentityMatrixWhenMultiplied($operand)
+//    {
+//        $mA = new NumericMatrix($operand);
+//        $mI = $this->object->transform($mA);
+//        $result = $mA('Mul\Matrix', $mI);
+//        $this->assertFalse($result->is('identity'));
+//    }
 
     /**
      * This test is exactly the same as

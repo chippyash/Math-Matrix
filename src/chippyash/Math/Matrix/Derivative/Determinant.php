@@ -15,6 +15,7 @@ use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
 use chippyash\Matrix\Traits\AssertMatrixIsSquare;
 use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Laplace;
+use chippyash\Math\Matrix\Derivative\Strategy\Determinant\Lu;
 use chippyash\Math\Matrix\Interfaces\TuningInterface;
 use chippyash\Type\String\StringType;
 
@@ -27,12 +28,14 @@ class Determinant extends AbstractDerivative implements TuningInterface
 
     const METHOD_AUTO = 0;
     const METHOD_LAPLACE = 1;
+    const METHOD_LU = 2;
 
     /**
-     * Maximum matrix size that will be handled by the Laplace expansion method
+     * Maximum matrix size that will be handled by the LU decomposition method
+     * when in auto mode
      * @var int
      */
-    static protected $laplaceLimit = 9;
+    static protected $luLimit = 20;
 
     /**
      * Which derivative method to use
@@ -69,7 +72,8 @@ class Determinant extends AbstractDerivative implements TuningInterface
 
     /**
      * Tune an item on a class. Available items:
-     * - laplaceLimit: int Matrix size (n=m) limit for Laplace Expansion
+     * - luLimit: int Matrix size (n=m) limit for LU decomposition when
+     *   using the auto method
      *
      * @param \chippyash\Type\String\StringType $name Item to tune
      * @param mixed $value Value to set
@@ -80,12 +84,12 @@ class Determinant extends AbstractDerivative implements TuningInterface
      */
     public function tune(StringType $name, $value)
     {
-        if ($name() != 'laplaceLimit') {
+        if ($name() != 'luLimit') {
             throw new \InvalidArgumentException("{$name} is unknown for tuning");
         }
 
-        $ret = self::$laplaceLimit;
-        self::$laplaceLimit = $value;
+        $ret = self::$luLimit;
+        self::$luLimit = $value;
 
         return $ret;
     }
@@ -103,14 +107,17 @@ class Determinant extends AbstractDerivative implements TuningInterface
     {
         switch ($this->method) {
             case self::METHOD_AUTO;
-                if ($mA->rows() <= self::$laplaceLimit) {
-                    $strategy = new Laplace();
+                if ($mA->rows() <= self::$luLimit) {
+                    $strategy = new Lu();
                 } else {
                     throw new UndefinedComputationException('No available strategy found to determine the determinant');
                 }
                 break;
             case self::METHOD_LAPLACE:
                 $strategy = new Laplace();
+                break;
+            case self::METHOD_LU;
+                $strategy = new Lu();
                 break;
             default:
                 throw new UndefinedComputationException('Unknown determinant computation method');
