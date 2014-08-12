@@ -93,7 +93,7 @@ class Lu extends AbstractDecomposition
 
         $this->setOtherProducts($mA);
 
-        return $this;
+        return clone $this;
     }
 
     /**

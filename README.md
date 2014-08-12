@@ -260,6 +260,45 @@ If you want to break the 20x20 limit, you can do the following:
     $det->tune('luLimit', 40); //or whatever you are prepared to put up with
     $mI = $mA('Invert');
 </pre>
+#### Matrices can be decomposed
+
+*  The original matrix is untouched
+*  You can use the magic __invoke functionality
+*  Decompositions return a decomposition object, from which you can access the various parts of the decomposition.
+*  Decompositions implement the chippyash\Math\Matrix\Interfaces\DecompositionInterface
+
+The library currently supports:
+
+*  LU Decomposition
+
+<pre>
+    $lu = $mA('Lu');
+    //same as
+    $fLu = new chippyash\Math\Matrix\Decomposition\Lu()
+    $lu = $mA->decompose($fLu);
+    //same as
+    $lu = $fLu($mA);
+</pre>
+
+The LU products are:
+
+*  LU : NumericMatrix - The LU complete decomposition matrix
+*  L : NumericMatrix - The lower triangle
+*  U : NumericMatrix - The upper triangle
+*  PivotVector : NumericMatrix - Pivot vector of the decomposition
+*  PermutationMatrix : NumericMatrix - Permutation matrix
+*  Det : NumericTypeInterface|Null - Determinant or null if matrix is not square
+
+Accessing the products is either via the product() method or more simply as an
+attribute of the decomposition:
+
+<pre>
+    $pv = $lu->product('PivotVector');
+    //same as
+    $pv = $lu->PivotVector;
+</pre>
+
+N.B.  Product names for any decomposition are case sensitive
 
 ### Changing the library
 

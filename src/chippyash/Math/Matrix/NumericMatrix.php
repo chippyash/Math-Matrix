@@ -14,6 +14,7 @@ use chippyash\Math\Matrix\Traits\ConvertNumberToNumeric;
 use chippyash\Math\Matrix\Exceptions\MathMatrixException;
 use chippyash\Math\Matrix\Interfaces\ComputatationInterface;
 use chippyash\Math\Matrix\Interfaces\DerivativeInterface;
+use chippyash\Math\Matrix\Interfaces\DecompositionInterface;
 use chippyash\Matrix\Interfaces\TransformationInterface;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Type\Number\IntType;
@@ -35,6 +36,7 @@ class NumericMatrix extends Matrix
     const NS_COMPUTATION = 'chippyash\Math\Matrix\Computation\\';
     const NS_NTRANSFORMATION = 'chippyash\Math\Matrix\Transformation\\';
     const NS_DERIVATIVE = 'chippyash\Math\Matrix\Derivative\\';
+    const NS_DECOMPOSITION = 'chippyash\Math\Matrix\Decomposition\\';
 
     /**
      * Construct a complete Matrix with all entries set to chippyash/Type
@@ -132,6 +134,18 @@ class NumericMatrix extends Matrix
     }
 
     /**
+     * Decompose this matrix
+     *
+     * @param \chippyash\Math\Matrix\Interfaces\DecompositionInterface $decomposition
+     * @param mixed $extra
+     * @return \chippyash\Math\Matrix\Interfaces\DecompositionInterface
+     */
+    public function decompose(DecompositionInterface $decomposition, $extra = null)
+    {
+        return $decomposition->decompose($this, $extra);
+    }
+
+    /**
      *
      * @param \chippyash\Matrix\Interfaces\TransformationInterface $transformation
      * @param mixed $extra
@@ -189,6 +203,11 @@ class NumericMatrix extends Matrix
         $dName = self::NS_DERIVATIVE . $operationName;
         if (class_exists($dName, true)) {
             return $this->derive(new $dName(), $extra);
+        }
+
+        $dcName = self::NS_DECOMPOSITION . $operationName;
+        if (class_exists($dcName, true)) {
+            return $this->decompose(new $dName(), $extra);
         }
 
         //parent transformations
