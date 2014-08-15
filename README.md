@@ -270,7 +270,9 @@ If you want to break the 20x20 limit, you can do the following:
 The library currently supports:
 
 *  LU Decomposition
+*  Gauss Jordan Elimination
 
+**LU**
 <pre>
     $lu = $mA('Lu');
     //same as
@@ -299,6 +301,86 @@ attribute of the decomposition:
 </pre>
 
 N.B.  Product names for any decomposition are case sensitive
+
+**Gauss Jordan Elimination**
+
+<pre>
+    $mA = new NumericMatrix(
+                [[1, 1, 1],
+                 [2, 3, 5],
+                 [4, 0, 5]]
+                );
+    $mB = new NumericMatrix(
+            [[5],
+             [8],
+             [2]]
+            );
+    $elim = $mA('GaussJordonElimination', $mB);
+    //same as
+    $fElim = new chippyash\Math\Matrix\Decomposition\GaussJordonElimination()
+    $elim = $mA->decompose($fElim, $mB);
+    //same as
+    $elim = $fElim($mA, $mB);
+</pre>
+
+The products are:
+
+*  left  The left matrix after elimination
+*  right The right matrix after elimination
+
+Using the above example then $elim->left should == an identity matrix and
+$elim->right == [[3],[4],[-2]] as we've just solved
+
+<pre>
+    x + y + z = 5
+    2x + 3y + 5z = 8
+    4x + 5z = 2
+where
+    x = 3, y = 4, z = -2
+</pre>
+
+#### Formatting for numeric display
+
+An additional display formatter is supported by the library:
+
+\chippyash\Math\Matrix\Formatter\AsciiNumeric
+
+It extends the \chippyash\Matrix\Formatter\Ascii.  An additional option 'outputType'
+is provided that should take one of the following values:
+
+<pre>
+    AsciiNumeric::TP_NONE      //behave as base formatter - default behaviour
+    AsciiNumeric::TP_INT       //convert all entries to int.  This will floor() if possible
+    AsciiNumeric::TP_FLOAT     //convert all entries to float if possible
+    AsciiNumeric::TP_RATIONAL  //convert all entries to rational if possible
+    AsciiNumeric::TP_COMPLEX   //convert all entries to complex (always possible)
+</pre>
+
+Please note that although you instruct to convert to a particular numeric type the
+actual display may result in a simpler form if possible.
+
+Example:
+
+<pre>
+    echo $mA->setFormatter(new AsciiNumeric())
+        ->display(['outputType' => AsciiNumeric::TP_FLOAT]);
+</pre>
+
+#### Exception handling
+
+As matrix maths can throw up problems, particularly when inverting or decomposing,
+it is always a good idea to wrap whatever you are doing in a try - catch block.
+The following exceptions are supported by the library.  They all extend from the
+chippyash\Matrix\Exceptions\MatrixException.  The base namespace is chippyash\Math\Matrix\Exceptions
+
+
+<pre>
+MathMatrixException
+  ComputationException
+  NoInverseException
+  SingularMatrixException
+  UndefinedComputationException
+</pre>
 
 ### Changing the library
 

@@ -9,7 +9,7 @@ use chippyash\Type\Number\FloatType;
 use chippyash\Type\Number\WholeIntType;
 use chippyash\Type\Number\NaturalIntType;
 use chippyash\Type\Number\Rational\RationalType;
-use chippyash\Type\Number\Complex\ComplexType;
+use chippyash\Math\Matrix\RationalMatrix;
 
 /**
  * Unit test for NumericMatrix Class
@@ -188,6 +188,14 @@ class NumericMatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(self::NSUT, $object("Invert"));
     }
 
+    public function testInvokeProxiesToDecompose()
+    {
+        $object = new NumericMatrix([1]);
+        $this->assertInstanceOf(
+                'chippyash\Math\Matrix\Interfaces\DecompositionInterface',
+                $object('Lu'));
+    }
+
     public function testInvokeProxiesToParentClassTransform()
     {
         $testArray = [[1, 2, 3], [3, 2, 1], [2, 1, 3]];
@@ -251,5 +259,70 @@ class NumericMatrixTest extends \PHPUnit_Framework_TestCase
         $mA = new NumericMatrix($testArray);
         $this->assertInstanceOf(self::NSUT, $mA->transform($transformation));
     }
+
+    public function testDecomposeReturnsDecomposition()
+    {
+        $mock = $this->getMock('chippyash\Math\Matrix\Interfaces\DecompositionInterface');
+        $mock->expects($this->once())
+                ->method('decompose')
+                ->will($this->returnValue($mock));
+        $mA = new NumericMatrix([]);
+        $this->assertEquals($mock, $mA->decompose($mock));
+    }
+
+    public function testEqualityWithStrictSettingReturnsTrueForSameClassAndContent()
+    {
+        $mN = new NumericMatrix([[2]]);
+
+        $this->assertTrue($mN->equality($mN));
+    }
+
+    public function testEqualityWithStrictSettingReturnsFalseForDifferentClassAndSameContent()
+    {
+        $mN = new NumericMatrix([[2]]);
+        $mR = new RationalMatrix([[2]]);
+
+        $this->assertFalse($mN->equality($mR));
+    }
+
+    public function testEqualityWithStrictSettingReturnsFalseForSameClassAndDifferentContent()
+    {
+        $mN = new RationalMatrix([[3]]);
+        $mR = new RationalMatrix([[2]]);
+
+        $this->assertFalse($mN->equality($mR));
+    }
+
+    public function testEqualityWithLooseSettingReturnsTrueForSameClassAndContent()
+    {
+        $mN = new NumericMatrix([[2]]);
+
+        $this->assertTrue($mN->equality($mN, false));
+    }
+
+    public function testEqualityWithLooseSettingReturnsTrueForDifferentClassAndSameContent()
+    {
+        $mN = new NumericMatrix([[2]]);
+        $mR = new RationalMatrix([[2]]);
+
+        $this->assertTrue($mN->equality($mR, false));
+    }
+
+    public function testEqualityWithLooseSettingReturnsFalseForSameClassAndDifferentContent()
+    {
+        $mA = new NumericMatrix([[12]]);
+        $mB = new NumericMatrix([[2]]);
+
+        $this->assertFalse($mA->equality($mB, false));
+    }
+
+    public function testEqualityWithLooseSettingReturnsFalseForDifferentClassAndDifferentContent()
+    {
+        $mN = new NumericMatrix([[2]]);
+        $mR = new RationalMatrix([[12]]);
+
+        $this->assertFalse($mN->equality($mR, false));
+    }
+
 
 }

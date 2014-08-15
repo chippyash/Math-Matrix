@@ -2,13 +2,8 @@
 namespace chippyash\Test\Math\Matrix\Decomposition;
 use chippyash\Math\Matrix\Decomposition\Lu;
 use chippyash\Math\Matrix\RationalMatrix;
-use chippyash\Type\Number\IntType;
 use chippyash\Type\Number\Rational\RationalTypeFactory as RTF;
 
-/**
- * Description of LuTest
- *
- */
 class LuTest extends \PHPUnit_Framework_TestCase
 {
     protected $object;
