@@ -94,7 +94,7 @@ class InvertDeterminantTest extends \PHPUnit_Framework_TestCase
      * @dataProvider computeMatrices
      *
      * However this is not a stable test as it can sometimes assert true, sometimes false
-     * 
+     *
      */
 //    public function testTransformWithNumericMatrixDoesNotProduceIdentityMatrixWhenMultiplied($operand)
 //    {

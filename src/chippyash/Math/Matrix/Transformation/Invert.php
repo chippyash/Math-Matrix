@@ -35,7 +35,7 @@ class Invert extends AbstractTransformation
     use CreateCorrectMatrixType;
 
     const METHOD_AUTO = 0; //Auto determine
-    const METHOD_DET = 1; //By determinant method
+    const METHOD_DET = 1; //By Determinant method
 
     /**
      * Which inversion method to use

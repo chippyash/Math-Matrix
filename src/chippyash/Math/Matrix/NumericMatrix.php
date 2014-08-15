@@ -19,6 +19,7 @@ use chippyash\Matrix\Interfaces\TransformationInterface;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Type\Number\IntType;
 use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Math\Type\Comparator;
 
 /**
  * Construct a matrix whose entries are numeric, i.e int, float, IntType,
@@ -207,7 +208,7 @@ class NumericMatrix extends Matrix
 
         $dcName = self::NS_DECOMPOSITION . $operationName;
         if (class_exists($dcName, true)) {
-            return $this->decompose(new $dName(), $extra);
+            return $this->decompose(new $dcName(), $extra);
         }
 
         //parent transformations
@@ -218,6 +219,48 @@ class NumericMatrix extends Matrix
 
         //else
         throw new \InvalidArgumentException(self::ERR_INVALID_OP_NAME);
+    }
+
+    /**
+     * Check equality of each matrix entry
+     * Also check that matrices are same type if $strict
+     *
+     * @override ancestor
+     *
+     * @param \chippyash\Matrix\Matrix $mB
+     * @param boolean $strict
+     *
+     * @return boolean
+     */
+    protected function checkEntryEquality(Matrix $mB, $strict)
+    {
+        if ($strict) {
+            if (get_class($this) !== get_class($mB)) {
+                return false;
+            }
+        }
+
+        $dA = $this->toArray();
+        $dB = $mB->toArray();
+        $m = $this->rows();
+        $n = $this->columns();
+        $comp = new Comparator();
+
+        for ($i=0; $i<$m; $i++) {
+            for ($j=0; $j<$n; $j++) {
+                if ($strict) {
+                    if ($dA[$i][$j] !== $dB[$i][$j]) {
+                        return false;
+                    }
+                } else {
+                    if ($comp->neq($dA[$i][$j], $dB[$i][$j])) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -237,5 +280,4 @@ class NumericMatrix extends Matrix
         }
         $this->data = $data;
     }
-
 }

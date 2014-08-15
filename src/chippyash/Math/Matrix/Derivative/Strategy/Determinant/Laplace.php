@@ -96,7 +96,6 @@ class Laplace implements DeterminantStrategyInterface, TuningInterface
      */
     protected function det(NumericMatrix $mA)
     {
-        //echo $mA->setFormatter(new \chippyash\Matrix\Formatter\Ascii)->display();
         $rowCount = $mA->rows();
 
         if ($rowCount == 0) {
