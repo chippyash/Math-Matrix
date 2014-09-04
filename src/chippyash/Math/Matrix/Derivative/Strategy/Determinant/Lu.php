@@ -27,7 +27,7 @@ class Lu implements DeterminantStrategyInterface
      *
      * @param \chippyash\Matrix\NumericMatrix $mA
     *
-     * @return \chippyash\Type\Number\NumericTypeInterface
+     * @return \chippyash\Type\Interfaces\NumericTypeInterface
      */
     public function determinant(NumericMatrix $mA)
     {

@@ -13,7 +13,7 @@ use chippyash\Math\Matrix\Interfaces\DecompositionInterface;
 use chippyash\Matrix\Interfaces\InvokableInterface;
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
-use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Interfaces\NumericTypeInterface;
 
 /**
  * Base abstract for decomposition

@@ -21,6 +21,7 @@ use chippyash\Matrix\Traits\AssertParameterIsMatrix;
 use chippyash\Matrix\Traits\AssertMatrixIsSquare;
 use chippyash\Matrix\Traits\AssertMatrixRowsAreEqual;
 use chippyash\Type\Number\IntType;
+use chippyash\Type\Number\Rational\RationalType;
 use chippyash\Math\Type\Calculator;
 use chippyash\Math\Type\Comparator;
 
@@ -78,8 +79,8 @@ class GaussJordanElimination extends AbstractDecomposition
         $rows = $mA->rows();
         $dA = $mA->toArray();
         $dB = $extra->toArray();
-        $zero = function(){return new IntType(0);};
-        $one = function(){return new IntType(1);};
+        $zero = function(){return new RationalType(new IntType(0), new IntType(1));};
+        $one = function(){return new RationalType(new IntType(1), new IntType(1));};
         $calc = new Calculator();
         $comp = new Comparator();
 

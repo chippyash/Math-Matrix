@@ -12,7 +12,7 @@ namespace chippyash\Math\Matrix\Attribute;
 use chippyash\Matrix\Interfaces\AttributeInterface;
 use chippyash\Matrix\Matrix;
 use chippyash\Math\Matrix\NumericMatrix;
-use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Interfaces\NumericTypeInterface;
 use chippyash\Type\Number\Complex\ComplexType;
 
 /**

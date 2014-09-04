@@ -5,7 +5,7 @@ use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\RationalMatrix;
 use chippyash\Math\Matrix\ComplexMatrix;
 use chippyash\Type\TypeFactory;
-use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Interfaces\NumericTypeInterface;
 
 
 class stubConvertNumberToNumeric
@@ -33,7 +33,7 @@ class ConvertNumberToNumericTest extends \PHPUnit_Framework_TestCase
     public function testTraitReturnsCorrectType($number)
     {
         $this->assertInstanceOf(
-                'chippyash\Type\Number\NumericTypeInterface',
+                'chippyash\Type\Interfaces\NumericTypeInterface',
                 $this->object->test($number));
     }
 
@@ -62,7 +62,7 @@ class ConvertNumberToNumericTest extends \PHPUnit_Framework_TestCase
     public function testTraitThrowsExceptionForInvalidNumbers($number)
     {
         $this->assertInstanceOf(
-                'chippyash\Type\Number\NumericTypeInterface',
+                'chippyash\Type\Interfaces\NumericTypeInterface',
                 $this->object->test($number));
     }
 

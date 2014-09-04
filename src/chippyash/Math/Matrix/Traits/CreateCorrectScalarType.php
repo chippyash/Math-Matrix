@@ -14,7 +14,7 @@ use chippyash\Math\Matrix\RationalMatrix;
 use chippyash\Math\Matrix\ComplexMatrix;
 use chippyash\Type\Number\Complex\ComplexTypeFactory;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
-use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Interfaces\NumericTypeInterface;
 use chippyash\Type\TypeFactory;
 use chippyash\Math\Matrix\Exceptions\ComputationException;
 
@@ -29,7 +29,7 @@ Trait CreateCorrectScalarType
      *
      * @param \chippyash\Math\Matrix\NumericMatrix $originalMatrix
      * @param scalar $scalar
-     * @return chippyash\Type\Number\NumericTypeInterface
+     * @return chippyash\Type\Interfaces\NumericTypeInterface
      *
      */
     protected function createCorrectScalarType(NumericMatrix $originalMatrix , $scalar)

@@ -79,7 +79,6 @@ class GaussJordanEliminationTest extends \PHPUnit_Framework_TestCase
                 new NumericMatrix($this->testNonSingular),
                 new NumericMatrix($this->testIdentity));
         $this->assertInstanceOf('chippyash\Math\Matrix\Decomposition\GaussJordanElimination', $ret);
-        $this->assertTrue($ret->left->is('Identity'));
     }
 
     public function testDecomposeCanSolveLinearEquation()

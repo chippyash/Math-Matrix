@@ -11,7 +11,7 @@ namespace chippyash\Math\Matrix\Formatter;
 
 use chippyash\Matrix\Formatter\Ascii as BaseAscii;
 use chippyash\Matrix\Matrix;
-use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Interfaces\NumericTypeInterface;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Type\Number\Complex\ComplexTypeFactory;
 
