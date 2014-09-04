@@ -56,7 +56,7 @@ class Laplace implements DeterminantStrategyInterface, TuningInterface
      * This is not checked here - that is done in the determinant derivative class
      *
      * @param \chippyash\Math\Matrix\NumericMatrix $mA
-     * @return \chippyash\Type\Number\NumericTypeInterface
+     * @return \chippyash\Type\Interfaces\NumericTypeInterface
      */
     public function determinant(NumericMatrix $mA)
     {
@@ -92,7 +92,7 @@ class Laplace implements DeterminantStrategyInterface, TuningInterface
      * Recursive determinant function
      *
      * @param \chippyash\Math\Matrix\NumericMatrix $mA
-     * @return \chippyash\Type\Number\NumericTypeInterface
+     * @return \chippyash\Type\Interfaces\NumericTypeInterface
      */
     protected function det(NumericMatrix $mA)
     {
@@ -146,7 +146,7 @@ class Laplace implements DeterminantStrategyInterface, TuningInterface
      *
      * @link http://www.intmath.com/matrices-determinants/2-large-determinants.php
      * @param \chippyash\Math\Matrix\NumericMatrix $mA
-     * @return chippyash\Type\Number\NumericTypeInterface
+     * @return chippyash\Type\Interfaces\NumericTypeInterface
      */
     protected function detN(NumericMatrix $mA)
     {

@@ -18,7 +18,7 @@ use chippyash\Math\Matrix\Interfaces\DecompositionInterface;
 use chippyash\Matrix\Interfaces\TransformationInterface;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
 use chippyash\Type\Number\IntType;
-use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Interfaces\NumericTypeInterface;
 use chippyash\Math\Type\Comparator;
 
 /**

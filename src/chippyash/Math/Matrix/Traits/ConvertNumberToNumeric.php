@@ -11,7 +11,7 @@ namespace chippyash\Math\Matrix\Traits;
 
 use chippyash\Matrix\Exceptions\MatrixException;
 use chippyash\Type\TypeFactory;
-use chippyash\Type\Number\NumericTypeInterface;
+use chippyash\Type\Interfaces\NumericTypeInterface;
 
 /**
  * Convert if possible a supplied argument to strong numeric
@@ -22,7 +22,7 @@ Trait ConvertNumberToNumeric
      * Convert if possible a supplied argument to a strong numeric type
      *
      * @param int|float|string|NumericTypeInterface $numerator
-     * @return chippyash\Type\Number\NumericTypeInterface
+     * @return chippyash\Type\Interfaces\NumericTypeInterface
      * @throws UndefinedComputationException
      */
     protected function convertNumberToNumeric($value)

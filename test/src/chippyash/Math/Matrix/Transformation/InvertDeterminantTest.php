@@ -60,22 +60,25 @@ class InvertDeterminantTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider computeMatrices
      *
-     * As a result of the computation, all the items are converted to rational
-     * types to maintain stability.  This test is kind of a fudge, because the
-     * $result array contains FloatTypes.  We need to convert them to RationalTypes
-     * to make the comparison
      */
     public function testTransformWithNumericMatrixReturnsCorrectResult($operand, $result)
     {
         $mA = new NumericMatrix($operand);
         $mI = $this->object->transform($mA);
-        foreach ($result as &$row) {
+        $test = $mI->toArray();
+        foreach ($test as &$row) {
             foreach ($row as &$item) {
-                $item = RationalTypeFactory::fromFloat($item);
+                $item = $item();
 
             }
         }
-        $this->assertEquals($result, $mI->toArray());
+        foreach ($result as &$row) {
+            foreach ($row as &$item) {
+                $item = $item();
+
+            }
+        }
+        $this->assertEquals($result, $test);
     }
 
     /**
