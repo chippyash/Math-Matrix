@@ -167,4 +167,12 @@ class MatrixFactoryTest extends \PHPUnit_Framework_TestCase
         $fn = function($r, $c){return 1;};
         $mA = MatrixFactory::createFromFunction($fn, new IntType(1), new IntType(0));
     }
+    
+    public function testCreateFromComplexReturnsRationalMatrix()
+    {
+        $c = CF::fromString('2+4i');
+        $mA = MatrixFactory::createFromComplex($c);
+        $test = MatrixFactory::createRational([['2/1', '-4/1'],['4/1', '2/1']]);
+        $this->assertEquals($test, $mA);
+    }
 }

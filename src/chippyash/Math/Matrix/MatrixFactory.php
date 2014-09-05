@@ -167,4 +167,22 @@ abstract class MatrixFactory
 
         return self::create($type, $source);
     }
+    
+    /**
+     * Create a matrix representation of a complex number
+     * For z = a+bi
+     * Returns [[a, -b]
+     *          [b, a]]
+     * 
+     * @param \chippyash\Type\Number\Complex\ComplexType $c
+     * @return \chippyash\Math\Matrix\RationalMatrix
+     */
+    public static function createFromComplex(ComplexType $c)
+    {
+        $a = clone $c->r();
+        $b = clone $c->i();
+        $b2 = clone $c->i();
+        $bi = new RationalType($b2->numerator()->negate(), $b->denominator());
+        return self::createRational([[$a, $bi],[$b, $a]]);
+    }
 }

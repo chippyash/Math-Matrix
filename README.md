@@ -124,6 +124,7 @@ provides static methods:
 *  MatrixFactory::createRational(array $data)
 *  MatrixFactory::createNumeric(array $data)
 *  MatrixFactory::createFromFunction(callable $fn, IntType $rows, IntType $cols, $type = 'numeric')
+*  MatrixFactory::createFromComplex(ComplexType $c)
 
 #### FunctionMatrix
 
