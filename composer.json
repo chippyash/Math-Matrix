@@ -3,6 +3,7 @@
     "description": "Matrix maths package",
     "keywords": ["maths", "matrix", "inversion", "laplace", "gauss", "jordan", "elemination", "determinant"],
     "license": "GPL 3.0",
+    "homepage" : "http://the-matrix.github.io/",
     "authors": [
         {
             "name": "Ashley Kitson",
