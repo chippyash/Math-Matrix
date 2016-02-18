@@ -35,11 +35,11 @@ class Sum extends AbstractDerivative
 
         $calc = new Calculator();
 
-        return array_reduce($mA->toArray(), function ($carry, $row) use ($calc) {
+        return array_reduce($mA->toArray(), function ($c1, $row) use ($calc) {
             return array_reduce($row, function($carry, $item) use ($calc) {
                 return $calc->add($item, $carry);
             },
-                $carry
+                $c1
             );
         },
             new IntType(0)
