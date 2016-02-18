@@ -22,7 +22,7 @@ This library aims to provide arithmetic matrix functionality in the most efficie
 possible using PHP given that:
 
 *  Everything has a test case
-*  It's PHP 5.4+
+*  It's PHP 5.5+
 
 The library is released under the [GNU GPL V3 or later license](http://www.gnu.org/copyleft/gpl.html)
 
