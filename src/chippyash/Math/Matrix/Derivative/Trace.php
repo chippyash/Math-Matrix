@@ -10,6 +10,10 @@
 
 namespace chippyash\Math\Matrix\Derivative;
 
+<<<<<<< HEAD
+=======
+use chippyash\Math\Matrix\Derivative\AbstractDerivative;
+>>>>>>> 48473dea2ad6395867fa2efd81822b45248dd8c9
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
 use chippyash\Math\Type\Calculator;

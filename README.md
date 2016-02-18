@@ -1,5 +1,6 @@
 # chippyash/Math-Matrix
 
+<<<<<<< HEAD
 ## Quality
 
 See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md)
