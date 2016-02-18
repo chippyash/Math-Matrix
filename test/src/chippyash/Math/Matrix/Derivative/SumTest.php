@@ -28,6 +28,14 @@ class SumTest extends \PHPUnit_Framework_TestCase
         $this->sut = new Sum();
     }
 
+
+    public function testSutHasDerivativeInterface()
+    {
+        $this->assertInstanceOf(
+            'chippyash\Math\Matrix\Interfaces\DerivativeInterface',
+            $this->sut);
+    }
+
     public function testSummingAZeroMatrixReturnsIntZero()
     {
         $test = (new NumericMatrix([]))->derive($this->sut);
@@ -62,6 +70,7 @@ class SumTest extends \PHPUnit_Framework_TestCase
             [[[1],[2],[3]], new IntType(6)],
             [[[1,2,3],[1,2,3]], new IntType(12)],
             [[[1.1,2,3],[1,2.2,3]], RationalTypeFactory::fromFloat(12.3)],
+            [[[0.5,0.5]], RationalTypeFactory::create(1)]
         ];
     }
 }
