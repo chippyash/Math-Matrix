@@ -57,7 +57,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
     /**
      * General non commutative rule
      */
-    public function testNotCommutative()
+    public function testMatrixMultiplicationIsNotCommutative()
     {
         $mA = $this->colVector;
         $mB = $this->rowVector;
@@ -78,7 +78,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
      * Exception to non commutative rule
      * Empty matrix is special form of index matrix
      */
-    public function testMultEmptyMatrixIsCommmutative()
+    public function testMultiplicationByAnEmptyMatrixIsCommmutative()
     {
         $mA = $this->empty;
         $mB = $this->square;
@@ -91,7 +91,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
     /**
      * Exception to non commutative rule
      */
-    public function testMultIdentityMatrixIsCommmutative()
+    public function testMultiplicationByAnIdentityMatrixIsCommmutative()
     {
         $mA = $this->square;
         $mB = new IdentityMatrix(new IntType($mA->rows()));
@@ -105,7 +105,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
      * Exception to non commutative rule
      * Single item matrix is special form of index matrix
      */
-    public function testMultSingleItemMatrixIsCommmutative()
+    public function testMultiplicationByASingleItemMatrixIsCommmutative()
     {
         $mA = $this->single;
         $mB = $this->single;
@@ -118,7 +118,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
     /**
      * Exception to non commutative rule
      */
-    public function testMultTwoSquareMatricesTheSameIsCommutative()
+    public function testMultiplicationByTwoSquareMatricesWithTheSameVerticesIsCommutative()
     {
         $mA = $this->square;
         $mB = $this->square;
@@ -133,7 +133,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
      * Left distributivity
      * A(B + C) = AB + AC
      */
-    public function testLeftDistributivity()
+    public function testMultiplicationMaintainsLeftDistributivityOverMatrixAddition()
     {
         //create three different matrices
         $mA = $this->square;
@@ -154,7 +154,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
      * Right distributivity
      * (A+B)C = AC + BC
      */
-    public function testRightDistributivity()
+    public function testMultiplicationMaintainsRightDistributivityOverMatrixAddition()
     {
         //create three different matrices
         $mA = $this->square;
@@ -174,7 +174,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
      * Scalar multiplication is compatible with matrix multiplication
      * s(AB) = (sA)B and (AB)s = A(Bs)
      */
-    public function testScalarMultiplicationIsCompatible()
+    public function testScalarMultiplicationIsCompatibleWithMatrixMultiplication()
     {
         //create two different matrices
         $mA = $this->square;
@@ -198,7 +198,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
      * Transpose
      * fT(AB) = fT(A).$fT(B)
      */
-    public function testTranspose()
+    public function testTranspositionIsCommutative()
     {
         //create two different matrices
         $mA = $this->square;
@@ -217,7 +217,7 @@ class MatrixMultiplicationPropertiesTest extends \PHPUnit_Framework_TestCase
      * Trace - square matrices only
      * tr(AB) = tr(BA)
      */
-    public function testTrace()
+    public function testTraceIsCommutative()
     {
         //create two different matrices
         $mA = $this->square;

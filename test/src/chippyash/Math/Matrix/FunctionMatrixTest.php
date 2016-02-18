@@ -49,7 +49,7 @@ class FunctionMatrixTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $rows must be >= 1
      */
-    public function testConstructRowslessThanOneRaisesException()
+    public function testConstructRowsLessThanOneRaisesException()
     {
         $f = $this->function;
         $this->object = new FunctionMatrix($f, new IntType(0),new IntType(1));
@@ -59,7 +59,7 @@ class FunctionMatrixTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $cols must be >= 1
      */
-    public function testConstructColslessThanOneRaisesException()
+    public function testConstructColsLessThanOneRaisesException()
     {
         $f = $this->function;
         $this->object = new FunctionMatrix($f, new IntType(1),new IntType(0));

@@ -30,7 +30,7 @@ class IsComplexTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->is($mB));
     }
 
-    public function testNonRationalMatrixReturnsFalse()
+    public function testNonComplexMatrixReturnsFalse()
     {
         $mA = new Matrix([1]);
         $this->assertFalse($this->object->is($mA));

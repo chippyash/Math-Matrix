@@ -203,7 +203,7 @@ class NumericMatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(self::NSUT, $object("Reflect", 0));
     }
 
-    public function testConstructWithIncompletDataAndFloatDefaultReturnsMatrix()
+    public function testConstructWithIncompleteDataAndFloatDefaultReturnsMatrix()
     {
         $testArray = [[2, 1], []];
         $mA = new NumericMatrix($testArray, 12.3);
@@ -214,13 +214,13 @@ class NumericMatrixTest extends \PHPUnit_Framework_TestCase
      * @expectedException chippyash\Math\Matrix\Exceptions\MathMatrixException
      * @expectedExceptionMessage NumericMatrix expects numeric default value
      */
-    public function testConstructWithIncompletDataAndNonNumericDefaultThrowsException()
+    public function testConstructWithIncompleteDataAndNonNumericDefaultThrowsException()
     {
         $testArray = [[2, 1], []];
         $mA = new NumericMatrix($testArray, new \stdClass());
     }
 
-    public function testConstructWithIncompletDataAndNumericTypeDefaultReturnsMatrix()
+    public function testConstructWithIncompleteDataAndNumericTypeDefaultReturnsMatrix()
     {
         $testArray = [[2, 1], []];
         $mA = new NumericMatrix($testArray, new FloatType(12.3));

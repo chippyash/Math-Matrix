@@ -38,14 +38,14 @@ class IsIdentityTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->is($mA));
     }
 
-    public function testMatrixHasNonZeroInWrongPlaceIsNotAnIdentityMatrix()
+    public function testMatrixHavingNonZeroInWrongPlaceIsNotAnIdentityMatrix()
     {
         $testBad = [[1,0,2], [0,1,0], [0,0,1]];
         $mA = new NumericMatrix($testBad);
         $this->assertFalse($this->object->is($mA));
     }
 
-    public function testMatrixHasNonOneInWrongPlaceIsNotIdentityMatrix()
+    public function testMatrixHavingNonOneInWrongPlaceIsNotIdentityMatrix()
     {
         $testBad = [[2,0,0], [0,1,0], [0,0,1]];
         $mA = new NumericMatrix($testBad);

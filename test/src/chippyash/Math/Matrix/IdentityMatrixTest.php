@@ -56,7 +56,7 @@ class IdentityMatrixTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage size must be >= 1
      */
-    public function testConstructSizelessThanOneRaisesException()
+    public function testConstructSizeLessThanOneRaisesException()
     {
         $this->object = new IdentityMatrix(New IntType(0));
     }

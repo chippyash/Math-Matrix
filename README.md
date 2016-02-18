@@ -1,5 +1,11 @@
 # chippyash/Math-Matrix
 
+## Quality
+
+See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md)
+
+## What?
+
 Since the [JAMA library](http://www.phpmath.com/build02/JAMA/downloads/), there
 has not been been a library to my knowledge that allows PHP devs to simply
 incorporate arithmetic Matrix functionality within an application.
@@ -11,8 +17,6 @@ bindings are limited.
 
 You need speed - PHP is never going to do it for you on big Matrices, start compiling.
 For everything else, give this a go.
-
-## What?
 
 This library aims to provide arithmetic matrix functionality in the most efficient way
 possible using PHP given that:
@@ -167,7 +171,7 @@ Create a NumericMatrix with all entries set to zero
 ####  Numeric matrices have additional attributes
 
 *  IsComplex: boolean - Is the matrix instanceof ComplexMatrix?
-*  IsIdentity: boolean - Is the matrix and identity matrix?
+*  IsIdentity: boolean - Is the matrix an identity matrix?
 *  IsNonsingular: boolean - Is the matrix non singular
 *  IsNumeric: boolean - Is the matrix instanceof NumericMatrix?
 *  IsRational: boolean -  Is the matrix instanceof RationalMatrix?
@@ -218,7 +222,7 @@ The following computations are provided (using the magic invoke interface method
 *  You can use the magic __invoke functionality
 *  Derivatives implement the chippyash\Math\Matrix\Interfaces\DerivativeInterface
 
-Two derivatives are currently supplied.
+Three derivatives are currently supplied.
 
 *  Determinant
 
@@ -243,6 +247,13 @@ little likelihood you will want to use it!
 
 <pre>
     $tr = $mA('Trace');
+    //or other variations as with Determinant
+</pre>
+
+*  Sum. Simply sums all the vertices in the matrix and returns the result
+
+<pre>
+    $sum = $mA('Sum');
     //or other variations as with Determinant
 </pre>
 
@@ -272,6 +283,7 @@ If you want to break the 20x20 limit, you can do the following:
     $det->tune('luLimit', 40); //or whatever you are prepared to put up with
     $mI = $mA('Invert');
 </pre>
+
 #### Matrices can be decomposed
 
 *  The original matrix is untouched
@@ -384,7 +396,6 @@ As matrix maths can throw up problems, particularly when inverting or decomposin
 it is always a good idea to wrap whatever you are doing in a try - catch block.
 The following exceptions are supported by the library.  They all extend from the
 chippyash\Matrix\Exceptions\MatrixException.  The base namespace is chippyash\Math\Matrix\Exceptions
-
 
 <pre>
 MathMatrixException

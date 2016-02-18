@@ -14,7 +14,7 @@ class ZeroMatrixTest extends \PHPUnit_Framework_TestCase
 {
     const NSUT = 'chippyash\Math\Matrix\ZeroMatrix';
 
-    public function testConstructProperlyGivesIdentityMatrix()
+    public function testConstructingProperlyGivesIdentityMatrix()
     {
         $zero = new IntType(0);
         $one = new IntType(1);
@@ -34,7 +34,7 @@ class ZeroMatrixTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $rows must be >= 1
      */
-    public function testConstructWithRowsLessThanOneThrowsException()
+    public function testConstructingWithRowsLessThanOneThrowsException()
     {
         $zero = new IntType(0);
         $one = new IntType(1);
@@ -46,7 +46,7 @@ class ZeroMatrixTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $cols must be >= 1
      */
-    public function testConstructWithColesLeassThanOneThrowsException()
+    public function testConstructingWithColsLessThanOneThrowsException()
     {
         $zero = new IntType(0);
         $one = new IntType(1);
