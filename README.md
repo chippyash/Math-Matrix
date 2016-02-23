@@ -63,6 +63,18 @@ Check out [chippyash/Builder-Pattern](https://github.com/chippyash/Builder-Patte
 
 ## How
 
+The current version of this library utilises the PHP Native numeric Strong Types as the
+calculator that it uses can only deal with them at present.  GMP support is on the
+roadmap once the calculator provides it.  You can ensure that this is enforced by
+forcing its setting by a call to 
+
+<pre>
+use chippyash\Type\RequiredType;
+RequiredType::getInstance()->set(RequiredType::TYPE_NATIVE);
+</pre>
+
+before any operation with the matrices.
+
 ### Coding Basics
 
 In PHP terms a matrix is an array of arrays, 2 dimensional i.e

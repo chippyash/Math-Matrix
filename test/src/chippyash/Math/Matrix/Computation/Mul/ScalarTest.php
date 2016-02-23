@@ -3,8 +3,8 @@ namespace chippyash\Test\Math\Matrix\Computation\Mul;
 use chippyash\Math\Matrix\Computation\Mul\Scalar;
 use chippyash\Math\Matrix\NumericMatrix;
 use chippyash\Type\Number\IntType;
-use chippyash\Type\Number\FloatType;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
+use chippyash\Type\RequiredType;
 
 /**
  * Multiplication by scalar test
@@ -96,6 +96,8 @@ class ScalarTest extends \PHPUnit_Framework_TestCase
 
     public function computeMatrices()
     {
+        //set required type as data is generated before tests
+        RequiredType::getInstance()->set(RequiredType::TYPE_NATIVE);
         return [
             [
                 [[1,2,3], [3,2,1], [2,1,3]],

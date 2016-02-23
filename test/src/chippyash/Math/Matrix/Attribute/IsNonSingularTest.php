@@ -2,6 +2,7 @@
 namespace chippyash\Test\Math\Matrix\Attribute;
 use chippyash\Math\Matrix\Attribute\IsNonsingular;
 use chippyash\Math\Matrix\NumericMatrix;
+use chippyash\Type\RequiredType;
 
 /**
  */
@@ -11,6 +12,7 @@ class IsNonSingularTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        RequiredType::getInstance()->set(RequiredType::TYPE_NATIVE);
         $this->object = new IsNonsingular();
     }
 
@@ -22,7 +24,6 @@ class IsNonSingularTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers chippyash\Math\Matrix\Attribute\IsNonSingular::is()
      * @dataProvider singularMatrices
      */
     public function testSingularMatricesReturnsFalse(array $m)
