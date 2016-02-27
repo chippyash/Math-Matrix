@@ -23,6 +23,16 @@
 *  Rational number non identity matrix is recognised
 
 ## 
+      chippyash\Test\Math\Matrix\Attribute\IsMarkov
+    
+
+*  A non numeric matrix will return false
+*  A not square matrix will return false
+*  Attribute returns true for a matrix that has rows that sum to the same number
+*  Attribute returns false for a matrix that has rows that do not sum to the same number
+*  A matrix with fewer than two rows and two columns is not a markov chain
+
+## 
       chippyash\Test\Math\Matrix\Attribute\IsNonSingular
     
 
@@ -251,6 +261,7 @@
       chippyash\Test\Math\Matrix\Derivative\Sum
     
 
+*  Sut has derivative interface
 *  Summing a zero matrix returns int zero
 *  Summing a single item matrix returns the single item
 *  Summing an n plus matrix returns the sum of the vertices

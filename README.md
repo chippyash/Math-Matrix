@@ -187,6 +187,7 @@ Create a NumericMatrix with all entries set to zero
 *  IsNonsingular: boolean - Is the matrix non singular
 *  IsNumeric: boolean - Is the matrix instanceof NumericMatrix?
 *  IsRational: boolean -  Is the matrix instanceof RationalMatrix?
+*  IsMarkov: boolean - Does matrix conform to requirements for a Markov Chain Matrix
 
 Remember, you can use the is() method to test for an attribute on a matrix.
 
