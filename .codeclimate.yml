@@ -3,9 +3,12 @@ languages:
   JavaScript: false
   PHP: true
   Python: false
-# exclude_paths:
-# - "foo/bar.rb"
 engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
   phpmd:
     enabled: true
     checks:
@@ -13,3 +16,11 @@ engines:
         enabled: false
       Naming/ShortVariable:
         enabled: false
+ratings:
+  paths:
+  - "**.php"
+exclude_paths:
+- test/
+- vendor/
+- doc/
+- examples/

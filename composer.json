@@ -29,8 +29,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "~4.3.0",
-    "codeclimate/php-test-reporter": "0.3.*",
-    "zendframework/zend-debug": "dev-master"
+    "codeclimate/php-test-reporter": "0.3.*"
   },
   "autoload": {
     "psr-0": {
