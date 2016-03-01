@@ -7,7 +7,7 @@
  * @license GPL V3+ See LICENSE.md
  */
 
-namespace Chippyash\Math\Matrix\Exceptions;
+namespace chippyash\Math\Matrix\Exceptions;
 
 
 class NotMarkovException extends MathMatrixException

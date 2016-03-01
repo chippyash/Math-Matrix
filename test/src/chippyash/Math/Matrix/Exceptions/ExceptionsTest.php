@@ -18,6 +18,7 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase
             'UndefinedComputation' => new Exceptions\UndefinedComputationException('foo'),
             'MathMatrix' => new Exceptions\MathMatrixException('foo'),
             'SingularMatrix' => new Exceptions\SingularMatrixException('foo'),
+            'NotMarkovException' => new Exceptions\NotMarkovException('foo'),
         );
     }
 

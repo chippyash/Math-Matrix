@@ -149,8 +149,8 @@ provides static methods:
 Create a numeric matrix as a result of applying a function.
 
 <pre>
-    $f = function($row, $col) {return new IntType($row * $col);};
-    $mA = new FunctionMatrix($f, new IntType(3), new IntType(4));
+    $f = function($row, $col) {return TypeFactory::createInt($row * $col);};
+    $mA = new FunctionMatrix($f, TypeFactory::createInt(3), TypeFactory::createInt(4));
 </pre>
 
 #### IdentityMatrix
@@ -159,16 +159,16 @@ Create a NumericMatrix Identity matrix
 
 <pre>
     //create 4x4 identity matrix with integer entries
-    $mA = new IdentityMatrix(new IntType(4));
+    $mA = new IdentityMatrix(TypeFactory::createInt(4));
     //or more usually, use the factory method
-    $mA - IdentityMatrix::numericIdentity(new IntType(4));
+    $mA - IdentityMatrix::numericIdentity(TypeFactory::createInt(4));
 </pre>
 
 Create rational and complex identity matrices using factory methods:
 
 <pre>
-    $mR = IdentityMatrix::rationalIdentity(new IntType(4));
-    $mC = IdentityMatrix::complexIdentity(new IntType(4));
+    $mR = IdentityMatrix::rationalIdentity(TypeFactory::createInt(4));
+    $mC = IdentityMatrix::complexIdentity(TypeFactory::createInt(4));
 </pre>
 
 #### ZeroMatrix
@@ -177,7 +177,7 @@ Create a NumericMatrix with all entries set to zero
 
 <pre>
     //create 2 x 4 zero matrix
-    $mZ = new ZeroMatrix(new IntType(2), new IntType(4));
+    $mZ = new ZeroMatrix(TypeFactory::createInt(2), TypeFactory::createInt(4));
 </pre>
 
 ####  Numeric matrices have additional attributes
@@ -235,7 +235,7 @@ The following computations are provided (using the magic invoke interface method
 *  You can use the magic __invoke functionality
 *  Derivatives implement the chippyash\Math\Matrix\Interfaces\DerivativeInterface
 
-Three derivatives are currently supplied.
+Four derivatives are currently supplied.
 
 *  Determinant
 
@@ -270,6 +270,30 @@ little likelihood you will want to use it!
     //or other variations as with Determinant
 </pre>
 
+* MarkovWeightedRandom. Return the next step using Random Weighted method on a 
+Markov Chain Matrix
+
+<pre>
+    $mA = new NumericMatrix(
+        [
+            [0,2,0,8]  //row 1
+            [1,0,0,0]  //row 2
+            [0,0,5,5]  //row 3
+            [0,1,6,3]  //row 4
+        ]
+    )
+    
+    $next = $mA('MarkovWeightedRandom', TypeFactory::createInt(3));
+    //will return IntType(3) or IntType(4) with 50% chance of either being returned
+    
+</pre>
+
+A NotMarkovException will be thrown if the supplied Matrix does not conform to the
+IsMarkov Attribute.  Please note, that whilst you can supply a matrix with floats, the
+nature of mt_rand() function used to generate the next number means that, for the time
+being, you should provide integer values.  As long as you supply a square matrix where
+each row row sums to the same number, you have a Markov Chain expressed as a Matrix.
+
 #### Additional transformations are supported by numeric matrices
 
 *  Invert - Returns the inverted matrix or throws an exception if not possible.
@@ -296,6 +320,35 @@ If you want to break the 20x20 limit, you can do the following:
     $det->tune('luLimit', 40); //or whatever you are prepared to put up with
     $mI = $mA('Invert');
 </pre>
+
+*  MarkovRandomWalk - Given a Markov Chain repesented as a Numeric Matrix, randomly 
+walk from a start row to a target row, returning a Row Vector Numeric Matrix of IntTypes:
+
+<pre>
+    $det = new chippyash\Math\Matrix\Derivative\MarkovRandomWalk();
+    $res = $det->transform(
+        $mA, 
+        array(
+            'start'=>TypeFactory::createInt(2), 
+            'target'=>TypeFactory::createInt(4)
+        )
+    );
+</pre>
+
+You can supply an optional third parameter, `limit` to limit the steps that can be taken.
+This is set to 100 by default.
+
+<pre>
+    $res = $mA(
+        'MarkovRandomWalk', 
+        array(
+            'start'=>TypeFactory::createInt(2), 
+            'target'=>TypeFactory::createInt(4),
+            'limit'=>TypeFactory::createInt(10)
+        )
+    );
+</pre>
+
 
 #### Matrices can be decomposed
 

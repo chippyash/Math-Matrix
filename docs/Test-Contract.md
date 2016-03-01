@@ -242,6 +242,16 @@
 *  Tuning with invalid name throws exception
 
 ## 
+      chippyash\Test\Math\Matrix\Derivative\MarkovWeightedRandom
+    
+
+*  If only one choice is available for a next link it will be returned
+*  A zero sum of a chain row will throw an exception
+*  A non integer sum of a chain row will throw an exception
+*  Using negative values will throw an exception
+*  You can pick the next link in a chain
+
+## 
       chippyash\Test\Math\Matrix\Derivative\Strategy\Determinant\Laplace
     
 
@@ -459,6 +469,18 @@
 *  Compute non invertible matrices throws exception
 *  Transform with numeric matrix returns correct result
 *  Transform with rational matrix produces identity matrix when multiplied
+
+## 
+      chippyash\Test\Math\Matrix\Transformation\MarkovRandomWalk
+    
+
+*  You must supply a start row parameter
+*  The start parameter must be an inttype
+*  The target parameter must be an inttype
+*  The limit parameter if provided must be an inttype
+*  You must supply a target row parameter
+*  You can walk through the chain by weighted random selection and return a row vector of inttypes
+*  You can place a limit on the walk
 
 ## 
       chippyash\Test\Math\Matrix\ZeroMatrix
