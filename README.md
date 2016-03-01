@@ -2,6 +2,8 @@
 
 ## Quality
 
+[![Build Status](https://travis-ci.org/chippyash/Math-Matrix.svg?branch=master)](https://travis-ci.org/chippyash/Math-Matrix)
+
 See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md)
 
 ## What?

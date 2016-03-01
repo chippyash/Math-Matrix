@@ -105,8 +105,9 @@ class MarkovRandomWalkTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('chippyash\Math\Matrix\NumericMatrix', $res);
         $this->assertTrue($res->is('Rowvector'));
-        foreach(array_pop($res->toArray()) as $r) {
-            $this->assertInstanceOf('chippyash\Type\Number\IntType', $r);
+        $links = array_pop($res->toArray());
+        foreach($links as $rowNum) {
+            $this->assertInstanceOf('chippyash\Type\Number\IntType', $rowNum);
         }
     }
 
