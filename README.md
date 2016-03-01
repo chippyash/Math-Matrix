@@ -3,7 +3,15 @@
 ## Quality
 
 [![Build Status](https://travis-ci.org/chippyash/Math-Matrix.svg?branch=master)](https://travis-ci.org/chippyash/Math-Matrix)
+[![Test Coverage](https://codeclimate.com/github/chippyash/Math-Matrix/badges/coverage.svg)](https://codeclimate.com/github/chippyash/Math-Matrix/coverage)
+[![Code Climate](https://codeclimate.com/github/chippyash/Math-Matrix/badges/gpa.svg)](https://codeclimate.com/github/chippyash/Math-Matrix)
 
+The above badges represent the current development branch.  As a rule, I don't push
+ to GitHub unless tests, coverage and usability are acceptable.  This may not be
+ true for short periods of time; on holiday, need code for some other downstream
+ project etc.  If you need stable code, use a tagged version. Read 'Further Documentation'
+ and 'Installation'.
+ 
 See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md)
 
 ## What?
@@ -323,7 +331,7 @@ If you want to break the 20x20 limit, you can do the following:
     $mI = $mA('Invert');
 </pre>
 
-*  MarkovRandomWalk - Given a Markov Chain repesented as a Numeric Matrix, randomly 
+*  MarkovRandomWalk - Given a Markov Chain represented as a Numeric Matrix, randomly 
 walk from a start row to a target row, returning a Row Vector Numeric Matrix of IntTypes:
 
 <pre>
@@ -505,7 +513,7 @@ The library is only available at present in dev-master
 add
 
 <pre>
-    "chippyash/matrix": "dev-master"
+    "chippyash/math-matrix": "dev-master"
 </pre>
 
 to your composer.json "requires" section.  You may need to add
@@ -521,15 +529,15 @@ to your composer.json file
 Clone this repo, and then run Composer in local repo root to pull in dependencies
 
 <pre>
-    git clone git@github.com:chippyash/Math-Matrix.git Matrix
-    cd Matrix
+    git clone git@github.com:chippyash/Math-Matrix.git Math-Matrix
+    cd Math-Matrix
     composer install
 </pre>
 
 To run the tests:
 
 <pre>
-    cd Matrix
-    vendor/bin/phpunit -c Test/phpunit.xml Test/
+    cd Math-Matrix
+    vendor/bin/phpunit -c test/phpunit.xml test/
 </pre>
 

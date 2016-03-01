@@ -21,9 +21,8 @@ before_script:
 script:
   - vendor/bin/phpunit --configuration test/phpunit.xml --coverage-clover build/logs/clover.xml test
 
-#after_success:
-#    - php vendor/bin/coveralls -v
-#    - CODECLIMATE_REPO_TOKEN=4bb5e11a781e977d22fb5b2209b45a08e383a7671524d73b5a12f1424d91c645 ./vendor/bin/test-reporter
+after_success:
+    - CODECLIMATE_REPO_TOKEN=e126f5970b487e0c9a38a52f05a564701fe40e32fc4ffb3c69e5311c3e0e97a4 ./vendor/bin/test-reporter
 
 # configure notifications (email, IRC, campfire etc)
 notifications:
