@@ -11,11 +11,14 @@
 
 include "../vendor/autoload.php";
 
-use chippyash\Math\Matrix\MatrixFactory;
-use chippyash\Math\Matrix\Derivative\Determinant;
+use Chippyash\Math\Matrix\MatrixFactory;
+use Chippyash\Math\Matrix\Derivative\Determinant;
 use chippyash\Type\Number\Rational\RationalTypeFactory;
-use chippyash\Type\Number\IntType;
 use chippyash\Type\String\StringType;
+use chippyash\Type\TypeFactory;
+use chippyash\Type\RequiredType;
+
+RequiredType::getInstance()->set(RequiredType::TYPE_NATIVE);
 
 function createMatrix($size)
 {
@@ -23,7 +26,7 @@ function createMatrix($size)
     $fn = function($r, $c) use(&$c) {
         return RationalTypeFactory::create($c++,1);
     };
-    $iSize = new IntType($size);
+    $iSize = TypeFactory::createInt($size);
     return MatrixFactory::createFromFunction($fn, $iSize, $iSize, new StringType('rational'));
 }
 

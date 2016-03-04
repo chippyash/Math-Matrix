@@ -12,7 +12,7 @@ The above badges represent the current development branch.  As a rule, I don't p
  project etc.  If you need stable code, use a tagged version. Read 'Further Documentation'
  and 'Installation'.
  
-See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md)
+See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md) (455 tests, 774 assertions)
 
 ## What?
 
@@ -119,9 +119,9 @@ Both the RationalMatrix and ComplexMatrix extend the NumericMatrix.
 Creating a numeric type matrix is straightforward:
 
 <pre>
-    use chippyash\Math\Matrix\NumericMatrix;
-    use chippyash\Math\Matrix\RationalMatrix;
-    use chippyash\Math\Matrix\ComplexMatrix;
+    use Chippyash\Math\Matrix\NumericMatrix;
+    use Chippyash\Math\Matrix\RationalMatrix;
+    use Chippyash\Math\Matrix\ComplexMatrix;
     //create empty matrices
     $mA = new NumericMatrix([]);
     $mB = new RationalMatrix([]);
@@ -206,7 +206,7 @@ Remember, you can use the is() method to test for an attribute on a matrix.
 *  Computations always return a matrix.
 *  The original matrix is untouched
 *  You can use the magic __invoke functionality
-*  Computations implement the chippyash\Math\Matrix\Interfaces\ComputationInterface
+*  Computations implement the Chippyash\Math\Matrix\Interfaces\ComputationInterface
 *  Computations work with scalar values or other matrices.  Non scalar values will throw an exception
 
 On the whole, computations, will work with any scalar but:
@@ -232,7 +232,7 @@ The following computations are provided (using the magic invoke interface method
 <pre>
     $mC = $mA('Mul\Matrix', $mB);
     //same as
-    $fMul = new chippyash\Math\Matrix\Computation\Mul\Matrix();
+    $fMul = new Chippyash\Math\Matrix\Computation\Mul\Matrix();
     $mC = $mA->compute($fMul, $mB)
     //same as
     $mC = $fMul->compute($mA, $mB);
@@ -243,7 +243,7 @@ The following computations are provided (using the magic invoke interface method
 *  Derivatives always return a numeric result
 *  The original matrix is untouched
 *  You can use the magic __invoke functionality
-*  Derivatives implement the chippyash\Math\Matrix\Interfaces\DerivativeInterface
+*  Derivatives implement the Chippyash\Math\Matrix\Interfaces\DerivativeInterface
 
 Four derivatives are currently supplied.
 
@@ -252,7 +252,7 @@ Four derivatives are currently supplied.
 <pre>
     $det = $mA("Determinant");
     //same as
-    $fDet = new chippyash\Math\Matrix\Derivative\Determinant();
+    $fDet = new Chippyash\Math\Matrix\Derivative\Determinant();
     $det = $mA->derive($fDet);
     //same as
     $det = $fDet($mA);
@@ -314,11 +314,11 @@ currently feasible for matrices up to 20x20
     try {
         $mI = $mA('Invert');
         //same as
-        $fInvert = new chippyash\Math\Matrix\Transformation\Invert();
+        $fInvert = new Chippyash\Math\Matrix\Transformation\Invert();
         $mI = $mA->transform($fInvert);
         //same as
         $mI = $fInvert($mA);
-    } catch (chippyash\Math\Matrix\Exceptions\ComputationException $e) {
+    } catch (Chippyash\Math\Matrix\Exceptions\ComputationException $e) {
         //cannot invert
     }
 </pre>
@@ -326,7 +326,7 @@ currently feasible for matrices up to 20x20
 If you want to break the 20x20 limit, you can do the following:
 
 <pre>
-    $det = new chippyash\Math\Matrix\Derivative\Determinant();
+    $det = new Chippyash\Math\Matrix\Derivative\Determinant();
     $det->tune('luLimit', 40); //or whatever you are prepared to put up with
     $mI = $mA('Invert');
 </pre>
@@ -335,7 +335,7 @@ If you want to break the 20x20 limit, you can do the following:
 walk from a start row to a target row, returning a Row Vector Numeric Matrix of IntTypes:
 
 <pre>
-    $det = new chippyash\Math\Matrix\Derivative\MarkovRandomWalk();
+    $det = new Chippyash\Math\Matrix\Derivative\MarkovRandomWalk();
     $res = $det->transform(
         $mA, 
         array(
@@ -365,7 +365,7 @@ This is set to 100 by default.
 *  The original matrix is untouched
 *  You can use the magic __invoke functionality
 *  Decompositions return a decomposition object, from which you can access the various parts of the decomposition.
-*  Decompositions implement the chippyash\Math\Matrix\Interfaces\DecompositionInterface
+*  Decompositions implement the Chippyash\Math\Matrix\Interfaces\DecompositionInterface
 
 The library currently supports:
 
@@ -376,7 +376,7 @@ The library currently supports:
 <pre>
     $lu = $mA('Lu');
     //same as
-    $fLu = new chippyash\Math\Matrix\Decomposition\Lu()
+    $fLu = new Chippyash\Math\Matrix\Decomposition\Lu()
     $lu = $mA->decompose($fLu);
     //same as
     $lu = $fLu($mA);
@@ -417,7 +417,7 @@ N.B.  Product names for any decomposition are case sensitive
             );
     $elim = $mA('GaussJordonElimination', $mB);
     //same as
-    $fElim = new chippyash\Math\Matrix\Decomposition\GaussJordonElimination()
+    $fElim = new Chippyash\Math\Matrix\Decomposition\GaussJordonElimination()
     $elim = $mA->decompose($fElim, $mB);
     //same as
     $elim = $fElim($mA, $mB);
@@ -443,7 +443,7 @@ where
 
 An additional display formatter is supported by the library:
 
-\chippyash\Math\Matrix\Formatter\AsciiNumeric
+\Chippyash\Math\Matrix\Formatter\AsciiNumeric
 
 It extends the \chippyash\Matrix\Formatter\Ascii.  An additional option 'outputType'
 is provided that should take one of the following values:
@@ -471,7 +471,7 @@ Example:
 As matrix maths can throw up problems, particularly when inverting or decomposing,
 it is always a good idea to wrap whatever you are doing in a try - catch block.
 The following exceptions are supported by the library.  They all extend from the
-chippyash\Matrix\Exceptions\MatrixException.  The base namespace is chippyash\Math\Matrix\Exceptions
+chippyash\Matrix\Exceptions\MatrixException.  The base namespace is Chippyash\Math\Matrix\Exceptions
 
 <pre>
 MathMatrixException
@@ -479,6 +479,7 @@ MathMatrixException
   NoInverseException
   SingularMatrixException
   UndefinedComputationException
+  NotMarkovException
 </pre>
 
 ### Changing the library
@@ -508,21 +509,13 @@ Install [Composer] (https://getcomposer.org/)
 
 #### For production
 
-The library is only available at present in dev-master
-
 add
 
 <pre>
-    "chippyash/math-matrix": "dev-master"
+    "chippyash/math-matrix": "~1.0"
 </pre>
 
-to your composer.json "requires" section.  You may need to add
-
-<pre>
-    "minimum-stability":"dev"
-</pre>
-
-to your composer.json file
+to your composer.json "requires" section.
 
 #### For development
 
@@ -553,4 +546,7 @@ license, which does not allow unrestricted inclusion of this code in commercial 
 
 ## History
 
+V1.0.0 Initial Release - after 2 years of development - yippee!
+
+V1.1.0 Update dependencies
 

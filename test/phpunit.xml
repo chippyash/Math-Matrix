@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-PHPUnit configuration file to run chippyash\Matrix tests
+PHPUnit configuration file to run Chippyash\Matrix tests
 -->
 
 <!--
@@ -30,7 +30,6 @@ testSuiteLoaderFile="/path/to/StandardTestSuiteLoader.php"
          timeoutForSmallTests="1"
          timeoutForMediumTests="10"
          timeoutForLargeTests="60"
-         strict="false"
          verbose="false">
 
     <!--
@@ -41,10 +40,10 @@ testSuiteLoaderFile="/path/to/StandardTestSuiteLoader.php"
         <blacklist>
             <directory>../vendor</directory>
             <!-- don't cover interfaces- nothing to test! -->
-            <directory>../src/chippyash/Math/Matrix/Interfaces</directory>
+            <directory>../src/Chippyash/Math/Matrix/Interfaces</directory>
             <!-- don't cover base math matrix exception.  It is an empty class so
             clover doesn't understand it.  It is tested - see ExceptionsTest -->
-            <file>../src/chippyash/Math/Matrix/Exceptions/MathMatrixException.php</file>
+            <file>../src/Chippyash/Math/Matrix/Exceptions/MathMatrixException.php</file>
         </blacklist>
     </filter>
 

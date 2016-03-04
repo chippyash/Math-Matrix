@@ -22,9 +22,9 @@
   ],
   "require": {
     "php": ">=5.4",
-    "chippyash/matrix": "~1.2",
-    "chippyash/math-type-calculator": "~1.1",
-    "chippyash/assembly-builder": "~1.1",
+    "chippyash/matrix": "~2",
+    "chippyash/math-type-calculator": "~2.0",
+    "chippyash/assembly-builder": "~1.2",
     "chippyash/monad": "~1.2"
   },
   "require-dev": {
@@ -33,7 +33,7 @@
   },
   "autoload": {
     "psr-0": {
-      "chippyash\\Math\\Matrix\\": "src"
+      "Chippyash\\Math\\Matrix\\": "src"
     }
   }
 }
