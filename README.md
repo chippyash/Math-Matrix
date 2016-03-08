@@ -230,7 +230,8 @@ The following computations are provided (using the magic invoke interface method
 *  'Div\Scalar'    : divide matrix by scalar value
 *  'Div\Matrix'    : divide matrix by another matrix - see notes at head of this readme
 *  'Div\Entrywise' : divide matrix by another matrix using an Entrywise method. Where a particular vertex is division
- by zero, a null will be resulted, so check for completness after such a division
+ by zero, a zero will be resulted.  This is a defensive strategy and there is no right answer.
+ Best defence is to ensure that the matrix you are dividing by does not contain zeros 
 
 <pre>
     $mC = $mA('Mul\Matrix', $mB);
@@ -552,4 +553,6 @@ license, which does not allow unrestricted inclusion of this code in commercial 
 V1.0.0 Initial Release - after 2 years of development - yippee!
 
 V1.1.0 Update dependencies
+
+V1.2.0 Add Entrywise calculations
 
