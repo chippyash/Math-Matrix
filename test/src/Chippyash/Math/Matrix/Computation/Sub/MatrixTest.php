@@ -47,7 +47,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException Chippyash\Matrix\Exceptions\MatrixException
-     * @expectedExceptionMessage mA->rows != mB->rows
+     * @expectedExceptionMessage mA->cols != mB->cols
      */
     public function testComputeThrowsExceptionIfBothOperandsNotSameSize()
     {

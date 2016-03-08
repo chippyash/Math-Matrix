@@ -220,14 +220,17 @@ On the whole, computations, will work with any scalar but:
 
 The following computations are provided (using the magic invoke interface method):
 
-*  'Add\Scalar' : add scalar value to the matrix
-*  'Add\Matrix' : add a matrix to the matrix
-*  'Sub\Scalar' : subtract scalar value from the matrix
-*  'Sub\Matrix' : subtract a matrix from the matrix
-*  'Mul\Scalar' : multiply matrix by scalar value
-*  'Mul\Matrix' : multiply matrix by another matrix
-*  'Div\Scalar' : divide matrix by scalar value
-*  'Div\Matrix' : divide matrix by another matrix - see notes at head of this readme
+*  'Add\Scalar'    : add scalar value to the matrix
+*  'Add\Matrix'    : add a matrix to the matrix
+*  'Sub\Scalar'    : subtract scalar value from the matrix
+*  'Sub\Matrix'    : subtract a matrix from the matrix
+*  'Mul\Scalar'    : multiply matrix by scalar value
+*  'Mul\Matrix'    : multiply matrix by another matrix using common [Matrix Product Method](https://en.wikipedia.org/wiki/Matrix_multiplication#General_definition_of_the_matrix_product)
+*  'Mul\Entrywise' : multiply matrix by another matrix using [Hadamard or Schur Product Method](https://en.wikipedia.org/wiki/Matrix_multiplication#Hadamard_product)
+*  'Div\Scalar'    : divide matrix by scalar value
+*  'Div\Matrix'    : divide matrix by another matrix - see notes at head of this readme
+*  'Div\Entrywise' : divide matrix by another matrix using an Entrywise method. Where a particular vertex is division
+ by zero, a null will be resulted, so check for completness after such a division
 
 <pre>
     $mC = $mA('Mul\Matrix', $mB);
