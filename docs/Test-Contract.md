@@ -84,6 +84,16 @@
 *  Compute returns correct result
 
 ## 
+      Chippyash\Test\Math\Matrix\Computation\Div\Entrywise
+    
+
+*  Compute rejects second param not being matrix
+*  Compute only accepts matrix values
+*  Compute with an empty matrix returns a matrix
+*  Compute returns correct results
+*  Division by zero results in zero vertices
+
+## 
       Chippyash\Test\Math\Matrix\Computation\Div\Matrix
     
 
@@ -120,6 +130,17 @@
 *  Scalar multiplication is compatible with matrix multiplication
 *  Transposition is commutative
 *  Trace is commutative
+
+## 
+      Chippyash\Test\Math\Matrix\Computation\Mul\Entrywise
+    
+
+*  Compute rejects second param not being matrix
+*  Compute only accepts matrix values
+*  Compute returns empty if matrix is empty
+*  Single item matrices return single item product
+*  Square x square returns square matrix
+*  Multiplying two matrices that are not the same shape will throw an exception
 
 ## 
       Chippyash\Test\Math\Matrix\Computation\Mul\Matrix
