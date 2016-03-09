@@ -9,13 +9,10 @@
  */
 namespace Chippyash\Math\Matrix;
 
-use Chippyash\Math\Matrix\FunctionMatrix;
-use Chippyash\Math\Matrix\RationalMatrix;
-use Chippyash\Math\Matrix\ComplexMatrix;
 use Chippyash\Type\Number\IntType;
-use Chippyash\Type\Number\FloatType;
-use Chippyash\Type\Number\Rational\RationalType;
-use Chippyash\Type\Number\Complex\ComplexType;
+use Chippyash\Type\Number\Rational\RationalTypeFactory;
+use Chippyash\Type\Number\Complex\ComplexTypeFactory;
+use Chippyash\Type\TypeFactory;
 
 /**
  * Construct an identity matrix
@@ -62,13 +59,13 @@ class IdentityMatrix extends FunctionMatrix
 
         $f = function($row, $col) use ($idt) {
             if ($idt == self::IDM_TYPE_RATIONAL) {
-                return new RationalType(new IntType($row == $col ? 1 : 0), new IntType(1));
+                return RationalTypeFactory::create($row == $col ? 1 : 0, 1);
             } elseif ($idt == self::IDM_TYPE_COMPLEX) {
-                return new ComplexType(
-                        new RationalType(new IntType($row == $col ? 1 : 0), new IntType(1)),
-                        new RationalType(new IntType(0), new IntType(1)));
+                return ComplexTypeFactory::create(
+                        RationalTypeFactory::create($row == $col ? 1 : 0, 1),
+                        RationalTypeFactory::create(0, 1));
             } else {
-                return new IntType($row == $col ? 1 : 0);
+                return TypeFactory::createInt($row == $col ? 1 : 0);
             }
         };
 
@@ -83,7 +80,7 @@ class IdentityMatrix extends FunctionMatrix
      */
     public static function rationalIdentity(IntType $size)
     {
-        $mA = new self($size, new IntType(self::IDM_TYPE_RATIONAL));
+        $mA = new self($size, TypeFactory::createInt(self::IDM_TYPE_RATIONAL));
         return new RationalMatrix($mA);
     }
 
@@ -95,7 +92,7 @@ class IdentityMatrix extends FunctionMatrix
      */
     public static function complexIdentity(IntType $size)
     {
-        $mA = new self($size, new IntType(self::IDM_TYPE_COMPLEX));
+        $mA = new self($size, TypeFactory::createInt(self::IDM_TYPE_COMPLEX));
         return new ComplexMatrix($mA);
     }
 
@@ -107,7 +104,7 @@ class IdentityMatrix extends FunctionMatrix
      */
     public static function numericIdentity(IntType $size)
     {
-        return new self($size, new IntType(self::IDM_TYPE_INT));
+        return new self($size, TypeFactory::createInt(self::IDM_TYPE_INT));
     }
 
 

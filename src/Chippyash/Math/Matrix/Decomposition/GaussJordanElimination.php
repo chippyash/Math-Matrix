@@ -12,7 +12,6 @@
 
 namespace Chippyash\Math\Matrix\Decomposition;
 
-use Chippyash\Math\Matrix\Decomposition\AbstractDecomposition;
 use Chippyash\Math\Matrix\NumericMatrix;
 use Chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
 use Chippyash\Math\Matrix\Traits\AssertMatrixIsNumeric;
@@ -20,10 +19,9 @@ use Chippyash\Math\Matrix\Exceptions\SingularMatrixException;
 use Chippyash\Matrix\Traits\AssertParameterIsMatrix;
 use Chippyash\Matrix\Traits\AssertMatrixIsSquare;
 use Chippyash\Matrix\Traits\AssertMatrixRowsAreEqual;
-use Chippyash\Type\Number\IntType;
-use Chippyash\Type\Number\Rational\RationalType;
 use Chippyash\Math\Type\Calculator;
 use Chippyash\Math\Type\Comparator;
+use Chippyash\Type\Number\Rational\RationalTypeFactory;
 
 /**
  * Gauss Jordan Elimination
@@ -64,9 +62,9 @@ class GaussJordanElimination extends AbstractDecomposition
      * @param NumericMatrix $mA First matrix to act on - required
      * @param NumericMatrix $extra Second matrix to act upon - required
      *
-     * @return Chippyash\Matrix\Decomposition\AbstractDecomposition Fluent Interface
+     * @return \Chippyash\Math\Matrix\DecompositionAbstractDecomposition Fluent Interface
      *
-     * @throws Chippyash\Math\Matrix\Exceptions\SingularMatrixException
+     * @throws \Chippyash\Math\Matrix\Exceptions\SingularMatrixException
      */
     public function decompose(NumericMatrix $mA, $extra = null)
     {
@@ -79,8 +77,8 @@ class GaussJordanElimination extends AbstractDecomposition
         $rows = $mA->rows();
         $dA = $mA->toArray();
         $dB = $extra->toArray();
-        $zero = function(){return new RationalType(new IntType(0), new IntType(1));};
-        $one = function(){return new RationalType(new IntType(1), new IntType(1));};
+        $zero = function(){return RationalTypeFactory::create(0, 1);};
+        $one = function(){return RationalTypeFactory::create(1, 1);};
         $calc = new Calculator();
         $comp = new Comparator();
 

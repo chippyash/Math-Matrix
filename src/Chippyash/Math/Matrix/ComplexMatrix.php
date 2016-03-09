@@ -9,11 +9,10 @@
  */
 namespace Chippyash\Math\Matrix;
 
-use Chippyash\Math\Matrix\NumericMatrix;
 use Chippyash\Type\Number\Complex\ComplexType;
-use Chippyash\Type\Number\Rational\RationalType;
-use Chippyash\Type\Number\IntType;
 use Chippyash\Math\Matrix\Traits\ConvertNumberToComplex;
+use Chippyash\Type\Number\Rational\RationalTypeFactory;
+use Chippyash\Type\Number\Complex\ComplexTypeFactory;
 
 /**
  * Construct a matrix whose entries are complex numbers
@@ -40,8 +39,8 @@ class ComplexMatrix extends NumericMatrix
     public function __construct($source, ComplexType $normalizeDefault = null)
     {
         if (is_null($normalizeDefault)) {
-            $ri = new RationalType(new IntType(0), new IntType(1));
-            $normalizeDefault = new ComplexType($ri, clone $ri);
+            $ri = RationalTypeFactory::create(0, 1);
+            $normalizeDefault = ComplexTypeFactory::create($ri, clone $ri);
         }
         parent::__construct($source, $normalizeDefault);
     }

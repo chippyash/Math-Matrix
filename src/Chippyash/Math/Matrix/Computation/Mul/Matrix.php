@@ -20,7 +20,7 @@ use Chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
 use Chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
 use Chippyash\Math\Matrix\Traits\AssertMatrixIsNumeric;
 use Chippyash\Matrix\Traits\AssertParameterIsMatrix;
-use Chippyash\Type\Number\IntType;
+use Chippyash\Type\TypeFactory;
 use Chippyash\Math\Type\Calculator;
 
 /**
@@ -73,7 +73,7 @@ class Matrix extends AbstractComputation
      */
     protected function doComputation(NumericMatrix $mA, NumericMatrix $mB)
     {
-        $size = new IntType(max(array($mA->columns(), $mA->rows(), $mB->columns(), $mB->rows())));
+        $size = TypeFactory::createInt(max(array($mA->columns(), $mA->rows(), $mB->columns(), $mB->rows())));
         $mZ = new ZMatrix($size, $size);
         $size = $size(); //convert back to internal type
         $product = $mZ->toArray();

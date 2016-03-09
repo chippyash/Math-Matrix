@@ -17,7 +17,7 @@ use Chippyash\Math\Matrix\Interfaces\DerivativeInterface;
 use Chippyash\Math\Matrix\Interfaces\DecompositionInterface;
 use Chippyash\Matrix\Interfaces\TransformationInterface;
 use Chippyash\Type\Number\Rational\RationalTypeFactory;
-use Chippyash\Type\Number\IntType;
+use Chippyash\Type\TypeFactory;
 use Chippyash\Type\Interfaces\NumericTypeInterface;
 use Chippyash\Math\Type\Comparator;
 
@@ -49,7 +49,7 @@ class NumericMatrix extends Matrix
      *
      * @param NumericMatrix|array $source Array to initialise the matrix with
      * @param mixed $normalizeDefault Value to set missing vertices
-     * @throws Chippyash\Math\Matrix\Exceptions\MathMatrixException
+     * @throws \Chippyash\Math\Matrix\Exceptions\MathMatrixException
      */
     public function __construct($source, $normalizeDefault = 0)
     {
@@ -60,7 +60,7 @@ class NumericMatrix extends Matrix
 
         if (is_array($source)) {
             if (is_int($normalizeDefault)) {
-                $default = new IntType($normalizeDefault);
+                $default = TypeFactory::createInt($normalizeDefault);
             } elseif (is_float($normalizeDefault)) {
                 $default = RationalTypeFactory::fromFloat($normalizeDefault);
             } elseif (!$normalizeDefault instanceof NumericTypeInterface) {

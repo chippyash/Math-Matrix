@@ -12,7 +12,7 @@ namespace Chippyash\Math\Matrix\Derivative;
 
 use Chippyash\Math\Matrix\NumericMatrix;
 use Chippyash\Math\Type\Calculator;
-use Chippyash\Type\Number\IntType;
+use Chippyash\Type\TypeFactory;
 
 /**
  * Sum Derivative
@@ -27,7 +27,7 @@ class Sum extends AbstractDerivative
     public function derive(NumericMatrix $mA, $extra = null)
     {
         if ($mA->is('empty')) {
-            return new IntType(0);
+            return TypeFactory::createInt(0);
         }
         if ($mA->is('singleitem')) {
             return $mA->get(1,1);
@@ -42,7 +42,7 @@ class Sum extends AbstractDerivative
                 $c1
             );
         },
-            new IntType(0)
+            TypeFactory::createInt(0)
         );
     }
 }

@@ -9,11 +9,9 @@
  */
 namespace Chippyash\Math\Matrix\Traits;
 
-use Chippyash\Type\Number\Rational\RationalType;
 use Chippyash\Type\Number\Rational\RationalTypeFactory;
 use Chippyash\Type\Number\Complex\ComplexTypeFactory;
 use Chippyash\Type\Interfaces\NumericTypeInterface;
-use Chippyash\Type\Number\IntType;
 use Chippyash\Matrix\Exceptions\MatrixException;
 
 /**
@@ -24,11 +22,12 @@ Trait ConvertNumberToRational
     /**
      * Convert if possible a supplied argument to a rational
      *
-     * @param int|float|string|NumericTypeInterface $numerator
+     * @param int|float|string|NumericTypeInterface $value
      *
-     * @return Chippyash\Math\Matrix\RationalNumber
+     * @return \Chippyash\Math\Matrix\RationalNumber
      *
-     * @throws Chippyash\Matrix\Exceptions\MatrixException
+     * @throws \Chippyash\Matrix\Exceptions\MatrixException
+     * @throws \Exception
      */
     protected function convertNumberToRational($value)
     {
@@ -38,7 +37,7 @@ Trait ConvertNumberToRational
 
         switch(gettype($value)) {
             case 'integer':
-                return new RationalType(new IntType($value), new IntType(1));
+                return RationalTypeFactory::create($value, 1);
             case 'double':
                 return RationalTypeFactory::fromFloat($value);
             case 'string':
@@ -52,9 +51,9 @@ Trait ConvertNumberToRational
                     }
                 }
             case 'NULL':
-                return new RationalType(new IntType(0), new IntType(1));
+                return RationalTypeFactory::create(0, 1);
             case 'boolean':
-                return new RationalType(new IntType($value ? 1 : 0), new IntType(1));
+                return RationalTypeFactory::create($value ? 1 : 0, 1);
             default:
                 throw new MatrixException('Rational expects int, float, string, Rational or NumericTypeInterface ');
         }

@@ -556,3 +556,5 @@ V1.1.0 Update dependencies
 
 V1.2.0 Add Entrywise calculations
 
+V1.2.1 Eradicate calls to plain numeric strong types - use the factories
+

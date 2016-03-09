@@ -14,7 +14,7 @@ use Chippyash\Math\Matrix\Computation\AbstractEntryWiseComputation;
 use Chippyash\Math\Type\Calculator;
 use Chippyash\Math\Type\Comparator;
 use Chippyash\Type\Interfaces\NumericTypeInterface;
-use Chippyash\Type\Number\IntType;
+use Chippyash\Type\TypeFactory;
 
 class Entrywise extends AbstractEntryWiseComputation
 {
@@ -28,7 +28,7 @@ class Entrywise extends AbstractEntryWiseComputation
      */
     protected function doCompute(NumericTypeInterface $a, NumericTypeInterface $b, Calculator $calc)
     {
-        if ($this->getComparator()->compare($b, new IntType(0)) === 0) {
+        if ($this->getComparator()->compare($b, TypeFactory::createInt(0)) === 0) {
             return null;
         }
         return $calc->div($a, $b);

@@ -9,8 +9,9 @@
  */
 namespace Chippyash\Math\Matrix;
 
-use Chippyash\Math\Matrix\FunctionMatrix;
-use Chippyash\Type\Number\IntType;
+use Chippyash\Math\Type\Comparator;
+use Chippyash\Type\Interfaces\NumericTypeInterface;
+use Chippyash\Type\TypeFactory;
 
 /**
  * Construct a matrix with all entries set to 0/1
@@ -20,22 +21,24 @@ class ZeroMatrix extends FunctionMatrix
     /**
      * Construct a Matrix with all entries set to IntType(0)
      *
-     * @param Chippyash\Type\Number\IntType $rows Number of required rows
-     * @param Chippyash\Type\Number\IntType $cols Number of required columns
+     * @param NumericTypeInterface $rows Number of required rows
+     * @param NumericTypeInterface $cols Number of required columns
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(IntType $rows, IntType $cols)
+    public function __construct(NumericTypeInterface $rows, NumericTypeInterface $cols)
     {
-        if ($rows() < 1) {
+        $comp = new Comparator();
+        $one = TypeFactory::createInt(1);
+        if ($comp->lt($rows, $one)) {
             throw new \InvalidArgumentException('$rows must be >= 1');
         }
-        if ($cols() < 1) {
+        if ($comp->lt($cols, $one)) {
             throw new \InvalidArgumentException('$cols must be >= 1');
         }
 
         $f = function($row, $col) {
-            return new IntType(0);
+            return TypeFactory::createInt(0);
         };
 
         parent::__construct($f, $rows, $cols);

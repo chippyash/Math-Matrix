@@ -19,7 +19,6 @@ use Chippyash\Math\Type\Calculator;
 use Chippyash\Type\Number\IntType;
 use Chippyash\Type\Number\FloatType;
 use Chippyash\Type\Number\Rational\RationalType;
-use Chippyash\Type\Number\Complex\ComplexType;
 
 /**
  * Divide every item in the operand matrix by a scalar value

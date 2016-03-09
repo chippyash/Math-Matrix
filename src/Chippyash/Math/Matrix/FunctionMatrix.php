@@ -11,7 +11,6 @@
 
 namespace Chippyash\Math\Matrix;
 
-use Chippyash\Math\Matrix\NumericMatrix;
 use Chippyash\Type\Number\IntType;
 
 /**

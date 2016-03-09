@@ -9,9 +9,6 @@
  */
 namespace Chippyash\Math\Matrix;
 
-use Chippyash\Math\Matrix\NumericMatrix;
-use Chippyash\Math\Matrix\RationalMatrix;
-use Chippyash\Math\Matrix\ComplexMatrix;
 use Chippyash\Type\Number\Complex\ComplexType;
 use Chippyash\Type\Number\Complex\ComplexTypeFactory;
 use Chippyash\Type\Number\Rational\RationalType;
@@ -30,7 +27,7 @@ abstract class MatrixFactory
      *
      * @param string $type
      * @param array $data
-     * @return Chippyash\Math\Matrix\NumericMatrix
+     * @return \Chippyash\Math\Matrix\NumericMatrix
      */
     public static function create($type, array $data)
     {
@@ -56,7 +53,7 @@ abstract class MatrixFactory
      *
      * @return \Chippyash\Math\Matrix\ComplexMatrix
      *
-     * @throws Chippyash\Math\Matrix\Exceptions\MathMatrixException
+     * @throws \Chippyash\Math\Matrix\Exceptions\MathMatrixException
      */
     public static function createComplex(array $data)
     {
@@ -92,7 +89,7 @@ abstract class MatrixFactory
      *
      * @return \Chippyash\Math\Matrix\RationalMatrix
      *
-     * @throws Chippyash\Math\Matrix\Exceptions\MathMatrixException
+     * @throws \Chippyash\Math\Matrix\Exceptions\MathMatrixException
      */
     public static function createRational(array $data)
     {

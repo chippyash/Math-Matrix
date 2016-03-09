@@ -15,11 +15,11 @@ use Chippyash\Math\Matrix\Exceptions\NotMarkovException;
 use Chippyash\Math\Matrix\NumericMatrix;
 use Chippyash\Math\Type\Calculator;
 use Chippyash\Math\Type\Comparator;
+use Chippyash\Type\Interfaces\NumericTypeInterface;
 use Chippyash\Type\Number\IntType;
 use Chippyash\Type\TypeFactory;
 use Assembler\FFor;
 use Monad\FTry;
-use Monad\Match;
 
 class MarkovWeightedRandom extends AbstractDerivative
 {
@@ -69,13 +69,13 @@ class MarkovWeightedRandom extends AbstractDerivative
      * Array must be specified in [key => weight, ...] form
      *
      * @param NumericMatrix $mA Matrix to process
-     * @param IntType $current Chain row to get next pick from
+     * @param NumericTypeInterface $current Chain row to get next pick from
      *
      * @return IntType Random key to matrix row
      *
      * @throws MathMatrixException
      */
-    protected function nextWeightedRandom(NumericMatrix $mA, IntType $current)
+    protected function nextWeightedRandom(NumericMatrix $mA, NumericTypeInterface $current)
     {
         $array = FFor::create(['row' => $current, 'mA' => $mA])
             ->slice(function($row, $mA) {$t = $mA('Rowslice', [$row()])->toArray(); return array_pop($t);})

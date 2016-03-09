@@ -12,11 +12,11 @@ namespace Chippyash\Math\Matrix\Transformation;
 use Chippyash\Math\Matrix\Exceptions\MathMatrixException;
 use Chippyash\Matrix\Transformation\AbstractTransformation;
 use Chippyash\Matrix\Matrix;
-use Chippyash\Math\Matrix\Exceptions\ComputationException;
 use Chippyash\Math\Matrix\Traits\AssertMatrixIsNumeric;
 use Chippyash\Math\Matrix\NumericMatrix;
 use Chippyash\Math\Type\Calculator;
 use Chippyash\Math\Type\Comparator;
+use Chippyash\Type\Interfaces\NumericTypeInterface;
 use Chippyash\Type\Number\IntType;
 use Chippyash\Type\TypeFactory;
 
@@ -37,7 +37,7 @@ class MarkovRandomWalk extends AbstractTransformation
      *
      * @return NumericMatrix
      *
-     * @throws ComputationException
+     * @throws MathMatrixException
      */
     protected function doTransform(Matrix $mA, $extra = null)
     {
@@ -67,15 +67,20 @@ class MarkovRandomWalk extends AbstractTransformation
 
     /**
      * @param NumericMatrix $mA
-     * @param IntType $start
-     * @param IntType $target
-     * @param IntType $limit
+     * @param NumericTypeInterface $start
+     * @param NumericTypeInterface $target
+     * @param NumericTypeInterface $limit
+     *
      * @return NumericMatrix
      */
-    protected function walk(NumericMatrix $mA, IntType $start, IntType $target, IntType $limit)
+    protected function walk(
+        NumericMatrix $mA,
+        NumericTypeInterface $start,
+        NumericTypeInterface $target,
+        NumericTypeInterface $limit)
     {
-        $zero = new IntType(0);
-        $one = new IntType(1);
+        $zero = TypeFactory::createInt(0);
+        $one = TypeFactory::createInt(1);
         $calc = new Calculator();
         $comp = new Comparator();
         $lim = $calc->sub($limit, $one);

@@ -9,13 +9,11 @@
  */
 namespace Chippyash\Math\Matrix\Decomposition;
 
-use Chippyash\Math\Matrix\Decomposition\AbstractDecomposition;
 use Chippyash\Math\Matrix\NumericMatrix;
 use Chippyash\Math\Type\Calculator;
 use Chippyash\Math\Type\Comparator;
 use Chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
 use Chippyash\Math\Matrix\Traits\CreateCorrectScalarType;
-use Chippyash\Type\Number\IntType;
 
 /**
  * This is lifted from the JAMA package and adapted for this library from its
