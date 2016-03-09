@@ -180,4 +180,20 @@ EOF;
             //[AsciiNumeric::TP_COMPLEX] //no exception as we are formatting as complex
         ];
     }
+
+    public function testSettingFormatSkipsNonNumericVertices()
+    {
+        $data = [['foo','2016-12-15',34]];
+        $mA = new Matrix($data);
+        $test1 = <<<EOF
++---------------------------------+
+|        foo 2016-12-15         34|
++---------------------------------+
+
+EOF;
+        $this->assertEquals($test1, $this->object->format($mA, ['outputType'=> AsciiNumeric::TP_FLOAT]));
+        $this->assertEquals($test1, $this->object->format($mA, ['outputType'=> AsciiNumeric::TP_INT]));
+        $this->assertEquals($test1, $this->object->format($mA, ['outputType'=> AsciiNumeric::TP_COMPLEX]));
+        $this->assertEquals($test1, $this->object->format($mA, ['outputType'=> AsciiNumeric::TP_RATIONAL]));
+    }
 }

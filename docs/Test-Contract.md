@@ -328,6 +328,7 @@
 *  Format rational returns rationals with base matrix
 *  Format complex returns complex with base matrix
 *  Format with non real complex throws exception
+*  Setting format skips non numeric vertices
 
 ## 
       Chippyash\Test\Math\Matrix\FunctionMatrix

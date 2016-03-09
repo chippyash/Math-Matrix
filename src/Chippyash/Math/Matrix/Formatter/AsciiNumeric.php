@@ -91,8 +91,10 @@ class AsciiNumeric extends BaseAscii
             foreach ($row as &$entry) {
                 if ($entry instanceof NumericTypeInterface) {
                     $entry = $entry->asIntType()->get();
-                } else {
+                } elseif (is_numeric($entry)) {
                     $entry = intval($entry);
+                } else {
+                    $entry = $entry;
                 }
             }
         }
@@ -105,8 +107,10 @@ class AsciiNumeric extends BaseAscii
             foreach ($row as &$entry) {
                 if ($entry instanceof NumericTypeInterface) {
                     $entry = $entry->asFloatType()->get();
-                } else {
+                } elseif (is_numeric($entry)){
                     $entry = floatval($entry);
+                } else {
+                    $entry = $entry;
                 }
             }
         }
@@ -119,8 +123,10 @@ class AsciiNumeric extends BaseAscii
             foreach ($row as &$entry) {
                 if ($entry instanceof NumericTypeInterface) {
                     $entry = $entry->asRational();
-                } else {
+                } elseif (is_numeric($entry)) {
                     $entry = RationalTypeFactory::fromFloat(floatval($entry));
+                } else {
+                    $entry = $entry;
                 }
             }
         }
@@ -133,8 +139,10 @@ class AsciiNumeric extends BaseAscii
             foreach ($row as &$entry) {
                 if ($entry instanceof NumericTypeInterface) {
                     $entry = $entry->asComplex();
-                } else {
+                } elseif (is_numeric($entry)) {
                     $entry = ComplexTypeFactory::create($entry);
+                } else {
+                    $entry = $entry;
                 }
             }
         }

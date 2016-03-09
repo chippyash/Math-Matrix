@@ -12,7 +12,7 @@ The above badges represent the current development branch.  As a rule, I don't p
  project etc.  If you need stable code, use a tagged version. Read 'Further Documentation'
  and 'Installation'.
  
-See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md) (466 tests, 755 assertions)
+See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md) (467 tests, 744 assertions)
 
 ## What?
 
@@ -557,4 +557,6 @@ V1.1.0 Update dependencies
 V1.2.0 Add Entrywise calculations
 
 V1.2.1 Eradicate calls to plain numeric strong types - use the factories
+
+V1.2.2 Fix AsciiNumeric formatter - don't format strings
 
