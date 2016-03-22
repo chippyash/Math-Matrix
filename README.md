@@ -64,12 +64,7 @@ Check out [chippyash/Matrix](https://github.com/chippyash/Matrix) for underlying
 
 Check out [chippyash/Logical-Matrix](https://github.com/chippyash/Logical-matrix) for logical matrix operations
 
-Check out [chippyash/Strong-Type](https://github.com/chippyashl/Strong-Type) for strong type including numeric,
-rational and complex type support
-
-Check out [chippyash/Math-Type-Calculator](https://github.com/chippyash/Math-Type-Calculator) for arithmetic operations on aforementioned strong types
-
-Check out [chippyash/Builder-Pattern](https://github.com/chippyash/Builder-Pattern) for an implementation of the Builder Pattern for PHP
+Check out [ZF4 Packages](http://zf4.biz/packages?utm_source=github&utm_medium=web&utm_campaign=blinks&utm_content=mathmatrix) for more packages
 
 ## How
 
@@ -559,4 +554,6 @@ V1.2.0 Add Entrywise calculations
 V1.2.1 Eradicate calls to plain numeric strong types - use the factories
 
 V1.2.2 Fix AsciiNumeric formatter - don't format strings
+
+V1.2.3 Add link to packages
 
