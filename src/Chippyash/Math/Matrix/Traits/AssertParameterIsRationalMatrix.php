@@ -18,16 +18,16 @@ use Chippyash\Math\Matrix\Exceptions\ComputationException;
 Trait AssertParameterIsRationalMatrix
 {
     /**
-     * Run test to ensure parameter is a Matrix
+     * Run test to ensure parameter is a Rational Matrix
      *
-     * @param mixed $value
+     * @param mixed $param
      * @param string $msg Optional message
      *
      * @return Fluent Interface
      *
      * @throws ComputationException
      */
-    protected function assertParameterIsMatrix($param, $msg = 'Parameter is not a rational matrix')
+    protected function assertParameterIsRationalMatrix($param, $msg = 'Parameter is not a rational matrix')
     {
         if (!$param instanceof RationalMatrix) {
             throw new ComputationException($msg, 103);

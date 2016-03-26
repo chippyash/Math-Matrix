@@ -9,18 +9,18 @@
  */
 namespace Chippyash\Math\Matrix\Traits;
 
-use Chippyash\Type\Number\Rational\RationalNumber;
+use Chippyash\Type\Number\Rational\RationalType;
 use Chippyash\Math\Matrix\Exceptions\ComputationException;
 
 /**
- * Assert parameter is scalar
+ * Assert parameter is a rational number
  */
 Trait AssertParameterIsRationalNumber
 {
     /**
      * Run test to ensure parameter is a rational number
      *
-     * @param mixed $value
+     * @param mixed $param
      * @param string $msg Optional message
      *
      * @return Fluent Interface
@@ -29,7 +29,7 @@ Trait AssertParameterIsRationalNumber
      */
     protected function assertParameterIsRationalNumber($param, $msg = 'Parameter is not a rational number!')
     {
-        if (!$param instanceof RationalNumber) {
+        if (!$param instanceof RationalType) {
             throw new ComputationException($msg, 106);
         }
 

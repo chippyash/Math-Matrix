@@ -19,7 +19,7 @@ Trait AssertParameterIsNotString
     /**
      * Run test to ensure parameter is not a string
      *
-     * @param mixed $value
+     * @param mixed $param
      * @param string $msg Optional message
      *
      * @return Fluent Interface

@@ -38,7 +38,7 @@ The library is released under the [GNU GPL V3 or later license](http://www.gnu.o
 
 ## Why?
 
-This adds maths to the chippyash/Matrix library giving you the ability to create
+This adds maths to the Chippyash/Matrix library giving you the ability to create
 and manipulate matrices containing numeric (float, int, rational and complex) values.
 
 ## When
@@ -71,10 +71,10 @@ Check out [ZF4 Packages](http://zf4.biz/packages?utm_source=github&utm_medium=we
 The current version of this library utilises the PHP Native numeric Strong Types as the
 calculator that it uses can only deal with them at present.  GMP support is on the
 roadmap once the calculator provides it.  You can ensure that this is enforced by
-forcing its setting by a call to 
+forcing its setting with a call to 
 
 <pre>
-use chippyash\Type\RequiredType;
+use Chippyash\Type\RequiredType;
 RequiredType::getInstance()->set(RequiredType::TYPE_NATIVE);
 </pre>
 
@@ -90,8 +90,8 @@ As with any TDD application, the tests tell you everything you need to know abou
 the SUT.  Read them!  However for the short of tempered amongst us the salient
 points are:
 
-The library extends the chippyash/Matrix library, so anything you can do on a basic
-matrix, you can do with a numeric matrix.  The library utilises the chippyash/Strong-Type
+The library extends the Chippyash/Matrix library, so anything you can do on a basic
+matrix, you can do with a numeric matrix.  The library utilises the Chippyash/Strong-Type
 strong types.
 
 Three basic Matrix types are supplied
@@ -104,10 +104,10 @@ FloatType, RationalType and ComplexType data items
 The NumericMatrix is fine for general purpose work, but not if you want prove that
 the inverse(M) * M = Identity.  For that you'll need the RationalMatrix which is
 far more arithmetically stable.  This is also the matrix that will benefit from
-forthcoming support of PHP's various maths extension libraries in the chippyash/Strong-Type
+forthcoming support of PHP's various maths extension libraries in the Chippyash/Strong-Type
 library.
 
-The ComplexMatrix fully supports the chippyash\Type\Numeric\Complex\ComplexType.
+The ComplexMatrix fully supports the Chippyash\Type\Numeric\Complex\ComplexType.
 
 Both the RationalMatrix and ComplexMatrix extend the NumericMatrix.
 
@@ -444,7 +444,7 @@ An additional display formatter is supported by the library:
 
 \Chippyash\Math\Matrix\Formatter\AsciiNumeric
 
-It extends the \chippyash\Matrix\Formatter\Ascii.  An additional option 'outputType'
+It extends the \Chippyash\Matrix\Formatter\Ascii.  An additional option 'outputType'
 is provided that should take one of the following values:
 
 <pre>
@@ -465,15 +465,110 @@ Example:
         ->display(['outputType' => AsciiNumeric::TP_FLOAT]);
 </pre>
 
+#### Formatting for a directed graph
+
+To use this functionality you need to include
+
+<pre>
+    "clue/graph": "^0.9",
+    "graphp/graphviz": "0.2.*"
+</pre>
+
+to your composer requires section and run a composer update.
+
+This adds the functionality to use the GraphViz suite of programs to create image files
+from a NumericMatrix that describes a graph.
+  
+The simplest use of the renderer is to simply supply it a NumericMatrix:
+
+<pre>
+$mA = new NumericMatrix([[0,0,1],[0,1,0],[1,0,0]]);
+$dot = $mA->setFormatter(new DirectedGraph())->display();
+</pre>
+
+will produce a GraphViz .dot file content string such as:
+ 
+<pre>
+digraph G {
+  0 -> 2 [label=1]
+  1 -> 1 [label=1 dir="none"]
+  2 -> 0 [label=1]
+}
+</pre>
+
+Mot often however, you'll want to give some meaning to your vertices.  To do this, you 
+can pass in a Monad\Collection of VertexDescription objects.  For example
+
+<pre>
+use Monad\Collection;
+use Chippyash\Math\Matrix\Formatter\DirectedGraph\VertexDescription;
+
+$attribs = new Collection(
+    [
+        new VertexDescription(new StringType('A')),
+        new VertexDescription(new StringType('B')),
+        new VertexDescription(new StringType('C')),
+    ]
+);
+$dot = $mA->setFormatter(new DirectedGraph())->display(['attribs' => $attribs]);
+</pre>
+
+gives
+
+<pre>
+'digraph G {
+  "A" -> "C" [label=1]
+  "B" -> "B" [label=1 dir="none"]
+  "C" -> "A" [label=1]
+}
+</pre>
+
+You can also set things like colours and shapes via the VertexDescription.  Take a
+look at the tests.
+
+If you want to do some additional processing prior to generating something through GraphViz,
+you can pass in an optional parameter:
+
+<pre>
+$graph = $mA->setFormatter(new DirectedGraph())->display(['output' => 'object']);
+</pre>
+
+will return a Fhaculty\Graph\Graph object that you can process further before sending
+into Graphp\GraphViz\GraphViz.  You may also want to get a Graph so that you can do some
+graph processing via the Graphp\Algorithms library.
+
+Finally, with the DirectedGraph renderer, you can provide an optional callable function
+that will be applied to the values of the edges.  This is often useful to reformat the value
+in some way.  For instance:
+
+<pre>
+$mA = new NumericMatrix([[0,50,50],[33,33,33],[100,0,0]]);
+$func = function($origValue) {return \round($origValue / 100, 2);};
+$dot = $mA->setFormatter(new DirectedGraph())->display(['edgeFunc' => $func]);
+</pre>
+
+will produce
+
+<pre>
+digraph G {
+  0 -> 1 [label=0.5]
+  0 -> 2 [label=0.5]
+  1 -> 0 [label=0.33]
+  1 -> 1 [label=0.33 dir="none"]
+  1 -> 2 [label=0.33]
+  2 -> 0 [label=1]
+}
+</pre>
+
 #### Exception handling
 
 As matrix maths can throw up problems, particularly when inverting or decomposing,
 it is always a good idea to wrap whatever you are doing in a try - catch block.
 The following exceptions are supported by the library.  They all extend from the
-chippyash\Matrix\Exceptions\MatrixException.  The base namespace is Chippyash\Math\Matrix\Exceptions
+Chippyash\Matrix\Exceptions\MatrixException.  The base namespace is Chippyash\Math\Matrix\Exceptions
 
 <pre>
-MathMatrixException
+  MathMatrixException
   ComputationException
   NoInverseException
   SingularMatrixException
@@ -556,4 +651,6 @@ V1.2.1 Eradicate calls to plain numeric strong types - use the factories
 V1.2.2 Fix AsciiNumeric formatter - don't format strings
 
 V1.2.3 Add link to packages
+
+V1.3.0 Add Directed Graph from Matrix rendering
 
