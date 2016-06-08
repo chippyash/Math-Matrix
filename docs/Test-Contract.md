@@ -331,6 +331,30 @@
 *  Setting format skips non numeric vertices
 
 ## 
+      Chippyash\Test\Math\Matrix\Formatter\DirectedGraph\VertexDescription
+    
+
+*  A vertex description has a name
+*  Setting a valid attribute will return the object
+*  Setting an invalid attribute will throw an exception
+*  You can test that an attribute is present
+*  You can get an attribute value if it exists
+*  Getting an unknown attribute value will throw an exception
+*  You can get all attributes as an array
+*  Getting all attributes returns keyed array with keys prepended with graphviz
+
+## 
+      Chippyash\Test\Math\Matrix\Formatter\DirectedGraph
+    
+
+*  Supplying a non numeric matrix will throw an exception
+*  Supplying a non container attribs parameter will throw an exception
+*  You do not need to supply vertex descriptions
+*  You can supply an optional edge formatter
+*  Passing in a non closure as edge function will throw an exception
+*  You can render a valid numeric matrix that describes a graph
+
+## 
       Chippyash\Test\Math\Matrix\FunctionMatrix
     
 
@@ -446,6 +470,22 @@
 *  Not string param returns class
 *  String param throws exception
 *  String param throws exception with user message
+
+## 
+      Chippyash\Test\Math\Matrix\Traits\AssertParameterIsRationalMatrix
+    
+
+*  Testing a rational matrix returns class
+*  Testing a non rational matrix throws an exception
+*  Testing a non rational matrix throws an exception with user message
+
+## 
+      Chippyash\Test\Math\Matrix\Traits\AssertParameterIsRationalNumber
+    
+
+*  Testing a rational matrix returns class
+*  Testing a non rational number throws an exception
+*  Testing a non rational number throws an exception with user message
 
 ## 
       Chippyash\Test\Math\Matrix\Traits\ConvertNumberToComplex
