@@ -48,12 +48,14 @@ class IdentityMatrixTest extends \PHPUnit_Framework_TestCase
                 $mA->toArray());
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
     public function testConstructSizeNotIntTypeRaisesException()
     {
-        $this->object = new IdentityMatrix(1.123);
+        if (PHP_MAJOR_VERSION < 7) {
+            $this->setExpectedException('PHPUnit_Framework_Error');
+            $this->object = new IdentityMatrix(1.123);
+        } else {
+            $this->markTestSkipped('Test incompatible with PHP 7');
+        }
     }
 
     /**

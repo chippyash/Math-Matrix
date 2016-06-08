@@ -39,12 +39,14 @@ class FunctionMatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->is('empty'));
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
     public function testConstructNotCallableParameterRaisesException()
     {
-        $this->object = new FunctionMatrix('foo', TypeFactory::createInt(1),TypeFactory::createInt(1));
+        if (PHP_MAJOR_VERSION < 7) {
+            $this->setExpectedException('PHPUnit_Framework_Error');
+            $this->object = new FunctionMatrix('foo', TypeFactory::createInt(1), TypeFactory::createInt(1));
+        } else {
+            $this->markTestSkipped('Test incompatible with PHP 7');
+        }
     }
 
     /**

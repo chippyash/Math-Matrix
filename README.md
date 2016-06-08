@@ -2,6 +2,10 @@
 
 ## Quality
 
+![PHP 5.4](https://img.shields.io/badge/PHP-5.4-blue.svg)
+![PHP 5.5](https://img.shields.io/badge/PHP-5.5-blue.svg)
+![PHP 5.6](https://img.shields.io/badge/PHP-5.6-blue.svg)
+![PHP 7](https://img.shields.io/badge/PHP-7-blue.svg)
 [![Build Status](https://travis-ci.org/chippyash/Math-Matrix.svg?branch=master)](https://travis-ci.org/chippyash/Math-Matrix)
 [![Test Coverage](https://codeclimate.com/github/chippyash/Math-Matrix/badges/coverage.svg)](https://codeclimate.com/github/chippyash/Math-Matrix/coverage)
 [![Code Climate](https://codeclimate.com/github/chippyash/Math-Matrix/badges/gpa.svg)](https://codeclimate.com/github/chippyash/Math-Matrix)
@@ -12,7 +16,7 @@ The above badges represent the current development branch.  As a rule, I don't p
  project etc.  If you need stable code, use a tagged version. Read 'Further Documentation'
  and 'Installation'.
  
-See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md) (487 tests, 770 assertions)
+See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md) (487 tests, 774 assertions)
 
 ## What?
 
