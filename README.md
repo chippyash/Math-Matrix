@@ -189,6 +189,23 @@ Create a NumericMatrix with all entries set to zero
     $mZ = new ZeroMatrix(TypeFactory::createInt(2), TypeFactory::createInt(4));
 </pre>
 
+#### ShiftMatrix
+
+Create a [Shift Matrix](https://en.wikipedia.org/wiki/Shift_matrix)
+
+<pre>
+	$mA - IdentityMatrix::numericIdentity(TypeFactory::createInt(5));
+	
+	//create 5 x 5 shift matrices
+	$mSupper = new ShiftMatrix(new IntType(5), new StringType(ShiftMatrix::SM_TYPE_UPPER);
+	$mSlower = new ShiftMatrix(new IntType(5), new StringType(ShiftMatrix::SM_TYPE_LOWER);
+	//optionally specify the matrix content type
+	$mSupper = new ShiftMatrix(new IntType(5), new StringType(ShiftMatrix::SM_TYPE_UPPER, new IntType(IdentityMatrix::IDM_TYPE_COMPLEX));
+	
+	$mC = $mA('Mul\Matrix', $mSupper);
+	$mD = $mLower('Mul\Matrix', $mA);
+</pre>
+
 ####  Numeric matrices have additional attributes
 
 *  IsComplex: boolean - Is the matrix instanceof ComplexMatrix?
@@ -657,4 +674,6 @@ V1.2.2 Fix AsciiNumeric formatter - don't format strings
 V1.2.3 Add link to packages
 
 V1.3.0 Add Directed Graph from Matrix rendering
+
+V1.4.0 Add ShiftMatrix
 

@@ -1,16 +1,12 @@
 # Chippyash Math Matrix
 
-## 
-      Chippyash\Test\Math\Matrix\Attribute\IsComplex
-    
+## Chippyash\Test\Math\Matrix\Attribute\IsComplex
 
 *  Sut has attribute interface
 *  Complex matrix returns true
 *  Non complex matrix returns false
 
-## 
-      Chippyash\Test\Math\Matrix\Attribute\IsIdentity
-    
+## Chippyash\Test\Math\Matrix\Attribute\IsIdentity
 
 *  Sut has attribute interface
 *  Non numeric matrix can never be an identity matrix
@@ -22,9 +18,7 @@
 *  Rational number identity matrix is recognised
 *  Rational number non identity matrix is recognised
 
-## 
-      Chippyash\Test\Math\Matrix\Attribute\IsMarkov
-    
+## Chippyash\Test\Math\Matrix\Attribute\IsMarkov
 
 *  A non numeric matrix will return false
 *  A not square matrix will return false
@@ -32,42 +26,32 @@
 *  Attribute returns false for a matrix that has rows that do not sum to the same number
 *  A matrix with fewer than two rows and two columns is not a markov chain
 
-## 
-      Chippyash\Test\Math\Matrix\Attribute\IsNonSingular
-    
+## Chippyash\Test\Math\Matrix\Attribute\IsNonSingular
 
 *  Sut has attribute interface
 *  Singular matrices returns false
 *  Non singular matrix returns true
 
-## 
-      Chippyash\Test\Math\Matrix\Attribute\IsNumeric
-    
+## Chippyash\Test\Math\Matrix\Attribute\IsNumeric
 
 *  Sut has attribute interface
 *  Numeric matrix returns true
 *  Non numeric matrix returns false
 
-## 
-      Chippyash\Test\Math\Matrix\Attribute\IsRational
-    
+## Chippyash\Test\Math\Matrix\Attribute\IsRational
 
 *  Sut has attribute interface
 *  Rational matrix returns true
 *  Non rational matrix returns false
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\AbstractComputation
-    
+## Chippyash\Test\Math\Matrix\Computation\AbstractComputation
 
 *  Invoke expects at least one argument
 *  Invoke expects less than three arguments
 *  Invoke can accept two arguments
 *  Invoke proxies to compute
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Add\Matrix
-    
+## Chippyash\Test\Math\Matrix\Computation\Add\Matrix
 
 *  Compute rejects second param not being matrix
 *  Compute only accepts matrix values
@@ -75,17 +59,13 @@
 *  Compute throws exception if both operands not same size
 *  Compute returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Add\Scalar
-    
+## Chippyash\Test\Math\Matrix\Computation\Add\Scalar
 
 *  Compute accepts scalar value
 *  Compute returns empty if matrix is empty
 *  Compute returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Div\Entrywise
-    
+## Chippyash\Test\Math\Matrix\Computation\Div\Entrywise
 
 *  Compute rejects second param not being matrix
 *  Compute only accepts matrix values
@@ -93,9 +73,7 @@
 *  Compute returns correct results
 *  Division by zero results in zero vertices
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Div\Matrix
-    
+## Chippyash\Test\Math\Matrix\Computation\Div\Matrix
 
 *  Compute rejects second param not being matrix
 *  Compute only accepts matrix values
@@ -103,9 +81,7 @@
 *  Compute returns correct results
 *  Compute with zero matrix throws exception
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Div\Scalar
-    
+## Chippyash\Test\Math\Matrix\Computation\Div\Scalar
 
 *  Compute returns empty matrix if matrix parameter is empty
 *  Compute throws exception if scalar is zero for numeric matrix
@@ -116,9 +92,7 @@
 *  Compute rejects non scalar value
 *  Compute returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\MatrixMultiplicationProperties
-    
+## Chippyash\Test\Math\Matrix\Computation\MatrixMultiplicationProperties
 
 *  Matrix multiplication is not commutative
 *  Multiplication by an empty matrix is commmutative
@@ -131,9 +105,7 @@
 *  Transposition is commutative
 *  Trace is commutative
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Mul\Entrywise
-    
+## Chippyash\Test\Math\Matrix\Computation\Mul\Entrywise
 
 *  Compute rejects second param not being matrix
 *  Compute only accepts matrix values
@@ -142,9 +114,7 @@
 *  Square x square returns square matrix
 *  Multiplying two matrices that are not the same shape will throw an exception
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Mul\Matrix
-    
+## Chippyash\Test\Math\Matrix\Computation\Mul\Matrix
 
 *  Compute rejects second param not being matrix
 *  Compute only accepts matrix values
@@ -166,9 +136,7 @@
 *  Product of two rectangles with ma cols equal mb rows returns result test 2
 *  Known output one
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Mul\Scalar
-    
+## Chippyash\Test\Math\Matrix\Computation\Mul\Scalar
 
 *  Compute returns empty if matrix is empty
 *  Compute accepts numeric scalar value
@@ -178,9 +146,7 @@
 *  Compute rejects string value in matrix
 *  Compute returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Sub\Matrix
-    
+## Chippyash\Test\Math\Matrix\Computation\Sub\Matrix
 
 *  Compute rejects second param not being matrix
 *  Compute only accepts matrix values
@@ -190,9 +156,7 @@
 *  Compute throws exception if second operand vertice not scalar
 *  Compute returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Computation\Sub\Scalar
-    
+## Chippyash\Test\Math\Matrix\Computation\Sub\Scalar
 
 *  Compute accepts numeric scalar value
 *  Compute rejects non numeric scalar value
@@ -201,9 +165,7 @@
 *  Compute returns empty if matrix is empty
 *  Compute returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Decomposition\AbstractDecomposition
-    
+## Chippyash\Test\Math\Matrix\Decomposition\AbstractDecomposition
 
 *  Decompose returns fluent interface
 *  Invoke proxies to decompose with one parameter
@@ -219,9 +181,7 @@
 *  Getting invokable class product from callable returns the class
 *  Setting unknown product throws exception
 
-## 
-      Chippyash\Test\Math\Matrix\Decomposition\GaussJordanElimination
-    
+## Chippyash\Test\Math\Matrix\Decomposition\GaussJordanElimination
 
 *  Decompose with one parameter throws exception
 *  Decompose with non numeric matrix extra parameter throws exception
@@ -231,24 +191,18 @@
 *  Decompose with non singular first matrix returns decomposition
 *  Decompose can solve linear equation
 
-## 
-      Chippyash\Test\Math\Matrix\Decomposition\Lu
-    
+## Chippyash\Test\Math\Matrix\Decomposition\Lu
 
 *  Decompose returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Derivative\AbstractDerivative
-    
+## Chippyash\Test\Math\Matrix\Derivative\AbstractDerivative
 
 *  Invoke expects at least one argument
 *  Invoke expects less than three arguments
 *  Invoke can accept two arguments
 *  Invoke proxies to derive
 
-## 
-      Chippyash\Test\Math\Matrix\Derivative\Determinant
-    
+## Chippyash\Test\Math\Matrix\Derivative\Determinant
 
 *  Sut has derivative interface
 *  Non square matrix throws exception
@@ -262,9 +216,7 @@
 *  Can set upper limit for lu method when auto determining strategy
 *  Tuning with invalid name throws exception
 
-## 
-      Chippyash\Test\Math\Matrix\Derivative\MarkovWeightedRandom
-    
+## Chippyash\Test\Math\Matrix\Derivative\MarkovWeightedRandom
 
 *  If only one choice is available for a next link it will be returned
 *  A zero sum of a chain row will throw an exception
@@ -272,9 +224,7 @@
 *  Using negative values will throw an exception
 *  You can pick the next link in a chain
 
-## 
-      Chippyash\Test\Math\Matrix\Derivative\Strategy\Determinant\Laplace
-    
+## Chippyash\Test\Math\Matrix\Derivative\Strategy\Determinant\Laplace
 
 *  Empty matrix returns one
 *  Single matrix returns value of its single entry
@@ -288,18 +238,14 @@
 *  Tune clear cache true does clear cache
 *  Tuning with invalid name throws exception
 
-## 
-      Chippyash\Test\Math\Matrix\Derivative\Sum
-    
+## Chippyash\Test\Math\Matrix\Derivative\Sum
 
 *  Sut has derivative interface
 *  Summing a zero matrix returns int zero
 *  Summing a single item matrix returns the single item
 *  Summing an n plus matrix returns the sum of the vertices
 
-## 
-      Chippyash\Test\Math\Matrix\Derivative\Trace
-    
+## Chippyash\Test\Math\Matrix\Derivative\Trace
 
 *  Sut has derivative interface
 *  Empty matrix throws exception
@@ -307,15 +253,11 @@
 *  Non square matrix throws exception
 *  Returns trace for square matrix
 
-## 
-      Chippyash\Test\Math\Matrix\Exceptions\Exceptions
-    
+## Chippyash\Test\Math\Matrix\Exceptions\Exceptions
 
 *  Exceptions derived from computation exception
 
-## 
-      Chippyash\Test\Math\Matrix\Formatter\AsciiNumeric
-    
+## Chippyash\Test\Math\Matrix\Formatter\AsciiNumeric
 
 *  Construct gives formatter interface
 *  Format as int type returns integers
@@ -330,9 +272,7 @@
 *  Format with non real complex throws exception
 *  Setting format skips non numeric vertices
 
-## 
-      Chippyash\Test\Math\Matrix\Formatter\DirectedGraph\VertexDescription
-    
+## Chippyash\Test\Math\Matrix\Formatter\DirectedGraph\VertexDescription
 
 *  A vertex description has a name
 *  Setting a valid attribute will return the object
@@ -343,9 +283,7 @@
 *  You can get all attributes as an array
 *  Getting all attributes returns keyed array with keys prepended with graphviz
 
-## 
-      Chippyash\Test\Math\Matrix\Formatter\DirectedGraph
-    
+## Chippyash\Test\Math\Matrix\Formatter\DirectedGraph
 
 *  Supplying a non numeric matrix will throw an exception
 *  Supplying a non container attribs parameter will throw an exception
@@ -354,9 +292,7 @@
 *  Passing in a non closure as edge function will throw an exception
 *  You can render a valid numeric matrix that describes a graph
 
-## 
-      Chippyash\Test\Math\Matrix\FunctionMatrix
-    
+## Chippyash\Test\Math\Matrix\FunctionMatrix
 
 *  Construct properly gives function matrix
 *  Construct not callable parameter raises exception
@@ -364,9 +300,7 @@
 *  Construct cols less than one raises exception
 *  Construct gives expected output
 
-## 
-      Chippyash\Test\Math\Matrix\IdentityMatrix
-    
+## Chippyash\Test\Math\Matrix\IdentityMatrix
 
 *  Construct properly gives identity matrix
 *  Construct requesting rationalisation properly gives identity matrix
@@ -377,9 +311,7 @@
 *  Numeric identity factory method returns matrix with int types
 *  Construct with unknown matrix type throws exception
 
-## 
-      Chippyash\Test\Math\Matrix\MatrixFactory
-    
+## Chippyash\Test\Math\Matrix\MatrixFactory
 
 *  Create complex matrix with complex type entries returns complex matrix
 *  Create complex matrix with complex string entries returns complex matrix
@@ -396,9 +328,7 @@
 *  Create from function with cols less than one throws exception
 *  Create from complex returns rational matrix
 
-## 
-      Chippyash\Test\Math\Matrix\NumericMatrix
-    
+## Chippyash\Test\Math\Matrix\NumericMatrix
 
 *  Construct with base matrix throws exception
 *  Construct with numeric matrix is allowed
@@ -431,9 +361,7 @@
 *  Equality with loose setting returns false for same class and different content
 *  Equality with loose setting returns false for different class and different content
 
-## 
-      Chippyash\Test\Math\Matrix\RationalMatrix
-    
+## Chippyash\Test\Math\Matrix\RationalMatrix
 
 *  Construct with rational matrix matrix gives rational matrix
 *  Construct non empty array gives non empty matrix
@@ -441,88 +369,74 @@
 *  Matrix get returns correct value
 *  Compute returns correct result
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\AssertMatrixIsNonSingular
-    
+## Chippyash\Test\Math\Matrix\ShiftMatrix
+
+*  You can create an integer upper shift matrix
+*  You can create an integer lower shift matrix
+*  You can create a rational upper shift matrix
+*  You can create a rational lower shift matrix
+*  You can create a complex upper shift matrix
+*  You can create a complex lower shift matrix
+*  You can shift another matrix by multiplying with a shift matrix
+
+## Chippyash\Test\Math\Matrix\Traits\AssertMatrixIsNonSingular
 
 *  Non singular matrix returns class
 *  Singular matrix throws exception
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\AssertMatrixIsNumeric
-    
+## Chippyash\Test\Math\Matrix\Traits\AssertMatrixIsNumeric
 
 *  Numeric matrix returns class
 *  Non numeric matrix throws exception
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\AssertMatrixIsRational
-    
+## Chippyash\Test\Math\Matrix\Traits\AssertMatrixIsRational
 
 *  Rational matrix returns class
 *  Non rational matrix throws exception
 *  Non rational matrix throws exception with user message
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\AssertParameterIsNotString
-    
+## Chippyash\Test\Math\Matrix\Traits\AssertParameterIsNotString
 
 *  Not string param returns class
 *  String param throws exception
 *  String param throws exception with user message
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\AssertParameterIsRationalMatrix
-    
+## Chippyash\Test\Math\Matrix\Traits\AssertParameterIsRationalMatrix
 
 *  Testing a rational matrix returns class
 *  Testing a non rational matrix throws an exception
 *  Testing a non rational matrix throws an exception with user message
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\AssertParameterIsRationalNumber
-    
+## Chippyash\Test\Math\Matrix\Traits\AssertParameterIsRationalNumber
 
 *  Testing a rational matrix returns class
 *  Testing a non rational number throws an exception
 *  Testing a non rational number throws an exception with user message
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\ConvertNumberToComplex
-    
+## Chippyash\Test\Math\Matrix\Traits\ConvertNumberToComplex
 
 *  Trait returns correct type
 *  Trait throws exception for invalid numbers
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\ConvertNumberToNumeric
-    
+## Chippyash\Test\Math\Matrix\Traits\ConvertNumberToNumeric
 
 *  Trait returns correct type
 *  Trait throws exception for invalid numbers
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\ConvertNumberToRational
-    
+## Chippyash\Test\Math\Matrix\Traits\ConvertNumberToRational
 
 *  Trait returns correct type
 *  Trait throws exception for invalid numbers
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\CreateCorrectMatrixType
-    
+## Chippyash\Test\Math\Matrix\Traits\CreateCorrectMatrixType
 
 *  Trait returns correct type
 
-## 
-      Chippyash\Test\Math\Matrix\Traits\CreateCorrectScalarType
-    
+## Chippyash\Test\Math\Matrix\Traits\CreateCorrectScalarType
 
 *  Trait returns correct type
 
-## 
-      Chippyash\Test\Math\Matrix\Transformation\InvertDeterminant
-    
+## Chippyash\Test\Math\Matrix\Transformation\InvertDeterminant
 
 *  Empty matrix returns empty numeric matrix
 *  Single item no zero matrix returns simple inverse numeric matrix
@@ -532,9 +446,7 @@
 *  Transform with numeric matrix returns correct result
 *  Transform with rational matrix produces identity matrix when multiplied
 
-## 
-      Chippyash\Test\Math\Matrix\Transformation\MarkovRandomWalk
-    
+## Chippyash\Test\Math\Matrix\Transformation\MarkovRandomWalk
 
 *  You must supply a start row parameter
 *  The start parameter must be an inttype
@@ -544,9 +456,7 @@
 *  You can walk through the chain by weighted random selection and return a row vector of inttypes
 *  You can place a limit on the walk
 
-## 
-      Chippyash\Test\Math\Matrix\ZeroMatrix
-    
+## Chippyash\Test\Math\Matrix\ZeroMatrix
 
 *  Constructing properly gives identity matrix
 *  Constructing with rows less than one throws exception
