@@ -24,6 +24,8 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
     protected $vwideRectangle;
     protected $longRectangle;
     protected $vlongRectangle;
+    protected $onesRow;
+    protected $onesCol;
 
     protected function setUp()
     {
@@ -79,6 +81,17 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
             [1, 2],
             [1, 2],
             [1, 2]]);
+        $this->onesRow = new NumericMatrix(
+            [[1, 1, 1]]
+        );
+
+        $this->onesCol = new NumericMatrix(
+            [
+                [1],
+                [1],
+                [1]
+            ]
+        );
     }
 
     /**
@@ -273,6 +286,27 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
                     [1315, 1430, 1545, 1660, 1775]
                 ]),
                 $test->toArray());
+    }
+
+    public function testMultiplyByOnesRowReturnsCorrectProduct()
+    {
+        $arr = [
+            [1],
+            [2],
+            [3]
+        ];
+        $mA = new NumericMatrix($arr);
+        $test = $this->object->compute($mA, $this->onesRow);
+        $this->assertEquals(
+            $this->toStrongType(
+                [
+                    [1, 1, 1],
+                    [2, 2, 2],
+                    [3, 3, 3]
+                ]
+            ),
+            $test->toArray()
+        );
     }
 
     private function toStrongType(array $values)
