@@ -23,8 +23,8 @@ use Chippyash\Validation\Pattern\HasTypeMap;
  */
 class Cauchy extends AbstractSpecial
 {
-    const ERR1 = 'X and Y must be vectors of same length for cauchy matrix';
-    const ERR2 = 'X and Y must be vectors';
+    const ERR1 = 'x and y must be vectors of same length for cauchy matrix';
+    const ERR2 = 'x and y must be vectors';
 
     /**
      * Map of argument names
@@ -115,7 +115,6 @@ class Cauchy extends AbstractSpecial
         $mC = $m1('Add\Matrix', $m2);
         $onesSquare = $ones->create([$mVertices, $mVertices]);
         //C = ones (n) ./ C;
-        $mC = $onesSquare('Div\Entrywise', $mC);
-        return $mC;
+        return $onesSquare('Div\Entrywise', $mC);
     }
 }

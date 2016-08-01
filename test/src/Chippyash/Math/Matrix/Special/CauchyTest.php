@@ -29,7 +29,7 @@ class CauchyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Chippyash\Validation\Exceptions\InvalidParameterException
-     * @expectedExceptionMessage Invalid or missing parameter: Value key:X is not of type:integer:Value has invalid type map:Value key:X is not of type:Chippyash\Math\Matrix\NumericMatrix:Value has invalid type map
+     * @expectedExceptionMessage Invalid or missing parameter: Value key:x is not of type:integer:Value has invalid type map:Value key:x is not of type:Chippyash\Math\Matrix\NumericMatrix:Value has invalid type map
      */
     public function testIfOneArgumentSuppliedToCreateMethodItMustBeAnInteger()
     {
@@ -38,7 +38,7 @@ class CauchyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Chippyash\Validation\Exceptions\InvalidParameterException
-     * @expectedExceptionMessage Value key:X is not of type:integer:Value has invalid type map:Value key:Y is not of type:Chippyash\Math\Matrix\NumericMatrix:Value has invalid type map
+     * @expectedExceptionMessage Value key:x is not of type:integer:Value has invalid type map:Value key:y is not of type:Chippyash\Math\Matrix\NumericMatrix:Value has invalid type map
      */
     public function testIfTwoArgumentsSuppliedToCreateTheyMustBothBeNumericMatrices()
     {
@@ -47,7 +47,7 @@ class CauchyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Chippyash\Validation\Exceptions\InvalidParameterException
-     * @expectedExceptionMessage Value key:X is not of type:integer:Value has invalid type map:X and Y must be vectors
+     * @expectedExceptionMessage Invalid or missing parameter: Value key:x is not of type:integer:Value has invalid type map:x and y must be vectors
      */
     public function testIfTwoArgumentsSuppliedToCreateTheyMustBothBeVectors()
     {
@@ -69,7 +69,7 @@ class CauchyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Chippyash\Validation\Exceptions\InvalidParameterException
-     * @expectedExceptionMessage Value key:X is not of type:integer:Value has invalid type map:X and Y must be vectors of same length for cauchy matrix
+     * @expectedExceptionMessage Value key:x is not of type:integer:Value has invalid type map:x and y must be vectors of same length for cauchy matrix
      */
     public function testIfTwoArgumentsSuppliedToCreateTheyMustBothBeVectorsOfTheSameLength()
     {
