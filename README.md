@@ -206,6 +206,28 @@ Create a [Shift Matrix](https://en.wikipedia.org/wiki/Shift_matrix)
 	$mD = $mLower('Mul\Matrix', $mA);
 </pre>
 
+#### SpecialMatrix
+
+Provides numerous special matrices:
+
+<pre>
+//inline creation if your version of PHP allows it
+$mS = (new SpecialMatrix())->create(new StringType('NameOfMatrix')[, $arg1, $arg2]);
+
+//or as an invokable class
+$factory = new SpecialMatrix();
+$mS = $factory(new StringType('nameOfMatrix')[, $arg1, $arg2]);
+//or
+$mS = $factory('NameOfMatrix'[, $arg1, $arg2]);
+</pre>
+
+Matrices provided:
+
+*  Ones: create('ones', int:rows) or create ('ones', int:rows, int:cols)
+*  Cauchy: create('cauchy', int:x) or create('cauchy', vector:x, vector:y)
+*  Zeros: create('zeros', int:rows) or create ('zeros', int:rows, int:cols)
+
+ 
 ####  Numeric matrices have additional attributes
 
 *  IsComplex: boolean - Is the matrix instanceof ComplexMatrix?

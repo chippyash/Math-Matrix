@@ -32,7 +32,7 @@ abstract class AbstractSpecial implements SpecialMatrixInterface
     {
         $mapped = $this->mapArguments($args);
         $this->validateArguments($mapped);
-        return $this->createMatrix($this->filter($mapped));
+        return $this->createMatrix($mapped);
     }
 
     /**
@@ -51,18 +51,6 @@ abstract class AbstractSpecial implements SpecialMatrixInterface
      * @return NumericMatrix
      */
     abstract protected function createMatrix(array $args);
-
-    /**
-     * Filter the arguments - convert them to required format etc.
-     * Override if required
-     * 
-     * @param array $args
-     * @return array
-     */
-    protected function filter(array $args)
-    {
-        return $args;
-    }
 
     /**
      * Map arguments into an associative array e.g.

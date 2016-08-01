@@ -8,13 +8,12 @@
  */
 namespace Chippyash\Math\Matrix\Special;
 
-use Chippyash\Math\Matrix\Computation\Add\Matrix as AddMatrix;
-use Chippyash\Math\Matrix\Computation\Div\Entrywise as DivEntrywise;
-use Chippyash\Math\Matrix\Computation\Mul\Matrix as MulMatrix;
 use Chippyash\Math\Matrix\Exceptions\MathMatrixException;
-use Chippyash\Math\Matrix\Formatter\AsciiNumeric;
 use Chippyash\Math\Matrix\NumericMatrix;
+use Chippyash\Type\String\StringType;
+use Chippyash\Validation\Common\Lambda;
 use Chippyash\Validation\Exceptions\InvalidParameterException;
+use Chippyash\Validation\Logical\LAnd;
 use Chippyash\Validation\Logical\LOr;
 use Chippyash\Validation\Pattern\HasTypeMap;
 
@@ -31,7 +30,7 @@ class Cauchy extends AbstractSpecial
      * Map of argument names
      * @var array
      */
-    protected $map = ['X', 'Y'];
+    protected $map = ['x', 'y'];
     
     /**
      * @inheritDoc
@@ -39,15 +38,32 @@ class Cauchy extends AbstractSpecial
     protected function validateArguments(array $args)
     {
         $valA = new HasTypeMap([
-                'X' => 'integer'
+                'x' => 'integer'
             ]
         );
         $valB = new HasTypeMap([
-                'X' => 'Chippyash\Math\Matrix\NumericMatrix',
-                'Y' => 'Chippyash\Math\Matrix\NumericMatrix'
+                'x' => 'Chippyash\Math\Matrix\NumericMatrix',
+                'y' => 'Chippyash\Math\Matrix\NumericMatrix'
             ]
         );
-        $validator = new LOr($valA, $valB);
+        $valB1 = new Lambda(function($args) {
+            return $args['x']->is('Vector') && $args['y']->is('Vector');
+        },
+            new StringType(self::ERR2));
+        $valB2 = new Lambda(function($args) {
+            return $args['x']->vertices() == $args['y']->vertices();
+        },
+            new StringType(self::ERR1)
+        );
+        $validator = new LOr(
+            $valA,
+            new LAnd(
+                $valB,
+                new LAnd(
+                    $valB1, $valB2
+                )
+            )
+        );
 
         if (!$validator->isValid($args)) {
             throw new InvalidParameterException(implode(':', $validator->getMessages()));
@@ -59,11 +75,11 @@ class Cauchy extends AbstractSpecial
      */
     protected function createMatrix(array $args)
     {
-        if (is_int($args['X'])) {
-            return $this->createFromInt($args['X']);
+        if (is_int($args['x'])) {
+            return $this->createFromInt($args['x']);
         }
 
-        return $this->createFromMatrices($args['X'], $args['Y']);
+        return $this->createFromMatrices($args['x'], $args['y']);
     }
 
     /**
@@ -79,51 +95,27 @@ class Cauchy extends AbstractSpecial
     }
 
     /**
-     * @param NumericMatrix $mX
-     * @param NumericMatrix $mY
+     * @param NumericMatrix $mX Row Vector
+     * @param NumericMatrix $mY Columnvector
      * @return NumericMatrix
      * @throws MathMatrixException
      */
     protected function createFromMatrices(NumericMatrix $mX, NumericMatrix $mY)
     {
-        $mVertices = $mX->vertices();
-        if ($mVertices != $mY->vertices()) {
-            throw new MathMatrixException(self::ERR1);
-        }
-        if (!($mX->is('columnvector') || $mX->is('rowvector'))) {
-            throw new MathMatrixException(self::ERR2);
-        }
-        if (!($mY->is('columnvector') || $mY->is('rowvector'))) {
-            throw new MathMatrixException(self::ERR2);
-        }
-
         $mX = ($mX->is('columnvector') ? $mX : $mX = $mX('Transpose'));
         $mY = ($mY->is('rowvector') ? $mY : $mY = $mY('Transpose'));
 
-        $onesRow = $this->ones(1, $mVertices);
-        $a = $onesRow->setFormatter(new AsciiNumeric())->display();
-        $onesCol = $onesRow('Transpose');
-        $a = $onesCol->setFormatter(new AsciiNumeric())->display();
+        $ones = new Ones();
+        $mVertices = $mX->vertices();
+        $onesRow = $ones->create([1, $mVertices]);
+        $onesCol = $ones->create([$mVertices, 1]);
         //C = x * ones (1, n) + ones (n, 1) * y
         $m1 = $mX('Mul\Matrix', $onesRow);
-        $a = $m1->setFormatter(new AsciiNumeric())->display();
         $m2 = $onesCol('Mul\Matrix', $mY);
-        $a = $m2->setFormatter(new AsciiNumeric())->display();
         $mC = $m1('Add\Matrix', $m2);
-        $a = $mC->setFormatter(new AsciiNumeric())->display();
-        $onesSquare = $this->ones($mVertices, $mVertices);
+        $onesSquare = $ones->create([$mVertices, $mVertices]);
         //C = ones (n) ./ C;
         $mC = $onesSquare('Div\Entrywise', $mC);
-        $b = $mC->setFormatter(new AsciiNumeric())->display();
         return $mC;
-    }
-
-    private function ones($rows, $cols)
-    {
-        $ret = [];
-        for ($i = 0; $i < $rows; $i++) {
-            $ret[] = range(1, $cols);
-        }
-        return new NumericMatrix($ret);
     }
 }
