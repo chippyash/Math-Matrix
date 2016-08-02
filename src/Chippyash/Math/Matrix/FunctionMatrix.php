@@ -15,6 +15,7 @@ use Chippyash\Type\Number\IntType;
 
 /**
  * Matrix construction using a function
+ * @deprecated Use SpecialMatrix::create('functional', int:rows, int:cols, \Closure:f) instead
  */
 class FunctionMatrix extends NumericMatrix
 {

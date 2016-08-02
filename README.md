@@ -155,6 +155,8 @@ provides static methods:
 
 #### FunctionMatrix
 
+\[DEPRECATED - Use SpecialMatrix::create('functional', int:rows, int:cols, \Closure:f(int:rows, int:cols))\] instead
+
 Create a numeric matrix as a result of applying a function.
 
 <pre>
@@ -164,7 +166,7 @@ Create a numeric matrix as a result of applying a function.
 
 #### IdentityMatrix
 
-\[DEPRECATED - Use SpecialMatrix::create('identity',size) instead\]
+\[DEPRECATED - Use SpecialMatrix::create('identity',int:size) instead\]
 
 Create a NumericMatrix Identity matrix
 
@@ -184,7 +186,7 @@ Create rational and complex identity matrices using factory methods:
 
 #### ZeroMatrix
 
-\[DEPRECATED - Use SpecialMatrix::create('zeros',...)\]
+\[DEPRECATED - Use SpecialMatrix::create('zeros', int:rows\[, int:cols\])\]
 
 Create a NumericMatrix with all entries set to zero
 
@@ -231,6 +233,7 @@ Matrices provided:
 *  Ones Matrix/Vector: create('ones', int:rows) or create ('ones', int:rows, int:cols)
 *  Cauchy Matrix: create('cauchy', int:x) or create('cauchy', vector:x, vector:y)
 *  Identity Matrix: create('identity', int:size)
+*  Functional Matrix: create('functional', int:rows, int:cols, \\Closure: f(int:rows, int:cols))
 *  Zeros Matrix/Vector: create('zeros', int:rows) or create ('zeros', int:rows, int:cols)
 
 All returned matrices are NumericMatrices
