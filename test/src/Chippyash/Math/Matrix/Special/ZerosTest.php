@@ -56,7 +56,7 @@ class ZerosTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($test->equality($expected, false));
     }
 
-    public function testYouCanCreateAZeroesRowMatrixWithTwoIntegerParamaters()
+    public function testYouCanCreateAZeroesRowMatrixWithTwoIntegerParameters()
     {
         $test = $this->sut->create([1,3]);
         $expected = new NumericMatrix([[0,0,0]]);
@@ -72,4 +72,23 @@ class ZerosTest extends \PHPUnit_Framework_TestCase
             [0,0,0]]);
         $this->assertTrue($test->equality($expected, false));
     }
+
+    /**
+     * @expectedException \Chippyash\Validation\Exceptions\InvalidParameterException
+     * @expectedExceptionMessage Invalid or missing parameter: rows parameter must be integer > 0:rows and cols parameter must be integer > 0
+     */
+    public function testConstructingWithRowsLessThanOneThrowsException()
+    {
+        $this->sut->create([0, 1]);
+    }
+
+    /**
+     * @expectedException \Chippyash\Validation\Exceptions\InvalidParameterException
+     * @expectedExceptionMessage Invalid or missing parameter: rows parameter must be integer > 0:rows and cols parameter must be integer > 0
+     */
+    public function testConstructingWithColsLessThanOneThrowsException()
+    {
+        $this->sut->create([1, 0]);
+    }
+
 }

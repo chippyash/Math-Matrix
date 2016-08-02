@@ -15,6 +15,7 @@ use Chippyash\Type\TypeFactory;
 
 /**
  * Construct a matrix with all entries set to 0/1
+ * @deprecated use SpecialMatrix('zeros',...) instead
  */
 class ZeroMatrix extends FunctionMatrix
 {

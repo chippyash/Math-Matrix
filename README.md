@@ -164,6 +164,8 @@ Create a numeric matrix as a result of applying a function.
 
 #### IdentityMatrix
 
+\[DEPRECATED - Use SpecialMatrix::create('identity',size) instead\]
+
 Create a NumericMatrix Identity matrix
 
 <pre>
@@ -181,6 +183,8 @@ Create rational and complex identity matrices using factory methods:
 </pre>
 
 #### ZeroMatrix
+
+\[DEPRECATED - Use SpecialMatrix::create('zeros',...)\]
 
 Create a NumericMatrix with all entries set to zero
 
@@ -212,6 +216,7 @@ Provides numerous special matrices:
 
 <pre>
 //inline creation if your version of PHP allows it
+use use Chippyash\Math\Matrix\SpecialMatrix;
 $mS = (new SpecialMatrix())->create(new StringType('NameOfMatrix')[, $arg1, $arg2]);
 
 //or as an invokable class
@@ -223,10 +228,12 @@ $mS = $factory('NameOfMatrix'[, $arg1, $arg2]);
 
 Matrices provided:
 
-*  Ones: create('ones', int:rows) or create ('ones', int:rows, int:cols)
-*  Cauchy: create('cauchy', int:x) or create('cauchy', vector:x, vector:y)
-*  Zeros: create('zeros', int:rows) or create ('zeros', int:rows, int:cols)
+*  Ones Matrix/Vector: create('ones', int:rows) or create ('ones', int:rows, int:cols)
+*  Cauchy Matrix: create('cauchy', int:x) or create('cauchy', vector:x, vector:y)
+*  Identity Matrix: create('identity', int:size)
+*  Zeros Matrix/Vector: create('zeros', int:rows) or create ('zeros', int:rows, int:cols)
 
+All returned matrices are NumericMatrices
  
 ####  Numeric matrices have additional attributes
 

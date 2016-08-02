@@ -10,12 +10,10 @@
 namespace Chippyash\Math\Matrix;
 
 use Chippyash\Matrix\Transformation\Shift;
-use Chippyash\Matrix\Transformation\Transpose;
 use Chippyash\Type\Number\IntType;
 use Chippyash\Type\String\StringType;
-use Chippyash\Type\Number\Rational\RationalTypeFactory;
-use Chippyash\Type\Number\Complex\ComplexTypeFactory;
 use Chippyash\Type\TypeFactory;
+use Chippyash\Math\Matrix\Special\Identity;
 
 /**
  * Class ShiftMatrix
@@ -37,20 +35,9 @@ class ShiftMatrix extends NumericMatrix
      */
     public function __construct(IntType $size, StringType $shiftType, IntType $identityType = null)
     {
-        $mA = new NumericMatrix(new IdentityMatrix($size, $identityType));
-        $idt = (is_null($identityType) ? IdentityMatrix::IDM_TYPE_INT : $identityType()); 
+        $mA = (new Identity())->create([$size()]);
+        $new = TypeFactory::createInt(0);
 
-        if ($idt == IdentityMatrix::IDM_TYPE_RATIONAL) {
-            $new = RationalTypeFactory::create(0);
-        } elseif ($idt == IdentityMatrix::IDM_TYPE_COMPLEX) {
-            $new = ComplexTypeFactory::create(
-                RationalTypeFactory::create(0),
-                RationalTypeFactory::create(0, 1));
-        } else {
-            $new = TypeFactory::createInt(0);
-        }
-
-        $fT = new Transpose();
         $fS = new Shift();
 
         if ($shiftType() == self::SM_TYPE_UPPER) {
