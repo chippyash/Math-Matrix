@@ -216,6 +216,8 @@ Create a [Shift Matrix](https://en.wikipedia.org/wiki/Shift_matrix)
 
 Provides numerous special matrices:
 
+Adopting an idea from [Octave Gallery Matrices](https://www.gnu.org/software/octave/doc/v4.0.1/Famous-Matrices.html)
+
 <pre>
 //inline creation if your version of PHP allows it
 use use Chippyash\Math\Matrix\SpecialMatrix;
@@ -708,4 +710,23 @@ V1.2.3 Add link to packages
 V1.3.0 Add Directed Graph from Matrix rendering
 
 V1.4.0 Add ShiftMatrix
+
+V1.5.0 Add Special Matrices
+```
+Deprecation notice: IdentityMatrix, ZeroMatrix, FunctionMatrix are
+deprecated, Use the SpecialMatrix instead to create these.  I found a
+problem in some of the auto conversion algorithms used in the Matrix calculator
+that depended on class names.  The new convention ensures that these matrix types
+are all returned as NumericMatrix objects which is more conformant with their
+intended use.  I will shortly deprecate ShiftMatrix in favour of a SpecialMatrix
+type instead, but as it's brand new, it probably won't effect too many.
+
+SpecialMatrix allows for arbitrary inclusion of all sorts of matrices and the idea
+comes from the Octave/Matlab world. I probably won't get round to including all those
+that are provided by Octave/Matlab, but it is certainly an opportunity for others
+to implement the other types provided by those libraries as required.
+
+In due course, the version number for this library will be bumped to 2.0.0 at which
+point the old classes will disappear.
+```
 
