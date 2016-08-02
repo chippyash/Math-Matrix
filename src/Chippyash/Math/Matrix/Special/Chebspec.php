@@ -18,10 +18,28 @@ use Chippyash\Validation\Logical\LOr;
 use Chippyash\Validation\Pattern\HasTypeMap;
 
 /**
- * Cauchy Matrix
- * @link https://en.wikipedia.org/wiki/Cauchy_matrix
+ * Chebspec Matrix
+ * CHEBSPEC  Chebyshev spectral differentiation matrix.
+ *            C = CHEBSPEC(N, K) is a Chebyshev spectral differentiation
+ *            matrix of order N.  K = 0 (the default) or 1.
+ *            For K = 0 (`no boundary conditions'), C is nilpotent, with
+ *                C^N = 0 and it has the null vector ONES(N,1).
+ *                C is similar to a Jordan block of size N with eigenvalue zero.
+ *            For K = 1, C is nonsingular and well-conditioned, and its eigenvalues
+ *                have negative real parts.
+ *            For both K, the computed eigenvector matrix X from EIG is
+ *                ill-conditioned (MESH(REAL(X)) is interesting).
+ * 
+ *            References:
+ *            C. Canuto, M.Y. Hussaini, A. Quarteroni and T.A. Zang, Spectral
+ *               Methods in Fluid Dynamics, Springer-Verlag, Berlin, 1988; p. 69.
+ *            L.N. Trefethen and M.R. Trummer, An instability phenomenon in
+ *               spectral methods, SIAM J. Numer. Anal., 24 (1987), pp. 1008-1023.
+ *            D. Funaro, Computing the inverse of the Chebyshev collocation
+ * 
+ * @link https://www.gnu.org/software/octave/doc/v4.0.0/Famous-Matrices.html#Famous-Matrices
  */
-class Cauchy extends AbstractSpecial
+class Chebspsec extends AbstractSpecial
 {
     const ERR1 = 'x and y must be vectors of same length for cauchy matrix';
     const ERR2 = 'x and y must be vectors';
@@ -30,7 +48,7 @@ class Cauchy extends AbstractSpecial
      * Map of argument names
      * @var array
      */
-    protected $map = ['x', 'y'];
+    protected $map = ['N', 'K'];
     
     /**
      * @inheritDoc
