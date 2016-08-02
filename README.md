@@ -220,7 +220,7 @@ Adopting an idea from [Octave Gallery Matrices](https://www.gnu.org/software/oct
 
 <pre>
 //inline creation if your version of PHP allows it
-use use Chippyash\Math\Matrix\SpecialMatrix;
+use Chippyash\Math\Matrix\SpecialMatrix;
 $mS = (new SpecialMatrix())->create(new StringType('NameOfMatrix')[, $arg1, $arg2]);
 
 //or as an invokable class
@@ -238,7 +238,11 @@ Matrices provided:
 *  Functional Matrix: create('functional', int:rows, int:cols, \\Closure: f(int:rows, int:cols))
 *  Zeros Matrix/Vector: create('zeros', int:rows) or create ('zeros', int:rows, int:cols)
 
-All returned matrices are NumericMatrices
+All returned matrices are NumericMatrices.
+
+Really important: We don't do this shit by ourselves. So read the tests and read the source files
+where you'll find attribution to some far cleverer people than me. I just try
+to translate into the PHP world.
  
 ####  Numeric matrices have additional attributes
 

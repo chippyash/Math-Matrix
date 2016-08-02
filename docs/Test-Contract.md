@@ -135,6 +135,7 @@
 *  Product of two rectangles with ma cols equal mb rows returns result test 1
 *  Product of two rectangles with ma cols equal mb rows returns result test 2
 *  Known output one
+*  Multiply by ones row returns correct product
 
 ## Chippyash\Test\Math\Matrix\Computation\Mul\Scalar
 
@@ -378,6 +379,55 @@
 *  You can create a complex upper shift matrix
 *  You can create a complex lower shift matrix
 *  You can shift another matrix by multiplying with a shift matrix
+
+## Chippyash\Test\Math\Matrix\Special\Cauchy
+
+*  If one argument supplied to create method it must be an integer
+*  If two arguments supplied to create they must both be numeric matrices
+*  If two arguments supplied to create they must both be vectors
+*  If two arguments supplied to create they must both be vectors of the same length
+*  You can create a cauchy matrix with a single integer x parameter
+*  You can create a cauchy matrix with two vector paramaters
+
+## Chippyash\Test\Math\Matrix\Special\Functional
+
+*  Rows parameter must be an integer
+*  Cols parameter must be an integer
+*  F parameter must be a closure
+*  Returned matrix will be a function of the f parameter
+
+## Chippyash\Test\Math\Matrix\Special\Identity
+
+*  Argument supplied to create method must be an integer
+*  You can create an identity matrix with a single integer size parameter
+*  Size parameter must be greater than zero
+*  You can create a single item identity matrix
+
+## Chippyash\Test\Math\Matrix\Special\Ones
+
+*  If one argument supplied to create method it must be an integer
+*  If two arguments supplied to create they must both be integers
+*  You can create a ones column vector with a single integer rows parameter
+*  You can create a ones row matrix with two integer paramaters
+*  You can create a ones matrix with two integer parameters greater than one
+
+## Chippyash\Test\Math\Matrix\Special\Zeros
+
+*  If one argument supplied to create method it must be an integer
+*  If two arguments supplied to create they must both be integers
+*  You can create a zeroes column vector with a single integer rows parameter
+*  You can create a zeroes row matrix with two integer parameters
+*  You can create a zeroes matrix with two integer parameters greater than one
+*  Constructing with rows less than one throws exception
+*  Constructing with cols less than one throws exception
+
+## Chippyash\Test\Math\Matrix\SpecialMatrix
+
+*  Invoking the class with no parameters throws an exceptoion
+*  Invoking the class with an unknown matrix name throws an exception
+*  You can invoke the class with a string type for the name
+*  You can invoke the class with a string for the name
+*  The create method requires a string type for the matrix name
 
 ## Chippyash\Test\Math\Matrix\Traits\AssertMatrixIsNonSingular
 
