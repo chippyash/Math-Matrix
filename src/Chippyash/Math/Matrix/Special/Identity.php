@@ -13,7 +13,6 @@ use Chippyash\Type\String\StringType;
 use Chippyash\Validation\Common\Lambda;
 use Chippyash\Validation\Exceptions\InvalidParameterException;
 use Chippyash\Validation\Logical\LAnd;
-use Chippyash\Validation\Logical\LOr;
 use Chippyash\Validation\Pattern\HasTypeMap;
 
 /**
@@ -56,13 +55,7 @@ class Identity extends AbstractSpecial
      */
     protected function createMatrix(array $args)
     {
-        $data = [];
-        for ($row = 0; $row < $args['size']; $row ++) {
-            for ($col = 0; $col < $args['size']; $col ++) {
-                $data[$row][$col] = ($row == $col ? 1 : 0);
-            }
-        }
-
-        return new NumericMatrix($data);
+        $func = function($row, $col) {return ($row == $col ? 1 : 0);};
+        return (new Functional())->create([$args['size'], $args['size'], $func]);
     }
 }
