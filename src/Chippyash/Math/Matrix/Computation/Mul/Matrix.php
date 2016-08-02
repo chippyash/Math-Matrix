@@ -13,7 +13,7 @@ namespace Chippyash\Math\Matrix\Computation\Mul;
 use Chippyash\Math\Matrix\Computation\AbstractComputation;
 use Chippyash\Matrix\Transformation\Colslice;
 use Chippyash\Math\Matrix\NumericMatrix;
-use Chippyash\Math\Matrix\ZeroMatrix as ZMatrix;
+use Chippyash\Math\Matrix\Special\Zeros as ZMatrix;
 use Chippyash\Math\Matrix\Exceptions\ComputationException;
 use Chippyash\Math\Matrix\Exceptions\UndefinedComputationException;
 use Chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
@@ -73,10 +73,8 @@ class Matrix extends AbstractComputation
      */
     protected function doComputation(NumericMatrix $mA, NumericMatrix $mB)
     {
-        $size = TypeFactory::createInt(max(array($mA->columns(), $mA->rows(), $mB->columns(), $mB->rows())));
-        $mZ = new ZMatrix($size, $size);
-        $size = $size(); //convert back to internal type
-        $product = $mZ->toArray();
+        $size = max([$mA->columns(), $mA->rows(), $mB->columns(), $mB->rows()]);
+        $product = (new ZMatrix())->create([$size, $size])->toArray();
         $dA = $mA->toArray();
         $dB = $mB->toArray();
         $zero = $this->createCorrectScalarType($mA, 0);

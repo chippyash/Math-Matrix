@@ -155,6 +155,8 @@ provides static methods:
 
 #### FunctionMatrix
 
+\[DEPRECATED - Use SpecialMatrix::create('functional', int:rows, int:cols, \Closure:f(int:rows, int:cols))\] instead
+
 Create a numeric matrix as a result of applying a function.
 
 <pre>
@@ -163,6 +165,8 @@ Create a numeric matrix as a result of applying a function.
 </pre>
 
 #### IdentityMatrix
+
+\[DEPRECATED - Use SpecialMatrix::create('identity',int:size) instead\]
 
 Create a NumericMatrix Identity matrix
 
@@ -181,6 +185,8 @@ Create rational and complex identity matrices using factory methods:
 </pre>
 
 #### ZeroMatrix
+
+\[DEPRECATED - Use SpecialMatrix::create('zeros', int:rows\[, int:cols\])\]
 
 Create a NumericMatrix with all entries set to zero
 
@@ -206,6 +212,34 @@ Create a [Shift Matrix](https://en.wikipedia.org/wiki/Shift_matrix)
 	$mD = $mLower('Mul\Matrix', $mA);
 </pre>
 
+#### SpecialMatrix
+
+Provides numerous special matrices:
+
+Adopting an idea from [Octave Gallery Matrices](https://www.gnu.org/software/octave/doc/v4.0.1/Famous-Matrices.html)
+
+<pre>
+//inline creation if your version of PHP allows it
+use use Chippyash\Math\Matrix\SpecialMatrix;
+$mS = (new SpecialMatrix())->create(new StringType('NameOfMatrix')[, $arg1, $arg2]);
+
+//or as an invokable class
+$factory = new SpecialMatrix();
+$mS = $factory(new StringType('nameOfMatrix')[, $arg1, $arg2]);
+//or
+$mS = $factory('NameOfMatrix'[, $arg1, $arg2]);
+</pre>
+
+Matrices provided:
+
+*  Ones Matrix/Vector: create('ones', int:rows) or create ('ones', int:rows, int:cols)
+*  Cauchy Matrix: create('cauchy', int:x) or create('cauchy', vector:x, vector:y)
+*  Identity Matrix: create('identity', int:size)
+*  Functional Matrix: create('functional', int:rows, int:cols, \\Closure: f(int:rows, int:cols))
+*  Zeros Matrix/Vector: create('zeros', int:rows) or create ('zeros', int:rows, int:cols)
+
+All returned matrices are NumericMatrices
+ 
 ####  Numeric matrices have additional attributes
 
 *  IsComplex: boolean - Is the matrix instanceof ComplexMatrix?
@@ -676,4 +710,23 @@ V1.2.3 Add link to packages
 V1.3.0 Add Directed Graph from Matrix rendering
 
 V1.4.0 Add ShiftMatrix
+
+V1.5.0 Add Special Matrices
+```
+Deprecation notice: IdentityMatrix, ZeroMatrix, FunctionMatrix are
+deprecated, Use the SpecialMatrix instead to create these.  I found a
+problem in some of the auto conversion algorithms used in the Matrix calculator
+that depended on class names.  The new convention ensures that these matrix types
+are all returned as NumericMatrix objects which is more conformant with their
+intended use.  I will shortly deprecate ShiftMatrix in favour of a SpecialMatrix
+type instead, but as it's brand new, it probably won't effect too many.
+
+SpecialMatrix allows for arbitrary inclusion of all sorts of matrices and the idea
+comes from the Octave/Matlab world. I probably won't get round to including all those
+that are provided by Octave/Matlab, but it is certainly an opportunity for others
+to implement the other types provided by those libraries as required.
+
+In due course, the version number for this library will be bumped to 2.0.0 at which
+point the old classes will disappear.
+```
 

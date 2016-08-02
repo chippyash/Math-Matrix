@@ -15,7 +15,7 @@ use Chippyash\Math\Matrix\Traits\CreateCorrectMatrixType;
 use Chippyash\Matrix\Traits\AssertParameterIsMatrix;
 use Chippyash\Matrix\Traits\AssertMatrixColumnsAreEqual;
 use Chippyash\Matrix\Traits\AssertMatrixRowsAreEqual;
-use Chippyash\Math\Matrix\ZeroMatrix as ZMatrix;
+use Chippyash\Math\Matrix\Special\Zeros as ZMatrix;
 use Chippyash\Type\Interfaces\NumericTypeInterface;
 use Chippyash\Type\TypeFactory;
 use Chippyash\Math\Type\Calculator;
@@ -46,8 +46,7 @@ abstract class AbstractEntryWiseComputation extends AbstractComputation
         $this->assertMatrixColumnsAreEqual($mA, $extra)
             ->assertMatrixRowsAreEqual($mA, $extra);
 
-        $mZ = new ZMatrix(TypeFactory::createInt($mA->rows()), TypeFactory::createInt($mA->columns()));
-        $data = $mZ->toArray();
+        $data = (new ZMatrix())->create([$mA->rows(), $mA->columns()])->toArray();
 
         $dA = $mA->toArray();
         $dB = $extra->toArray();

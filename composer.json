@@ -25,7 +25,8 @@
     "chippyash/matrix": "~2",
     "chippyash/math-type-calculator": "~2.0",
     "chippyash/assembly-builder": "~1.2",
-    "chippyash/monad": "~1.2"
+    "chippyash/monad": "~1.2",
+    "chippyash/validation": "~1.1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.3.0",

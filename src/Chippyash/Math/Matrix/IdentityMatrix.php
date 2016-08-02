@@ -16,6 +16,7 @@ use Chippyash\Type\TypeFactory;
 
 /**
  * Construct an identity matrix
+ * @deprecated Use SpecialMatrix::create('identity', size) instead
  */
 class IdentityMatrix extends FunctionMatrix
 {
