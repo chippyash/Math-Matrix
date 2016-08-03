@@ -10,4 +10,4 @@ if [ ! -d "../../apidoc/Math-Matrix" ]
 then
 	mkdir ../../apidoc/Math-Matrix
 fi
-apigen generate -s "src/Chippyash/Math/Matrix/" -d "../../apidoc/Math-Matrix" --title "Chippyash Math Matrix" --php --access-levels "public"
+apigen generate -s "src/Chippyash/Math/Matrix/" -d "../../apidoc/Math-Matrix" --title "Chippyash Math Matrix" --tree --access-levels "public"

@@ -16,7 +16,9 @@ The above badges represent the current development branch.  As a rule, I don't p
  project etc.  If you need stable code, use a tagged version. Read 'Further Documentation'
  and 'Installation'.
  
-See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md) (494 tests, 774 assertions)
+See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/docs/Test-Contract.md) (526 tests, 820 assertions)
+
+See the [API Documentation](http://chippyash.github.io/Math-Matrix/) for further information
 
 ## What?
 
