@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Chippyash\Math\Matrix\Derivative\Strategy\Determinant\Lu | Chippyash Math Matrix</title>
+
+	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-Chippyash.html">
+						Chippyash<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-Chippyash.Math.html">
+						Math<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-Chippyash.Math.Matrix.html">
+						Matrix<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Attribute.html">
+						Attribute					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Computation.html">
+						Computation<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Computation.Add.html">
+						Add					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Computation.Div.html">
+						Div					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Computation.Mul.html">
+						Mul					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Computation.Sub.html">
+						Sub					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Decomposition.html">
+						Decomposition					</a>
+
+						</li>
+				<li class="active">
+					<a href="namespace-Chippyash.Math.Matrix.Derivative.html">
+						Derivative<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-Chippyash.Math.Matrix.Derivative.Strategy.html">
+						Strategy<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-Chippyash.Math.Matrix.Derivative.Strategy.Determinant.html">
+						Determinant					</a>
+
+						</li>
+							</ul></li></ul></li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Exceptions.html">
+						Exceptions					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Formatter.html">
+						Formatter<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Formatter.DirectedGraph.html">
+						DirectedGraph					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Interfaces.html">
+						Interfaces					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Special.html">
+						Special					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Traits.html">
+						Traits					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Transformation.html">
+						Transformation<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Transformation.Strategy.html">
+						Strategy<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Chippyash.Math.Matrix.Transformation.Strategy.Invert.html">
+						Invert					</a>
+
+						</li>
+							</ul></li></ul></li></ul></li></ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-Chippyash.Math.Matrix.Derivative.Strategy.Determinant.Laplace.html">Laplace</a></li>
+				<li class="active"><a href="class-Chippyash.Math.Matrix.Derivative.Strategy.Determinant.Lu.html">Lu</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-Chippyash.Math.Matrix.Derivative.Strategy.Determinant.html" title="Summary of Chippyash\Math\Matrix\Derivative\Strategy\Determinant"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Lu</h1>
+
+
+	<div class="description">
+	<p>LU strategy for matrix determinant</p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+<b><span>Chippyash\Math\Matrix\Derivative\Strategy\Determinant\Lu</span></b>			
+			 implements 
+				<a href="class-Chippyash.Math.Matrix.Interfaces.DeterminantStrategyInterface.html"><span>Chippyash\Math\Matrix\Interfaces\DeterminantStrategyInterface</span></a>
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-Chippyash.html">Chippyash</a>\<a href="namespace-Chippyash.Math.html">Math</a>\<a href="namespace-Chippyash.Math.Matrix.html">Matrix</a>\<a href="namespace-Chippyash.Math.Matrix.Derivative.html">Derivative</a>\<a href="namespace-Chippyash.Math.Matrix.Derivative.Strategy.html">Strategy</a>\<a href="namespace-Chippyash.Math.Matrix.Derivative.Strategy.Determinant.html">Determinant</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-Chippyash.Math.Matrix.Derivative.Strategy.Determinant.Lu.html#16-39" title="Go to source code">Derivative/Strategy/Determinant/Lu.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="determinant" id="_determinant">
+
+		<td class="attributes"><code>
+			 public 
+
+			Chippyash\Type\Interfaces\NumericTypeInterface
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_determinant">#</a>
+		<code><a href="source-class-Chippyash.Math.Matrix.Derivative.Strategy.Determinant.Lu.html#22-38" title="Go to source code">determinant</a>( <span><code><a href="class-Chippyash.Math.Matrix.NumericMatrix.html">Chippyash\Math\Matrix\NumericMatrix</a></code> <var>$mA</var></span> )</code>
+
+		<div class="description short">
+			<p>Compute determinant using LU method
+$mA must be
+- square
+This is not checked here - that is done in the determinant derivative class</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Compute determinant using LU method
+$mA must be
+- square
+This is not checked here - that is done in the determinant derivative class</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$mA</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					Chippyash\Type\Interfaces\NumericTypeInterface
+				</div>
+
+
+
+
+				<h4>Implementation of</h4>
+				<div class="list"><code><a href="class-Chippyash.Math.Matrix.Interfaces.DeterminantStrategyInterface.html#_determinant">Chippyash\Math\Matrix\Interfaces\DeterminantStrategyInterface::determinant()</a></code></div>
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		Chippyash Math Matrix API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
