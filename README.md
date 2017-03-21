@@ -735,4 +735,5 @@ to implement the other types provided by those libraries as required.
 In due course, the version number for this library will be bumped to 2.0.0 at which
 point the old classes will disappear.
 ```
+V1.5.1 dependency update
 
