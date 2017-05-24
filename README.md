@@ -737,3 +737,5 @@ point the old classes will disappear.
 ```
 V1.5.1 dependency update
 
+V1.5.2 dependency update
+
