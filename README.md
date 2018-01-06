@@ -20,6 +20,13 @@ See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/doc
 
 See the [API Documentation](http://chippyash.github.io/Math-Matrix/) for further information
 
+### End of life notice
+
+In March 2018, developer support will be withdrawn from this library for PHP <5.6. Older
+versions of PHP are now in such little use that the added effort of maintaining 
+compatibility is not effort effective.  See [PHP Version Stats](https://seld.be/notes/php-versions-stats-2017-1-edition)
+ for the numbers.
+
 ## What?
 
 Since the [JAMA library](http://www.phpmath.com/build02/JAMA/downloads/), there
