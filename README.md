@@ -748,3 +748,6 @@ V1.5.2 dependency update
 
 V1.5.3 build script update
 
+V1.5.4 update composer - forced by packagist composer.json format change
+
+
