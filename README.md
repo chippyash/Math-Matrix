@@ -2,8 +2,6 @@
 
 ## Quality
 
-![PHP 5.4](https://img.shields.io/badge/PHP-5.4-blue.svg)
-![PHP 5.5](https://img.shields.io/badge/PHP-5.5-blue.svg)
 ![PHP 5.6](https://img.shields.io/badge/PHP-5.6-blue.svg)
 ![PHP 7](https://img.shields.io/badge/PHP-7-blue.svg)
 [![Build Status](https://travis-ci.org/chippyash/Math-Matrix.svg?branch=master)](https://travis-ci.org/chippyash/Math-Matrix)
@@ -20,12 +18,8 @@ See the [Test Contract](https://github.com/chippyash/Math-Matrix/blob/master/doc
 
 See the [API Documentation](http://chippyash.github.io/Math-Matrix/) for further information
 
-### End of life notice
-
-In March 2018, developer support will be withdrawn from this library for PHP <5.6. Older
-versions of PHP are now in such little use that the added effort of maintaining 
-compatibility is not effort effective.  See [PHP Version Stats](https://seld.be/notes/php-versions-stats-2017-1-edition)
- for the numbers.
+Please note that developer support for PHP5.4 & 5.5 was withdrawn at version 2.0.0 of this library.
+If you need support for PHP 5.4 or 5.5, please use a version `>=1,<2`
 
 ## What?
 
@@ -674,7 +668,7 @@ Install [Composer] (https://getcomposer.org/)
 add
 
 <pre>
-    "chippyash/math-matrix": "~1.0"
+    "chippyash/math-matrix": ">=2,<3"
 </pre>
 
 to your composer.json "requires" section.
@@ -739,7 +733,7 @@ comes from the Octave/Matlab world. I probably won't get round to including all 
 that are provided by Octave/Matlab, but it is certainly an opportunity for others
 to implement the other types provided by those libraries as required.
 
-In due course, the version number for this library will be bumped to 2.0.0 at which
+In due course, the version number for this library will be bumped at which
 point the old classes will disappear.
 ```
 V1.5.1 dependency update
@@ -750,4 +744,5 @@ V1.5.3 build script update
 
 V1.5.4 update composer - forced by packagist composer.json format change
 
+V2.0.0 BC Break. Withdraw support for old PHP versions
 
